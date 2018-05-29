@@ -1,8 +1,9 @@
-class CreateAssignments < ActiveRecord::Migration[5.0]
+class CreateAssignments < ActiveRecord::Migration[5.2]
   def change
     create_table :assignments do |t|
       t.text :description
       t.datetime :deadline
+      t.integer :staff_id
       t.integer :course_id
 
       t.timestamps
