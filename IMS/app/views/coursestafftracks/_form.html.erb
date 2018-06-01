@@ -1,0 +1,35 @@
+<%= form_with(model: coursestafftrack, local: true) do |form| %>
+  <% if coursestafftrack.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(coursestafftrack.errors.count, "error") %> prohibited this coursestafftrack from being saved:</h2>
+
+      <ul>
+      <% coursestafftrack.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+  <%= form.hidden_field :course_id, :value => @courseid %>
+  </div>
+  <div class="field">
+  <%= form.hidden_field :staff_id, :value => @staffid %>
+</div>
+<div class="field">
+<%= form.hidden_field :track_id, :value => @trackid %>
+</div>
+<div class="field">
+  <%= form.hidden_field :group_id, :value => @groupid %>
+  </div>
+
+
+
+  <%= form.label :material %>   
+  <%= form.file_field :material %>  
+
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

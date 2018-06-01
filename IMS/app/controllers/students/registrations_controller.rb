@@ -3,17 +3,6 @@
 class Students::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
-  def male
-    @students = Student.where(gender: Student.genders["male"])
-    student = @students.first
-    redirect_to student
-  end
-  
-  # def group1
-  #   @students = Student.where(group: Student.groups["group1"])
-  #   student = @students.first
-  #   redirect_to student
-  # end
 
   # GET /resource/sign_up
   # def new
@@ -70,8 +59,4 @@ class Students::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
-  def user_params
-    params.require(:student).permit(:name, :email, :password, :birth, :gender, :avatar, :group)
-  end
-
 end

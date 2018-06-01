@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_31_142944) do
+ActiveRecord::Schema.define(version: 2018_06_01_130038) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,31 +46,27 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "assignment_staff_student", id: :serial, force: :cascade do |t|
-    t.integer "assigntment_id"
-    t.integer "staff_id"
-    t.integer "student_id"
-    t.text "codeReview"
-  end
-
   create_table "assignments", force: :cascade do |t|
     t.text "description"
     t.datetime "deadline"
-    t.integer "course_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "course_staff_tracks", force: :cascade do |t|
-    t.integer "course_id"
     t.integer "staff_id"
-    t.integer "track_id"
-    t.integer "group"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_student_tracks", id: :serial, force: :cascade do |t|
+  create_table "assignmentstaffstudents", force: :cascade do |t|
+    t.integer "assignment_id"
+    t.integer "staff_id"
+    t.integer "student_id"
+    t.text "codeReview"
+    t.text "derlivered_assignment"
+    t.text "file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "course_student_tracks", force: :cascade do |t|
     t.integer "course_id"
     t.integer "student_id"
     t.integer "track_id"
@@ -81,6 +77,16 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "coursestafftracks", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "staff_id"
+    t.integer "track_id"
+    t.integer "group"
+    t.text "material"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -107,31 +113,16 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
   end
 
   create_table "students", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string "current_sign_in_ip"
-    t.string "last_sign_in_ip"
+    t.string "name"
+    t.string "password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "gender"
-    t.string "name"
-    t.datetime "birth"
-    t.string "avatar"
-    t.integer "group_id"
-    t.index ["email"], name: "index_students_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 
   create_table "tracks", force: :cascade do |t|
     t.string "name"
     t.integer "intake"
-    t.string "type"
+    t.string "typeoftrack"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
