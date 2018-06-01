@@ -3,7 +3,7 @@ class CreateTracks < ActiveRecord::Migration[5.2]
     create_table :tracks do |t|
       t.string :name
       t.integer :intake
-      t.string :typeoftrack
+      t.string :type
 
       t.timestamps
     end

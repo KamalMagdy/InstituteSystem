@@ -1,5 +1,4 @@
 class PostsController < InheritedResources::Base
-
   private
 
     def post_params
