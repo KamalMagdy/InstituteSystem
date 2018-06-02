@@ -1,0 +1,36 @@
+<%= form_with(model: coursestudenttrack, local: true) do |form| %>
+  <% if coursestudenttrack.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(coursestudenttrack.errors.count, "error") %> prohibited this coursestudenttrack from being saved:</h2>
+
+      <ul>
+      <% coursestudenttrack.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div class="field">
+  <%= form.label :track_id %>
+  <%= form.select :track_id, options_for_select(Track.all.map{|s|[s.name, s.id]}) %>
+</div>
+
+<div class="field">
+  <%= form.label :student_id %>
+  <%= form.select :student_id, options_for_select(Student.all.map{|st|[st.name, st.id]}) %>
+</div>
+
+<div class="field">
+  <%= form.label :course_id %>
+  <%= form.select :course_id, options_for_select(Course.all.map{|co|[co.name, co.id]}) %>
+</div>
+<div class="field">
+  <%= form.label :grade %>   
+  <%= form.number_field :grade %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

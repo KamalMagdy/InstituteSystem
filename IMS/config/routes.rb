@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  # resources :students
+  resources :coursestudenttracks
+  resources :coursestafftracks
+  resources :assignmentstaffstudents
   resources :staffs
   resources :courses
   resources :assignments

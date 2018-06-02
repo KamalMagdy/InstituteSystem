@@ -6,5 +6,8 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
       devise_parameter_sanitizer.permit :account_update, keys: added_attrs
     end
+    def current_ability
+      @current_ability ||= Ability.new(current_student)
+    end
 
 end

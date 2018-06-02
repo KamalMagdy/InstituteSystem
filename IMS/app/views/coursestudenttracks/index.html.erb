@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Coursestudenttracks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @coursestudenttracks.each do |coursestudenttrack| %>
+      <tr>
+        <td><%= link_to 'Show', coursestudenttrack %></td>
+        <td><%= link_to 'Edit', edit_coursestudenttrack_path(coursestudenttrack) %></td>
+        <td><%= link_to 'Destroy', coursestudenttrack, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Coursestudenttrack', new_coursestudenttrack_path %>

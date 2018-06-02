@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_01_153908) do
+ActiveRecord::Schema.define(version: 2018_06_02_085917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,13 +46,6 @@ ActiveRecord::Schema.define(version: 2018_06_01_153908) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "assignment_staff_student", force: :cascade do |t|
-    t.integer "assigntment_id"
-    t.integer "staff_id"
-    t.integer "student_id"
-    t.text "codeReview"
-  end
-
   create_table "assignments", force: :cascade do |t|
     t.text "description"
     t.datetime "deadline"
@@ -62,11 +55,13 @@ ActiveRecord::Schema.define(version: 2018_06_01_153908) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_staff_tracks", force: :cascade do |t|
-    t.integer "course_id"
+  create_table "assignmentstaffstudents", force: :cascade do |t|
+    t.integer "assignment_id"
     t.integer "staff_id"
-    t.integer "track_id"
-    t.integer "group"
+    t.integer "student_id"
+    t.text "codeReview"
+    t.text "derlivered_assignment"
+    t.text "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -82,6 +77,25 @@ ActiveRecord::Schema.define(version: 2018_06_01_153908) do
 
   create_table "courses", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "coursestafftracks", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "staff_id"
+    t.integer "track_id"
+    t.integer "group"
+    t.text "material"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "coursestudenttracks", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "student_id"
+    t.integer "track_id"
+    t.integer "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -132,7 +146,7 @@ ActiveRecord::Schema.define(version: 2018_06_01_153908) do
   create_table "tracks", force: :cascade do |t|
     t.string "name"
     t.integer "intake"
-    t.string "type"
+    t.string "typeoftrack"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
