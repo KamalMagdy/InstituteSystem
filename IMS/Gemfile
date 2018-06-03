@@ -9,6 +9,9 @@ gem 'devise', '~> 4.4', '>= 4.4.3'
 gem "fog-google"
 gem "google-api-client", "> 0.8.5", "< 0.9"
 gem "mime-types"
+gem "cancan"
+gem 'bootstrap', '~> 4.1', '>= 4.1.1'
+# gem 'google_drive'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 # Use postgresql as the database for Active Record
@@ -66,3 +69,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'acts_as_votable', '~> 0.11.1' 
+gem 'commontator', '~> 5.1.0'
