@@ -1,5 +1,6 @@
 class Student < ActiveRecord::Base
-    belongs_to :group
+    #belongs_to :group
+    acts_as_commontator
     has_many :posts
     # has_many :assignments
     has_many :assignments, :through => :assignment_staff_student

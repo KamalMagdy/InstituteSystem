@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_31_142944) do
+ActiveRecord::Schema.define(version: 2018_06_02_212010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "assignment_staff_student", id: :serial, force: :cascade do |t|
+  create_table "assignment_staff_student", force: :cascade do |t|
     t.integer "assigntment_id"
     t.integer "staff_id"
     t.integer "student_id"
@@ -56,9 +56,49 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
   create_table "assignments", force: :cascade do |t|
     t.text "description"
     t.datetime "deadline"
+    t.integer "staff_id"
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "commontator_comments", id: :serial, force: :cascade do |t|
+    t.string "creator_type"
+    t.integer "creator_id"
+    t.string "editor_type"
+    t.integer "editor_id"
+    t.integer "thread_id", null: false
+    t.text "body", null: false
+    t.datetime "deleted_at"
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cached_votes_down"], name: "index_commontator_comments_on_cached_votes_down"
+    t.index ["cached_votes_up"], name: "index_commontator_comments_on_cached_votes_up"
+    t.index ["creator_id", "creator_type", "thread_id"], name: "index_commontator_comments_on_c_id_and_c_type_and_t_id"
+    t.index ["thread_id", "created_at"], name: "index_commontator_comments_on_thread_id_and_created_at"
+  end
+
+  create_table "commontator_subscriptions", id: :serial, force: :cascade do |t|
+    t.string "subscriber_type", null: false
+    t.integer "subscriber_id", null: false
+    t.integer "thread_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscriber_id", "subscriber_type", "thread_id"], name: "index_commontator_subscriptions_on_s_id_and_s_type_and_t_id", unique: true
+    t.index ["thread_id"], name: "index_commontator_subscriptions_on_thread_id"
+  end
+
+  create_table "commontator_threads", id: :serial, force: :cascade do |t|
+    t.string "commontable_type"
+    t.integer "commontable_id"
+    t.datetime "closed_at"
+    t.string "closer_type"
+    t.integer "closer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commontable_id", "commontable_type"], name: "index_commontator_threads_on_c_id_and_c_type", unique: true
   end
 
   create_table "course_staff_tracks", force: :cascade do |t|
@@ -70,7 +110,7 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "course_student_tracks", id: :serial, force: :cascade do |t|
+  create_table "course_student_tracks", force: :cascade do |t|
     t.integer "course_id"
     t.integer "student_id"
     t.integer "track_id"
@@ -94,9 +134,13 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.integer "student_id"
-    t.integer "staff_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "posts_tags", id: false, force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "tag_id"
   end
 
   create_table "staffs", force: :cascade do |t|
@@ -128,12 +172,34 @@ ActiveRecord::Schema.define(version: 2018_05_31_142944) do
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true
   end
 
+  create_table "tags", force: :cascade do |t|
+    t.string "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "tracks", force: :cascade do |t|
     t.string "name"
     t.integer "intake"
     t.string "type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.string "votable_type"
+    t.bigint "votable_id"
+    t.string "voter_type"
+    t.bigint "voter_id"
+    t.boolean "vote_flag"
+    t.string "vote_scope"
+    t.integer "vote_weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+    t.index ["voter_type", "voter_id"], name: "index_votes_on_voter_type_and_voter_id"
   end
 
 end
