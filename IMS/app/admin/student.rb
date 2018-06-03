@@ -1,5 +1,5 @@
 ActiveAdmin.register Student do
-    permit_params :email, :password, :password_confirmation, :name, :birth, :gender, :group
+    permit_params :email, :password, :password_confirmation, :name, :birth, :gender, :avatar, :group
 
   index do
     selectable_column
