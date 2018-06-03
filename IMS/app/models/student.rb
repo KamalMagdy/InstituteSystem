@@ -1,5 +1,7 @@
 class Student < ActiveRecord::Base
     belongs_to :track
+    #belongs_to :group
+    acts_as_commontator
     has_many :posts
     has_many :assignments, :through => :assignmentstaffstudents
     has_many :staffs, :through => :assignmentstaffstudents
@@ -13,6 +15,11 @@ class Student < ActiveRecord::Base
   	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
     
+    def after_confirmation
+      welcome_email
+    end
+    
     mount_uploader :avatar, AvatarUploader
+    mount_uploader :cv, CvUploader
 
 end

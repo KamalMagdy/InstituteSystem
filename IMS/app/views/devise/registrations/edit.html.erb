@@ -38,14 +38,23 @@
 
       <div class="field form-group">
         <%= f.label :birth %><br />
-        <%= f.date_select :birth %>
+        <%= f.date_field :birth %>
       </div>
 
+  <div class="field">
+    <%= f.label :mobile %><br />
+    <%= f.text_field :mobile %>
+  </div>
 
   <div class="field">
     <%= f.label :avatar %><br>
     <%= f.file_field :avatar %>
   </div>
+    <div class="field">
+    <%= f.label :cv %><br>
+    <%= f.file_field :cv %>
+  </div>
+
 
   <div class="actions">
     <%= f.submit "Update" %>
