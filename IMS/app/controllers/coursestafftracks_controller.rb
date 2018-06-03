@@ -22,7 +22,7 @@ end
   private
 
     def coursestafftrack_params
-      params.require(:coursestafftrack).permit(:material, :course_id, :track_id, :staff_id)
+      params.require(:coursestafftrack).permit(:material, :course_id, :track_id, :staff_id, :material_name, :material_type)
     end
 end
 

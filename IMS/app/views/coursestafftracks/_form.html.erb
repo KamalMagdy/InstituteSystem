@@ -22,8 +22,21 @@
 <div class="field">
   <%= form.hidden_field :group_id, :value => @groupid %>
   </div>
+<p>Material name</p>
+<br/>
+  <div class="field">
+  <%= form.text_field :material_name %>
+  </div>
+  
+  <br/>
+  <div class="field">
+  <%= form.label :material_type %>
+  <%= form.select :material_type, options_for_select([['Lecture', 'Lecture'], ['Other Documnets', 'Other Documents']]) %>
+</div>
 
 
+  <br/>
+  <br/>
 
   <%= form.label :material %>   
   <%= form.file_field :material %>  

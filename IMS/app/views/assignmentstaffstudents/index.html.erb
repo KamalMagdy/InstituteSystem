@@ -15,6 +15,7 @@
        <td><%= @student_name[index] %></td>   
       <td><%= link_to "Download", assignmentstaffstudent.file_url %></td>
       <td><a href='<%=  assignmentstaffstudent.derlivered_assignment %>'><%=  assignmentstaffstudent.derlivered_assignment %></a></td>   
+      <td><%= assignmentstaffstudent.created_at %></td>
       </tr>
       <% end %>
   </tbody>

@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2018_06_02_085917) do
   create_table "assignments", force: :cascade do |t|
     t.text "description"
     t.datetime "deadline"
+    t.text "assignmentfile"
     t.integer "staff_id"
     t.integer "course_id"
     t.datetime "created_at", null: false
@@ -61,16 +62,8 @@ ActiveRecord::Schema.define(version: 2018_06_02_085917) do
     t.integer "student_id"
     t.text "codeReview"
     t.text "derlivered_assignment"
-    t.text "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "course_student_tracks", force: :cascade do |t|
     t.integer "course_id"
-    t.integer "student_id"
-    t.integer "track_id"
-    t.integer "grade"
+    t.text "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -87,6 +80,8 @@ ActiveRecord::Schema.define(version: 2018_06_02_085917) do
     t.integer "track_id"
     t.integer "group"
     t.text "material"
+    t.text "material_name"
+    t.text "material_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

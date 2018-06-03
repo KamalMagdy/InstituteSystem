@@ -1,5 +1,5 @@
 class Student < ActiveRecord::Base
-    #belongs_to :group
+    belongs_to :track
     has_many :posts
     has_many :assignments, :through => :assignmentstaffstudents
     has_many :staffs, :through => :assignmentstaffstudents

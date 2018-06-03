@@ -20,11 +20,14 @@
     <%= form.label :deadline %>
     <%= form.datetime_select :deadline %>
   </div>
-
+  
   <div class="field">
-    <%= form.label :course_id %>
-    <%= form.number_field :course_id %>
-  </div>
+  <%= form.label :course_id %>
+  <%= form.select :course_id, options_for_select(Course.all.map{|co|[co.name, co.id]}) %>
+</div>
+
+<%= form.label :assignmentfile %>   
+<%= form.file_field :assignmentfile %>  
 
   <div class="actions">
     <%= form.submit %>

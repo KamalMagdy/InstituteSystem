@@ -6,6 +6,8 @@ class CreateCoursestafftracks < ActiveRecord::Migration[5.2]
       t.integer :track_id
       t.integer :group
       t.text :material
+      t.text :material_name
+      t.text :material_type
       t.timestamps
     end
   end

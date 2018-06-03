@@ -5,5 +5,74 @@
   <%= @course.name %>
 </p>
 
+<p> Course Materials </p>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @materials_material.each_with_index do |onematerial,index| %>
+      <tr>
+      <td><%= link_to "Download", "http://localhost:3000/uploads/coursestafftrack/material/" + @materials_material_id[index] + "/" + @materials_material[index] %></td>
+        <td><%= @materials_material_name[index] %></td>
+        <td><%= @materials_material_type[index]  %></td>
+      </tr>  
+    <% end %>
+  </tbody>
+</table>
+
+<p> Course Assignments </p>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @courseassignments_deadline.each_with_index do |onecourseassignment,index| %>
+      <tr>
+      <% if @courseassignments_assignmentfile[index].empty? %>
+      <td> </td>
+      <% else %>
+      <td><%= link_to "Download", "http://localhost:3000/uploads/assignment/assignmentfile/" + @courseassignments_id[index] + "/" + @courseassignments_assignmentfile[index] %></td>
+      <% end %>
+      <td><%= @courseassignments_deadline[index]  %></td>
+        <td><%= @courseassignments_description[index]  %></td>
+        <td><%= @courseassignments_staff[index]  %></td>
+      </tr>  
+    <% end %>
+  </tbody>
+</table>
+
+<p> Uploaded Assignments </p>
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @assignments_delivered.each_with_index do |oneassignment,index| %>
+      <tr>
+      <% if @assignments_file[index].empty? %>
+      <td> </td>
+      <% else %>
+      <td><%= link_to "Download", "http://localhost:3000/uploads/assignmentstaffstudent/file/" + @assignments_id[index] + "/" + @assignments_file[index] %></td>
+      <% end %>
+      <td><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
+        <td><%= @assignments_createdat[index]  %></td>
+        <td><%= @assignments_staff[index]  %></td>
+      </tr>  
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+
 <%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>
