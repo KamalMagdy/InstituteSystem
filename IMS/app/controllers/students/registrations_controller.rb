@@ -21,8 +21,35 @@ class Students::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
+   # def create
+   # @student = Student.new(params[:student])
+   
+   #    respond_to do |format|
+   #       if @student.save
+   #          # Tell the UserMailer to send a welcome email after save
+   #          UserNotifierMailer.welcome_email(@student).deliver_now
+            
+   #          format.html { redirect_to(@student, notice: 'Student was successfully created.') }
+   #          format.json { render json: @student, status: :created, location: @student }
+   #       else
+   #          format.html { render action: 'new' }
+   #          format.json { render json: @student.errors, status: :unprocessable_entity }
+   #       end
+         
+   #    end
+      
+   # end
+
+  # def confirm!
+  #   welcome_email
   #   super
+  # end
+
+  # # Private Methods
+  # private
+
+  # def welcome_email
+  #   MemberMailer.welcome_email(self).deliver
   # end
 
   # GET /resource/edit
@@ -71,7 +98,7 @@ class Students::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   def user_params
-    params.require(:student).permit(:name, :email, :password, :birth, :gender, :avatar, :group)
+    params.require(:student).permit(:name, :email, :password, :birth, :gender, :mobile, :avatar, :cv, :group_id)
   end
 
 end
