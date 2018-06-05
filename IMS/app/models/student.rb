@@ -1,5 +1,5 @@
 class Student < ActiveRecord::Base
-    belongs_to :track
+    #belongs_to :track
     #belongs_to :group
     acts_as_commontator
     has_many :posts

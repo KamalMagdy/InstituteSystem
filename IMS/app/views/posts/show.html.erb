@@ -22,11 +22,10 @@
 
 <%= commontator_thread(@post) %>
 
-<% @tags.each do |tag| %>
-  <div>
-    <%= tag.body %> <br>
-  </div>
-<% end %>
+<p>
+      <strong>Tags:</strong>
+      <%= @post.tag_list %>
+  </p>
 
 <%= link_to 'Edit', edit_post_path(@post) %> 
 <%= link_to 'Back', posts_path %>
