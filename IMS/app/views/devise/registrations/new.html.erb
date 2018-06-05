@@ -51,6 +51,9 @@
     <%= f.collection_select :group_id, Group.all, :id, :name %>
   </div>
 
+<%= flash[:recaptcha_error] %>
+<%= recaptcha_tags %>
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

@@ -12,7 +12,7 @@
   <tbody>
   <% @assignmentstaffstudents.each_with_index do |assignmentstaffstudent,index| %>
       <tr>
-       <td><%= @student_name[index] %></td>   
+      <td><%= assignmentstaffstudent.student.name %></td
       <td><%= link_to "Download", assignmentstaffstudent.file_url %></td>
       <td><a href='<%=  assignmentstaffstudent.derlivered_assignment %>'><%=  assignmentstaffstudent.derlivered_assignment %></a></td>   
       <td><%= assignmentstaffstudent.created_at %></td>

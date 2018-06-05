@@ -11,7 +11,9 @@ gem "google-api-client", "> 0.8.5", "< 0.9"
 gem "mime-types"
 gem "cancan"
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
-gem 'acts-as-taggable-on', :git => 'https://github.com/Fodoj/acts-as-taggable-on',:branch => 'rails-5.2'
+gem 'acts-as-taggable-on', :git => 'https://github.com/Fodoj/acts-as-taggable-on', :branch => 'rails-5.2'
+gem 'brakeman', '~> 4.3'
+gem "recaptcha", require: "recaptcha/rails"
 # gem 'google_drive'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
