@@ -46,13 +46,6 @@ ActiveRecord::Schema.define(version: 2018_06_03_101453) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "assignment_staff_student", force: :cascade do |t|
-    t.integer "assigntment_id"
-    t.integer "staff_id"
-    t.integer "student_id"
-    t.text "codeReview"
-  end
-
   create_table "assignments", force: :cascade do |t|
     t.text "description"
     t.datetime "deadline"
@@ -69,6 +62,7 @@ ActiveRecord::Schema.define(version: 2018_06_03_101453) do
     t.integer "student_id"
     t.text "codeReview"
     t.text "derlivered_assignment"
+    t.integer "course_id"
     t.text "file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -111,22 +105,6 @@ ActiveRecord::Schema.define(version: 2018_06_03_101453) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["commontable_id", "commontable_type"], name: "index_commontator_threads_on_c_id_and_c_type", unique: true
-  end
-
-  create_table "course_staff_tracks", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "staff_id"
-    t.integer "track_id"
-    t.integer "group"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "course_student_tracks", force: :cascade do |t|
-    t.integer "course_id"
-    t.text "file"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "courses", force: :cascade do |t|
@@ -214,7 +192,7 @@ ActiveRecord::Schema.define(version: 2018_06_03_101453) do
   create_table "tracks", force: :cascade do |t|
     t.string "name"
     t.integer "intake"
-    t.string "type"
+    t.string "typeoftrack"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

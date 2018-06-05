@@ -1,12 +1,6 @@
 class AssignmentstaffstudentsController < InheritedResources::Base
   def index
     @assignmentstaffstudents = Assignmentstaffstudent.all
-    @student_name=[];
-    @studentids = ActiveRecord::Base.connection.exec_query("select student_id from assignmentstaffstudents")
-    for studentid in @studentids
-      querystatement = ActiveRecord::Base.connection.exec_query("select name from students where id=#{studentid['student_id']}")
-      @student_name.push("#{querystatement[0]['name']}")
-    end
   end
   def new  
     @assignmentstaffstudent = Assignmentstaffstudent.new    
