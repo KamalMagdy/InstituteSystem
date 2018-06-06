@@ -1,5 +1,5 @@
 class AssignmentstaffstudentsController < InheritedResources::Base
-  before_action :authenticate_admin_user!, only: [:index]
+  # before_action :authenticate_admin_user!, only: [:index]
   before_action :authenticate_student!, only: [:new]
 
   def index

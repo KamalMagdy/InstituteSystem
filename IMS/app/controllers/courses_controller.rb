@@ -1,5 +1,6 @@
 class CoursesController < InheritedResources::Base
   before_action :authenticate_student!
+  before_action :authenticate_admin_user!, only: [:new, :edit, :destroy] 
   before_action :get_course, only: [:show]
 
   def show

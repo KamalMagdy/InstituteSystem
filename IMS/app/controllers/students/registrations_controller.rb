@@ -16,6 +16,16 @@ class Students::RegistrationsController < Devise::RegistrationsController
     student = @students.first
     redirect_to student
   end
+  before_action :check_captcha
+  private
+    def check_captcha
+      unless verify_recaptcha
+        self.resource = resource_class.new sign_up_params
+        resource.validate # Look for any other validation errors besides Recaptcha
+        set_minimum_password_length
+        respond_with resource
+      end 
+    end
   
   # def group1
   #   @students = Student.where(group: Student.groups["group1"])

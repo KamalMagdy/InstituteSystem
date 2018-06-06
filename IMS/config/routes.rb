@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :coursestafftracks
   resources :assignmentstaffstudents
   resources :staffs
-  resources :tags
   resources :courses do
     member do
       put "upload", to: "assignmentstaffstudents#new"
@@ -22,6 +21,7 @@ Rails.application.routes.draw do
     put "dislike", to: "posts#downvote"
   end
 end
+get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
