@@ -1,10 +1,11 @@
 class Student < ActiveRecord::Base
-    belongs_to :track
     #belongs_to :group
     acts_as_commontator
     has_many :posts
     has_many :assignments, :through => :assignmentstaffstudents
     has_many :staffs, :through => :assignmentstaffstudents
+    has_many :tracks, :through => :lists
+    accepts_nested_attributes_for :tracks
     
     has_many :courses, :through => :coursestudenttracks
     has_many :tracks, :through => :coursestudenttracks

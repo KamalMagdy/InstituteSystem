@@ -1,5 +1,6 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation
+  permit_params :email, :password, :password_confirmation, :role
+  ROLES = %i[manager instructor supervisor]
 
   index do
     selectable_column

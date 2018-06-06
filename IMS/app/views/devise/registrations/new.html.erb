@@ -51,6 +51,11 @@
     <%= f.collection_select :group_id, Group.all, :id, :name %>
   </div>
 
+  <%= f.simple_fields_for(:track) do |entity_form| %>
+    <%= entity_form.collection_select :track_id, Track.all, :id, :name %>
+  <% end %>
+
+
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>

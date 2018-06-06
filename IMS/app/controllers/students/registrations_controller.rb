@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 class Students::RegistrationsController < Devise::RegistrationsController
+  # public 
+  def create
+    super do 
+    @st = Student.where(email: "#{params[:student][:email]}").select("id, created_at, updated_at")
+    @trackid=  params[:student][:track][:track_id]
+    @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@st[0]['id']}', #{@trackid}, '#{@st[0]['created_at']}', '#{@st[0]['updated_at']}')")
+      end
+  end
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   def male
@@ -98,7 +106,7 @@ class Students::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   def user_params
-    params.require(:student).permit(:name, :email, :password, :birth, :gender, :mobile, :avatar, :cv, :group_id)
+    params.require(:student).permit(:name, :email, :password, :birth, :gender, :mobile, :avatar, :cv, :group_id, track_attributes:[:track_id])
   end
 
 end
