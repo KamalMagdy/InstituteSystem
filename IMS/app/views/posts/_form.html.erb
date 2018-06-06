@@ -18,13 +18,11 @@
     <%= f.label :body %><br />
     <%= f.text_area :body %>
   </div>
-  
-  <% @tags.each do |tag| %>
-    <div>
-      <%= check_box_tag "post[tag][]", tag.id, @post.tags.include?(tag) %>
-      <%= tag.body %>
-    </div>
-<% end %>
+
+<div class="field">
+  <%= f.label :tag_list, "Tags (separated by commas)" %>
+<%= f.text_field :tag_list %>
+</div>
 
   <div class="actions">
     <%= f.submit %>

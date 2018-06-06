@@ -15,6 +15,10 @@ gem 'bootstrap', '~> 4.1', '>= 4.1.1'
 #gem 'google_drive'
 gem 'google_drive'
 gem 'oauth2'
+gem 'acts-as-taggable-on', :git => 'https://github.com/Fodoj/acts-as-taggable-on', :branch => 'rails-5.2'
+gem 'brakeman', '~> 4.3'
+gem "recaptcha", require: "recaptcha/rails"
+# gem 'google_drive'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 # Use postgresql as the database for Active Record

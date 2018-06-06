@@ -1,2 +1,5 @@
-ENV['MAILER_EMAIL'] = 'hotel.booking.951@gmail.com'
-ENV['MAILER_PASSWORD'] = 'LaravelProject'
+ENV['MAILER_EMAIL'] = 'railsfinalproject@gmail.com'
+ENV['MAILER_PASSWORD'] = 'raisproject'
+
+ENV['RECAPTCHA_PUBLIC_KEY'] = '6Lc6Pl0UAAAAAPVRMtpW69ib8lePeqinK4vNqlV9'
+ENV['RECAPTCHA_PRIVATE_KEY'] = '6Lc6Pl0UAAAAAErNOLMqMj3-mb8K3zPgiK3PrfYX'
