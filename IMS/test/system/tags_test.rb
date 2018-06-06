@@ -14,7 +14,7 @@ class TagsTest < ApplicationSystemTestCase
     visit tags_url
     click_on "New Tag"
 
-    fill_in "Body", with: @tag.body
+    fill_in "Text", with: @tag.text
     click_on "Create Tag"
 
     assert_text "Tag was successfully created"
@@ -25,7 +25,7 @@ class TagsTest < ApplicationSystemTestCase
     visit tags_url
     click_on "Edit", match: :first
 
-    fill_in "Body", with: @tag.body
+    fill_in "Text", with: @tag.text
     click_on "Update Tag"
 
     assert_text "Tag was successfully updated"
