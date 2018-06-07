@@ -1,5 +1,5 @@
 class AssignmentsController < InheritedResources::Base
-  before_action :authenticate_admin_user!
+  # before_action :authenticate_admin_user!
 
   private
 

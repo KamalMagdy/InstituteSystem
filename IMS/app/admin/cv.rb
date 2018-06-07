@@ -8,6 +8,7 @@ ActiveAdmin.register Cv do
     column :student_id
     column :student
     column :path
+ 
     actions
   end
 

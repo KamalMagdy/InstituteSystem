@@ -10,6 +10,9 @@
       </ul>
     </div>
   <% end %>
+  <div class="field">
+  <%= form.hidden_field :staff_id, :value => current_admin_user.id %>
+</div>
 
   <div class="field">
     <%= form.label :description %>
