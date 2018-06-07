@@ -12,6 +12,8 @@
   <tbody>
     <% @coursestafftracks.each do |coursestafftrack| %>
       <tr>
+      <td><%= coursestafftrack.material_name %></td>
+      <td><%= coursestafftrack.material_type %></td>
       <td><%= link_to "Download", coursestafftrack.material_url %></td>
         <td><%= link_to 'Edit', edit_coursestafftrack_path(coursestafftrack) %></td>
         <td><%= link_to 'Destroy', coursestafftrack, method: :delete, data: { confirm: 'Are you sure?' } %></td>

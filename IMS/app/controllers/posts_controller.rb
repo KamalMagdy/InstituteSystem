@@ -5,7 +5,19 @@ class PostsController < InheritedResources::Base
     @post.upvote_by current_student
     #redirect_to :back
     redirect_to(@post)
-  end  
+  end 
+
+  def index
+   
+    if params[:tag]
+      @posts = Post.tagged_with(params[:tag])
+      @events = Event.all
+    else
+      @posts = Post.all
+      @events = Event.all
+    end
+  end
+
   def downvote
     @post = Post.find(params[:id])
     @post.downvote_by current_student
@@ -13,11 +25,16 @@ class PostsController < InheritedResources::Base
     redirect_to(@post)
   end
 
-  def create
-    @post = Post.new(post_params)
+  def create 
+
+    @post=Post.create(post_params)
     respond_to do |format|
       if @post.save
+        puts "ffffffffffffffffffff"
+        puts @post.student_id
+        puts @post.tag_list
         # @post.tags << Post_Tag.find(params[:id]) 
+        @post.tag_list.add(@post.tag_list, parse: true)
         format.html { redirect_to(@post, :notice => 'Post was successfully created.') }
         format.xml  { render :xml => @post, :status => :created, :location => @post }
       else
@@ -32,7 +49,6 @@ class PostsController < InheritedResources::Base
     # GET /posts/new
   # GET /posts/new.xml
   def new
-    @tags = Tag.all
     @post = Post.new
 
     respond_to do |format|
@@ -43,23 +59,17 @@ class PostsController < InheritedResources::Base
 
   
     def show
-    @post = Post.find(params[:id])
-    @tags = @post.tags
-    @tags.each do |tag|
-      
-        puts tag.body
-     end
-     
+    @post = Post.find(params[:id]) 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @post }
     end
-  end
+    end
   
 
-  private
+  protected
   def post_params
-    params.require(:post).permit(:body,:student_id,:tags)
+    params.require(:post).permit(:body, :student_id,:tag_list)
   end    
 end
 

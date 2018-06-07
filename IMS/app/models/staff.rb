@@ -1,5 +1,4 @@
 class Staff < ApplicationRecord
-    has_many :posts
     has_many :assignments, :through => :assignmentstaffstudents
     has_many :students, :through => :assignmentstaffstudents
 

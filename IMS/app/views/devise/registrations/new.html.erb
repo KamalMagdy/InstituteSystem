@@ -51,6 +51,10 @@
     <%= f.collection_select :group_id, Group.all, :id, :name %>
   </div>
 
+  <%= f.simple_fields_for(:track) do |entity_form| %>
+    <%= entity_form.collection_select :track_id, Track.all, :id, :name %>
+  <% end %>
+
 <%= flash[:recaptcha_error] %>
 <div class="g-recaptcha" data-sitekey="6Lc6Pl0UAAAAAPVRMtpW69ib8lePeqinK4vNqlV9"></div>
 

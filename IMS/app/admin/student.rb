@@ -1,5 +1,5 @@
 ActiveAdmin.register Student do
-    permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :cv, :group_id
+    permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :cv, :group_id, track_attributes:[:track_id]
 
   # controller do 
   #   def create
@@ -8,9 +8,9 @@ ActiveAdmin.register Student do
   #   end
   # end
 
-    after_create do |user|
-      UserNotifierMailer.welcome_email(@student).deliver_now
-    end
+    # after_create do |user|
+    #   UserNotifierMailer.welcome_email(@student).deliver_now
+    # end
 
   index do
     selectable_column
@@ -19,6 +19,7 @@ ActiveAdmin.register Student do
     column :email
     column :birth
     column :created_at
+    column :cv
     actions
   end
 
@@ -39,6 +40,7 @@ ActiveAdmin.register Student do
       f.input :mobile
       f.input :cv
       f.input :group_id
+      # f.input :track_id
     end
     f.actions
   end

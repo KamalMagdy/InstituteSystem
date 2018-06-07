@@ -1,6 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Courses</h1>
+<%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
 
 <table>
   <thead>
