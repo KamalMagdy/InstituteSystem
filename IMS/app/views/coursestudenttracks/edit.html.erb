@@ -1,6 +1,21 @@
 <h1>Editing Coursestudenttrack</h1>
 
-<%= render 'form', coursestudenttrack: @coursestudenttrack %>
+<form accept-charset="UTF-8" action="update" method="post">
+<input name="_method" type="hidden" value="put" />
+<input name="student" value="<%= @student.id %>" type="hidden" />
+<% @coursenames.each_with_index do |course, index| %>
+    <% if @gradesarray[index]==0 %>
+    <input name=grade[<%= index %>] type=hidden value="0" />
+    <% else %>
+    <div class="field">
+    <%= @coursenames[index] %>   
+    <br/>
+    <input name=grade[<%= index %>] type=number value="<%= @gradesarray[index] %>" />
+    </div>
+    <% end %>
+  <% end %>
+<input type=submit value=update />
+</form>
 
-<%= link_to 'Show', @coursestudenttrack %> |
-<%= link_to 'Back', coursestudenttracks_path %>
+
+

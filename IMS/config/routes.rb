@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   resources :courses_tracks
   resources :lists
-  resources :coursestudenttracks
+  resources :coursestudenttracks do
+    member do
+      put "/update", to: "coursestudenttracks#update"
+    end 
+  end
   resources :coursestafftracks
   resources :assignmentstaffstudents
   resources :staffs

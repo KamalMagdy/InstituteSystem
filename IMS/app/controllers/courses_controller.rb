@@ -1,24 +1,35 @@
 class CoursesController < InheritedResources::Base
   before_action :authenticate_student!
-  before_action :authenticate_admin_user!, only: [:new, :edit, :destroy] 
+  # before_action :authenticate_admin_user!, only: [:new, :edit, :destroy] 
   before_action :get_course, only: [:show]
+  def index
+    @coursenames=[]
+    @courseids=[]
+    @track = ActiveRecord::Base.connection.exec_query("select track_id from lists where student_id=#{current_student.id}")
+    @courses = CoursesTrack.where(track_id: @track[0]["track_id"])
+    for @course in @courses
+      @name = Course.where(id: @course.id)
+      @coursenames.push("#{@name[0]['name']}")
+      @courseids.push("#{@name[0]['id']}")
+    end
+  end
 
   def show
     session[:student]=current_student
-    @materials_material=[];
-    @materials_material_name=[];
-    @materials_material_type=[];
-    @materials_material_id=[];
-    @assignments_delivered=[];
-    @assignments_file=[];
-    @assignments_createdat=[];
-    @assignments_staff=[];
-    @assignments_id=[];
-    @courseassignments_deadline=[];
-    @courseassignments_description=[];
-    @courseassignments_assignmentfile=[];
-    @courseassignments_staff=[];
-    @courseassignments_id=[];
+    @materials_material=[]
+    @materials_material_name=[]
+    @materials_material_type=[]
+    @materials_material_id=[]
+    @assignments_delivered=[]
+    @assignments_file=[]
+    @assignments_createdat=[]
+    @assignments_staff=[]
+    @assignments_id=[]
+    @courseassignments_deadline=[]
+    @courseassignments_description=[]
+    @courseassignments_assignmentfile=[]
+    @courseassignments_staff=[]
+    @courseassignments_id=[]
     materials = ActiveRecord::Base.connection.exec_query("select * from coursestafftracks where course_id=#{@course.id}")
     for material in materials
     @materials_material.push("#{material['material']}")
