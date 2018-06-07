@@ -5,9 +5,9 @@ class PostsController < InheritedResources::Base
     @post.upvote_by current_student
     #redirect_to :back
     redirect_to(@post)
-  end  
-  def index
-   
+  end 
+
+  def index 
     if params[:tag]
       @posts = Post.tagged_with(params[:tag])
     else
@@ -44,19 +44,14 @@ class PostsController < InheritedResources::Base
   end
 
 
-
-    # GET /posts/new
-  # GET /posts/new.xml
   def new
     @post = Post.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @post }
     end
-  end
+end
 
-  
     def show
     @post = Post.find(params[:id]) 
     respond_to do |format|
@@ -64,7 +59,6 @@ class PostsController < InheritedResources::Base
       format.xml  { render :xml => @post }
     end
   end
-  
 
   protected
   def post_params
