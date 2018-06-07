@@ -7,8 +7,7 @@ class PostsController < InheritedResources::Base
     redirect_to(@post)
   end 
 
-  def index
-   
+  def index 
     if params[:tag]
       @posts = Post.tagged_with(params[:tag])
       @events = Event.all
@@ -45,27 +44,21 @@ class PostsController < InheritedResources::Base
   end
 
 
-
-    # GET /posts/new
-  # GET /posts/new.xml
   def new
     @post = Post.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @post }
     end
-  end
+end
 
-  
     def show
     @post = Post.find(params[:id]) 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @post }
     end
-    end
-  
+  end
 
   protected
   def post_params

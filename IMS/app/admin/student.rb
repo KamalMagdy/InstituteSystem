@@ -1,5 +1,6 @@
 ActiveAdmin.register Student do
-    permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :cv, :group_id, track_attributes:[:track_id]
+
+    permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :group_id, track_attributes:[:track_id]
 
   # controller do 
   #   def create
@@ -38,9 +39,8 @@ ActiveAdmin.register Student do
       f.input :birth, :as => :datepicker
       f.input :avatar
       f.input :mobile
-      f.input :cv
-      f.input :group_id
-      # f.input :track_id
+      f.input :group
+      #f.input :lists
     end
     f.actions
   end

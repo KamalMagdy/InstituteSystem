@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
+
   get 'events/index'
+
+  resources :cvs do
+    get 'company', on: :collection
+  end
+
   resources :courses_tracks
   resources :lists
   resources :coursestudenttracks
