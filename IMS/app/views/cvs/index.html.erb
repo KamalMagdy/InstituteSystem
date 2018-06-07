@@ -16,8 +16,9 @@
   <tbody>
     <% @cvs.each do |cv| %>
       <tr>
-        <td><%= cv.path %></td>
-        <td><%= cv.student_id %></td>
+        <td><a href='<%=  cv.path %>'><%=  cv.path %></a></td>   
+
+        <td><%= cv.student.name %></td>
         <td><%= link_to 'Show', cv %></td>
         <td><%= link_to 'Edit', edit_cv_path(cv) %></td>
         <td><%= link_to 'Destroy', cv, method: :delete, data: { confirm: 'Are you sure?' } %></td>

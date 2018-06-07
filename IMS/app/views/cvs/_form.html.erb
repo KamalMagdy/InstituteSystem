@@ -13,12 +13,12 @@
 
   <div class="field">
     <%= form.label :path %>
-    <%= form.text_field :path %>
+    <%= form.file_field :path %>
   </div>
 
   <div class="field">
-    <%= form.label :student_id %>
-    <%= form.number_field :student_id %>
+    <%= form.hidden_field :student_id, value: current_student.id %>
+
   </div>
 
   <div class="actions">
