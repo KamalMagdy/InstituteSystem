@@ -1,6 +1,7 @@
 class Student < ActiveRecord::Base
     #belongs_to :track
-    #belongs_to :group
+    belongs_to :group
+    has_one :cv
     acts_as_commontator
     has_many :posts
     has_many :assignments, :through => :assignmentstaffstudents
@@ -22,6 +23,4 @@ class Student < ActiveRecord::Base
     end
     
     mount_uploader :avatar, AvatarUploader
-    mount_uploader :cv, CvUploader
-
 end

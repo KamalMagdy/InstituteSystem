@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :cvs do
+    get 'company', on: :collection
+  end
   resources :courses_tracks
   resources :lists
   resources :coursestudenttracks
@@ -21,11 +24,6 @@ Rails.application.routes.draw do
     put "dislike", to: "posts#downvote"
   end
 end
-get 'oauth2callback' => 'documents#set_google_drive_token' # user return to this after login
-get 'list_google_doc'  => 'documents#list_google_docs', :as => :list_google_doc #for listing the 
-                                                                                  #google docs
-get 'download_google_doc'  => 'documents#download_google_docs', :as => :download_google_doc #download
-
 get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
