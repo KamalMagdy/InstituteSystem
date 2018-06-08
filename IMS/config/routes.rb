@@ -9,17 +9,26 @@ Rails.application.routes.draw do
       put "/update", to: "coursestudenttracks#update"
     end 
   end
-  resources :coursestafftracks
+  resources :coursestafftracks do
+    member do
+      post 'beforenew' => 'coursestafftracks#beforenewpost'
+    end
+  end
   resources :assignmentstaffstudents
   resources :staffs
   resources :courses do
     member do
       put "upload", to: "assignmentstaffstudents#new"
-      # put "uploadmaterial", to: "coursestafftracks#new"
       get "grades", to:"coursestudenttracks#show"
     end 
   end
-  resources :assignments
+  resources :assignments do
+    member do
+      post 'beforenew' => 'assignments#beforenewpost'
+    end
+  end
+  get "/dena", to: "assignments#beforenew"
+  get "/deena", to: "coursestafftracks#beforenew"
   resources :tracks
   resources :groups
   resources :posts do
@@ -36,6 +45,4 @@ get 'tags/:tag', to: 'posts#index', as: :tag
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
 
-#mn show course
-#<%= link_to uploadmaterial_course_path(@course), method: :put do %>Upload new material<% end %>
 

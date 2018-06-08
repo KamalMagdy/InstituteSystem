@@ -13,11 +13,14 @@
   <% @assignmentstaffstudents.each_with_index do |assignmentstaffstudent,index| %>
       <tr>
       <td><%=  assignmentstaffstudent.student.name %></td>
+      <td><%= assignmentstaffstudent.assignment.description %></td>
       <% if assignmentstaffstudent.file_url==nil %>
       <td> </td>
       <% else %>
       <td><%= link_to "Download", assignmentstaffstudent.file_url %></td>
       <% end %>
+      <td><%= assignmentstaffstudent.course.name %></td>
+      <td><%= @trackarray[index] %></td>
       <td><a href='<%=  assignmentstaffstudent.derlivered_assignment %>'><%=  assignmentstaffstudent.derlivered_assignment %></a></td>   
       <td><%= assignmentstaffstudent.created_at %></td>
       </tr>

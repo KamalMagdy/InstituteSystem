@@ -1,6 +1,7 @@
 class CoursestudenttracksController < InheritedResources::Base
-  # before_action :authenticate_admin_user!, only: [:index, :new]
+  before_action :authenticate_admin_user!, only: [:index, :new]
   before_action :authenticate_student!, only: [:show]
+
   skip_before_action :verify_authenticity_token
   def new  
     @coursestudenttrack = Coursestudenttrack.new    
@@ -73,7 +74,23 @@ class CoursestudenttracksController < InheritedResources::Base
       end
       @gradesforeachstudent.push(@gradesarray)
     end
-  end 
+  end
+  def create 
+    begin
+      coursestudenttrack = Coursestudenttrack.new
+      coursestudenttrack.grade = params[:coursestudenttrack][:grade]
+      coursestudenttrack.course_id = params[:coursestudenttrack][:course_id]
+      coursestudenttrack.track_id = params[:coursestudenttrack][:track_id]
+      coursestudenttrack.student_id = params[:coursestudenttrack][:student_id]
+      existcourse = Coursestudenttrack.where(track_id: coursestudenttrack.track_id, student_id: coursestudenttrack.student_id, course_id: params[:coursestudenttrack][:course_id])
+      if existcourse.empty?
+        coursestudenttrack.save!
+        redirect_to :action => :index
+      else
+        redirect_to :action => :new
+      end
+    end
+  end
   
 
   private
