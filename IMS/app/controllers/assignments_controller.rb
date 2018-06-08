@@ -21,7 +21,7 @@ class AssignmentsController < InheritedResources::Base
   private
 
     def assignment_params 
-      params.require(:assignment).permit(:description, :deadline, :course_id, :assignmentfile, :staff_id)
+      params.require(:assignment).permit(:name, :deadline, :course_id, :assignmentfile, :staff_id)
     end
 end
 

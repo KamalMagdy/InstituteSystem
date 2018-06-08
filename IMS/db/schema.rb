@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
   end
 
   create_table "assignments", force: :cascade do |t|
-    t.text "description"
+    t.text "name"
     t.datetime "deadline"
     t.text "assignmentfile"
     t.integer "staff_id"
