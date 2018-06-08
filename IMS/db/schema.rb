@@ -42,7 +42,9 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.string "role"
+    t.integer "social_no"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -145,6 +147,14 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
   create_table "cvs", force: :cascade do |t|
     t.string "path"
     t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "admin_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

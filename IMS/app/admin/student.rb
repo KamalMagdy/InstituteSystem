@@ -3,7 +3,6 @@ ActiveAdmin.register Student do
     permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :group_id,  track_ids: []
 
 
-
   controller do 
     def create
       super
@@ -26,6 +25,7 @@ ActiveAdmin.register Student do
     column :email
     column :birth
     column :created_at
+    column :cv
     actions
   end
 

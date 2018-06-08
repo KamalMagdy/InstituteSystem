@@ -18,9 +18,12 @@ class Student < ActiveRecord::Base
     enum gender: {male: 0, female: 1, any: 2}
     # enum group: {group1: 0, group2: 1}
 
-  	devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  	# devise :database_authenticatable, :registerable,
+   #       :recoverable, :rememberable, :trackable, :validatable
     
+    devise :database_authenticatable,
+        :recoverable, :rememberable, :trackable, :validatable
+
     def after_confirmation
       welcome_email
     end
