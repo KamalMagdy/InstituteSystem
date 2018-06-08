@@ -27,11 +27,14 @@
     <%= form.datetime_select :deadline %>
   </div>
   
-<select name="course_id">
-<% @arrayofcoursenames.each_with_index do |course, index| %>
-    <option value="<%= @arrayofcourseids[index] %>"><%= @arrayofcoursenames[index] %></option>
-    <% end %>
-</select>
+
+
+<%= form.select(:course_id) do %>
+  <% @arrayofcoursenames.each_with_index do |course, index| %>
+    <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index]) %>
+  <% end %>
+<% end %>
+
 <br/>
 <br/>
 

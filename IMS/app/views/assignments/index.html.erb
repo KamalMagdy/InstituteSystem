@@ -13,11 +13,11 @@
   </thead>
 
   <tbody>
-    <% @assignments.each do |assignment| %>
+    <% @assignments.each_with_index do |assignment, index| %>
       <tr>
         <td><%= assignment.name %></td>
         <td><%= assignment.deadline %></td>
-        <td><%= assignment.course_id %></td>
+        <td><%= @arrayofcoursenames[index] %></td>
         <td><%= link_to 'Show', assignment %></td>
         <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
         <td><%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -28,4 +28,4 @@
 
 <br>
 
-<%= link_to 'New Assignment', new_assignment_path %>
+<%= link_to 'New Assignment', 'totrack' %>
