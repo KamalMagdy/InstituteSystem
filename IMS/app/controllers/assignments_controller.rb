@@ -6,6 +6,14 @@ class AssignmentsController < InheritedResources::Base
     session[:track]= params[:track_id]
     redirect_to :action => :new
   end
+  def index 
+    @arrayofcoursenames=[]
+    @assignments = Assignment.all
+    for @assignmentt in @assignments
+      @name = Course.find(@assignmentt.course_id)
+      @arrayofcoursenames.push(@name.name)
+    end
+  end
   def new
     @assignment = Assignment.new
     @arrayofcourseids=[]
@@ -17,7 +25,7 @@ class AssignmentsController < InheritedResources::Base
       @arrayofcoursenames.push(@name.name)
     end
   end
-
+  
   private
 
     def assignment_params 

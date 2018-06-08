@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-
   get 'events/index'
-
   resources :cvs do
     get 'company', on: :collection
   end
@@ -32,8 +30,8 @@ Rails.application.routes.draw do
       post 'beforenew' => 'assignments#beforenewpost'
     end
   end
-  get "/dena", to: "assignments#beforenew"
-  get "/deena", to: "coursestafftracks#beforenew"
+  get "/totrack", to: "assignments#beforenew"
+  get "/tochoosetrack", to: "coursestafftracks#beforenew"
   resources :tracks
   resources :groups
   resources :posts do
