@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
     t.text "name"
     t.datetime "deadline"
     t.text "assignmentfile"
-    t.integer "staff_id"
+    t.integer "admin_user_id"
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
 
   create_table "assignmentstaffstudents", force: :cascade do |t|
     t.integer "assignment_id"
-    t.integer "staff_id"
+    t.integer "admin_user_id"
     t.integer "student_id"
     t.text "codeReview"
     t.text "derlivered_assignment"
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
 
   create_table "coursestafftracks", force: :cascade do |t|
     t.integer "course_id"
-    t.integer "staff_id"
+    t.integer "admin_user_id"
     t.integer "track_id"
     t.integer "group"
     t.text "material"
@@ -180,8 +180,8 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
   end
 
   create_table "staffs", force: :cascade do |t|
-    t.string "name"
-    t.string "password"
+    t.string "admin_user_id"
+    t.string "track_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
