@@ -11,6 +11,10 @@ gem "fog-google"
 gem "mime-types"
 gem "cancan"
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
+
+gem 'pusher'
+gem 'figaro'
+
 #gem 'paperclip-googledrive'
 #gem 'google_drive'
 #gem 'google_drive'
