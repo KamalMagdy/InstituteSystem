@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   get 'events/index'
+  resources :events
 
   resources :cvs do
     get 'company', on: :collection

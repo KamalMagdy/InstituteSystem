@@ -15,3 +15,8 @@
 //= require turbolinks
 //= require_tree .
 //= require commontator/application
+//= require moment 
+//= require fullcalendar
+//= require fullcalendar/gcal
+
+$('#calendar').fullCalendar({});
