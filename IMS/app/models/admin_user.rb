@@ -9,7 +9,12 @@ class AdminUser < ApplicationRecord
 
   has_many :tracks, :through => :coursestafftracks
   has_many :courses, :through => :coursestafftracks
+  # if (current_admin_user.role=="Manager"):
   enum role: {Manager: "Manager", Supervisor: "Supervisor", Instructor: "Instructor"}
+  # else
+  # enum role: {Instructor: "Instructor"}
+  # end 
+
 
   has_many :staffs
   has_many :tracks, :through => :staffs
