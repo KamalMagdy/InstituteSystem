@@ -20,6 +20,7 @@ class AdminUser < ApplicationRecord
   has_many :tracks, :through => :staffs
   accepts_nested_attributes_for :tracks
 
+  has_many :messages
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
 end
