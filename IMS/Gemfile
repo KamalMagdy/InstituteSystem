@@ -14,6 +14,10 @@ gem 'momentjs-rails'
 gem "mime-types"
 gem "cancan"
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
+
+gem 'pusher'
+gem 'figaro'
+
 #gem 'paperclip-googledrive'
 #gem 'oauth2'
 gem 'acts-as-taggable-on', :git => 'https://github.com/Fodoj/acts-as-taggable-on', :branch => 'rails-5.2'

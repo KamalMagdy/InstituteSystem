@@ -1,5 +1,5 @@
 class CoursesController < InheritedResources::Base
-  before_action :authenticate_student!
+  # before_action :authenticate_student!
   # before_action :authenticate_admin_user!, only: [:new, :edit, :destroy] 
   before_action :get_course, only: [:show]
   def index
@@ -25,6 +25,7 @@ class CoursesController < InheritedResources::Base
     @assignments_createdat=[]
     @assignments_staff=[]
     @assignments_id=[]
+    @assignments_review=[]
     @courseassignments_deadline=[]
     @courseassignments_description=[]
     @courseassignments_assignmentfile=[]
@@ -44,6 +45,7 @@ class CoursesController < InheritedResources::Base
     @assignments_createdat.push("#{assignmentuploaded['created_at']}")
     @assignments_staff.push("#{assignmentuploaded['staff']}")
     @assignments_id.push("#{assignmentuploaded['id']}")
+    @assignments_review.push("#{assignmentuploaded['codeReview']}")
     end
     courseassignments = ActiveRecord::Base.connection.exec_query("select * from assignments where course_id=#{@course.id}")
     for courseassignment in courseassignments

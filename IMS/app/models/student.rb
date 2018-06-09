@@ -1,12 +1,14 @@
 class Student < ActiveRecord::Base
 
     #belongs_to :track
+    has_many :messages
+    has_many :notifications
     belongs_to :group
     has_one :cv
     acts_as_commontator
     has_many :posts
     has_many :assignments, :through => :assignmentstaffstudents
-    has_many :staffs, :through => :assignmentstaffstudents
+    has_many :admin_users, :through => :assignmentstaffstudents
     has_many :lists
     has_many :tracks, :through => :lists
     accepts_nested_attributes_for :tracks

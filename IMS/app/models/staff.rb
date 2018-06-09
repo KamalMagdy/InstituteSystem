@@ -1,7 +1,6 @@
 class Staff < ApplicationRecord
-    has_many :assignments, :through => :assignmentstaffstudents
-    has_many :students, :through => :assignmentstaffstudents
 
-    has_many :tracks, :through => :coursestafftracks
-    has_many :courses, :through => :coursestafftracks
+    belongs_to :admin_user
+    belongs_to :track
+    
 end
