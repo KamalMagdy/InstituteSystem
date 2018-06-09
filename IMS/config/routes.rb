@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   get 'events/index'
+  resources :messages
+  get 'message' , to: 'messages#index'
+
+  get 'notifications', to:'notifications#index' 
+  get 'current_user' => "home#current_user"
+   
+
   resources :cvs do
     get 'company', on: :collection
   end

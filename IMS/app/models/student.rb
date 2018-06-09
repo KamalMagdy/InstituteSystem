@@ -1,6 +1,8 @@
 class Student < ActiveRecord::Base
 
     #belongs_to :track
+    has_many :messages
+    has_many :notifications
     belongs_to :group
     has_one :cv
     acts_as_commontator
