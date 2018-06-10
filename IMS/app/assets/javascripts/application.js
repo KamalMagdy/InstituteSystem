@@ -15,3 +15,6 @@
 //= require turbolinks
 //= require_tree .
 //= require commontator/application
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets

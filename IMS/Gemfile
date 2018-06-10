@@ -11,6 +11,7 @@ gem 'google-api-client', '~> 0.20.0'
 gem "mime-types"
 gem "cancan"
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
+gem 'jquery-rails'
 #gem 'paperclip-googledrive'
 #gem 'google_drive'
 gem 'google_drive'
