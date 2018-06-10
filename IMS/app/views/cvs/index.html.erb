@@ -19,15 +19,20 @@
         <td><a href='<%=  cv.path %>'><%=  cv.path %></a></td>   
 
         <td><%= cv.student.name %></td>
+        <% if current_student == cv.student %>
         <td><%= link_to 'Show', cv %></td>
         <td><%= link_to 'Edit', edit_cv_path(cv) %></td>
-        <td><%= link_to 'Destroy', cv, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <% end %>
+        </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
+<% puts "ooooooooooooooooo" %>
+<% puts @students_arr %>
+
+<% if @students_arr.include? current_student.id %> 
 <%= link_to 'New Cv', new_cv_path %>
+<% end %>
 <% end %>

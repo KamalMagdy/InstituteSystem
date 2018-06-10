@@ -40,7 +40,7 @@ class CoursestudenttracksController < InheritedResources::Base
       @grades = ActiveRecord::Base.connection.exec_query("select * from coursestudenttracks where track_id=1 and student_id=#{params[:student]} and course_id=#{@course['id']}")
       if(params[:grade]["#{@counter}"]=="0")
       else
-        @desiredrecord = Coursestudenttrack.find(@grades[0]["id"])
+        @desiredrecord = Coursestudenttrack.find([course_id: @grades[0]["course_id"], student_id: @grades[0]["student_id"], track_id: @grades[0]["track_id"]])
         @desiredrecord.grade = params[:grade]["#{@counter}"]
         @desiredrecord.save!
       end
