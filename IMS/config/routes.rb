@@ -55,7 +55,7 @@ get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :students, controllers: { registrations: 'students/registrations', sessions: "students/sessions" }
+  devise_for :students, controllers: { registrations: 'students/registrations' }
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
   end
