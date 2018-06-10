@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
   get 'events/index'
+  resources :events
+  resources :messages
+  get 'message' , to: 'messages#index'
+
+  get 'notifications', to:'notifications#index' 
+  get 'current_user' => "home#current_user"
+
   resources :cvs do
     get 'company', on: :collection
   end
@@ -16,7 +23,11 @@ Rails.application.routes.draw do
       post 'beforenew' => 'coursestafftracks#beforenewpost'
     end
   end
-  resources :assignmentstaffstudents
+  resources :assignmentstaffstudents do
+    member do
+      post 'submitcodereview' => 'assignmentstaffstudents#submitcodereview'
+    end
+  end
   resources :staffs
   resources :events
   resources :courses do
@@ -34,7 +45,7 @@ Rails.application.routes.draw do
   get "/tochoosetrack", to: "coursestafftracks#beforenew"
   resources :tracks
   resources :groups
-  resources :posts do
+  resources :posts, path: 'home' do
   member do
     put "like", to: "posts#upvote"
     put "dislike", to: "posts#downvote"
@@ -47,6 +58,3 @@ get 'tags/:tag', to: 'posts#index', as: :tag
   devise_for :students, controllers: { registrations: 'students/registrations', sessions: "students/sessions" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
-
-#mn show course
-#<%= link_to uploadmaterial_course_path(@course), method: :put do %>Upload new material<% end %>

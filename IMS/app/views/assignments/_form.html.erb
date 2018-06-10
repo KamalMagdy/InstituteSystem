@@ -11,7 +11,7 @@
     </div>
   <% end %>
   <div class="field">
-  <%= form.hidden_field :staff_id, :value => current_admin_user.id %>
+  <%= form.hidden_field :admin_user_id, :value => current_admin_user.id %>
 </div>
 <div class="field">
   <%= form.hidden_field :track_id, :value => session[:track] %>

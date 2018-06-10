@@ -4,7 +4,7 @@ class CreateAssignments < ActiveRecord::Migration[5.2]
       t.text :name
       t.datetime :deadline
       t.text :assignmentfile
-      t.integer :staff_id
+      t.integer :admin_user_id
       t.integer :course_id
 
       t.timestamps

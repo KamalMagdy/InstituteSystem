@@ -25,7 +25,7 @@ ActiveAdmin.register Student do
     column :email
     column :birth
     column :created_at
-    column :cv
+    # column :cv
     actions
   end
 

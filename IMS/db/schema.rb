@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_06_235121) do
+ActiveRecord::Schema.define(version: 2018_06_09_132009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
     t.text "name"
     t.datetime "deadline"
     t.text "assignmentfile"
-    t.integer "staff_id"
+    t.integer "admin_user_id"
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
 
   create_table "assignmentstaffstudents", force: :cascade do |t|
     t.integer "assignment_id"
-    t.integer "staff_id"
+    t.integer "admin_user_id"
     t.integer "student_id"
     t.text "codeReview"
     t.text "derlivered_assignment"
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
 
   create_table "coursestafftracks", force: :cascade do |t|
     t.integer "course_id"
-    t.integer "staff_id"
+    t.integer "admin_user_id"
     t.integer "track_id"
     t.integer "group"
     t.text "material"
@@ -172,6 +172,23 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.integer "sender_id"
+    t.string "sender_model"
+    t.integer "receiver_id"
+    t.string "receiver_model"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.text "body"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.integer "student_id"
@@ -180,8 +197,8 @@ ActiveRecord::Schema.define(version: 2018_06_06_235121) do
   end
 
   create_table "staffs", force: :cascade do |t|
-    t.string "name"
-    t.string "password"
+    t.string "admin_user_id"
+    t.string "track_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
