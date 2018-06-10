@@ -1,19 +1,25 @@
 <%= form_with(model: assignment, local: true) do |form| %>
-  <% if assignment.errors.any? %>
+  <% if @assignment.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
+      <h2><%= pluralize(@assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
 
       <ul>
-      <% assignment.errors.full_messages.each do |message| %>
+      <% @assignment.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
+  <div class="field">
+  <%= form.hidden_field :admin_user_id, :value => current_admin_user.id %>
+</div>
+<div class="field">
+  <%= form.hidden_field :track_id, :value => session[:track] %>
+</div>
 
   <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
   </div>
 
   <div class="field">
@@ -21,10 +27,16 @@
     <%= form.datetime_select :deadline %>
   </div>
   
-  <div class="field">
-  <%= form.label :course_id %>
-  <%= form.select :course_id, options_for_select(Course.all.map{|co|[co.name, co.id]}) %>
-</div>
+
+
+<%= form.select(:course_id) do %>
+  <% @arrayofcoursenames.each_with_index do |course, index| %>
+    <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index]) %>
+  <% end %>
+<% end %>
+
+<br/>
+<br/>
 
 <%= form.label :assignmentfile %>   
 <%= form.file_field :assignmentfile %>  

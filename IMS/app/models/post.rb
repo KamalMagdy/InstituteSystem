@@ -5,4 +5,8 @@ class Post < ActiveRecord::Base
     belongs_to :student 
     acts_as_taggable
     accepts_nested_attributes_for :taggings
+    
+    def know
+        puts "yaraaaaaaaaaaaaaaaaaaaaaaaaaaaab"
+      end
 end

@@ -5,23 +5,26 @@
 <table>
   <thead>
     <tr>
-    <th>Students/Courses<th>
-    <% @courses.each do |course| %>
-        <th><%= course['course_id'] %></th>
+    <th>Students/Courses</th>
+    <% @coursenames.each_with_index do |course, index| %>
+        <th><%= @coursenames[index] %></th>
     <% end %>
+    <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @students.each do |student| %>
+    <% @studentnames.each_with_index do |student, index| %>
       <tr>
-        <td><%= student['student_id'] %></td>
-        <td><%= link_to 'Edit', edit_coursestudenttrack_path(student['student_id']) %></td>
+        <td><%= @studentnames[index] %></td>
+          <% @coursenames.each_with_index do |course, index1| %>
+            <td><%= @gradesforeachstudent[index][index1] %></td> 
+          <% end %>
+        <td><%= link_to 'Edit', edit_coursestudenttrack_path(@studentids[index]) %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
 <br>
 
 <%= link_to 'New Coursestudenttrack', new_coursestudenttrack_path %>

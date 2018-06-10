@@ -116,7 +116,7 @@ class Students::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   def user_params
-    params.require(:student).permit(:name, :email, :password, :birth, :gender, :mobile, :avatar, :cv, :group_id, track_attributes:[:track_id])
+    params.require(:student).permit(:name, :email, :password, :birth, :gender, :mobile, :avatar, :group_id, track_attributes:[:track_id])
   end
 
 end

@@ -10,8 +10,10 @@ class PostsController < InheritedResources::Base
   def index 
     if params[:tag]
       @posts = Post.tagged_with(params[:tag])
+      @events = Event.all
     else
       @posts = Post.all
+      @events = Event.all
     end
   end
 
@@ -23,8 +25,6 @@ class PostsController < InheritedResources::Base
   end
 
   def create 
-    # puts " i am here \n"
-    # puts params
 
     @post=Post.create(post_params)
     respond_to do |format|
@@ -59,6 +59,8 @@ end
       format.xml  { render :xml => @post }
     end
   end
+
+ 
 
   protected
   def post_params

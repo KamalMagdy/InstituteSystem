@@ -1,16 +1,22 @@
 ActiveAdmin.register Student do
-    permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :cv, :group_id, :list, :track_id
 
-  # controller do 
-  #   def create
-  #     super
-  #     UserNotifierMailer.welcome_email(@student).deliver_now
-  #   end
-  # end
+    permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :group_id,  track_ids: []
+
+
+  controller do 
+    def create
+      super
+    end
+  end
 
     after_create do |user|
-      UserNotifierMailer.welcome_email(@student).deliver_now
+      
+      @trackid=  params[:student][:track_ids]
+      @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@student.id}', #{@trackid}, '#{@student.created_at}', '#{@student.updated_at}')")
     end
+    # after_create do |user|
+    #   UserNotifierMailer.welcome_email(@student).deliver_now
+    # end
 
   index do
     selectable_column
@@ -19,6 +25,7 @@ ActiveAdmin.register Student do
     column :email
     column :birth
     column :created_at
+    # column :cv
     actions
   end
 
@@ -37,9 +44,9 @@ ActiveAdmin.register Student do
       f.input :birth, :as => :datepicker
       f.input :avatar
       f.input :mobile
-      f.input :cv
-      f.input :group_id
-      f.input :lists
+      f.input :tracks, :as => :radio, collection => Track.all
+      f.input :group
+      #f.input :lists
     end
     f.actions
   end

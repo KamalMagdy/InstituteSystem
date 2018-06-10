@@ -66,6 +66,7 @@
       <td><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
         <td><%= @assignments_createdat[index]  %></td>
         <td><%= @assignments_staff[index]  %></td>
+        <td><%= @assignments_review[index]  %></td>
       </tr>  
     <% end %>
   </tbody>
@@ -75,5 +76,4 @@
 
 
 
-<%= link_to 'Edit', edit_course_path(@course) %> |
 <%= link_to 'Back', courses_path %>

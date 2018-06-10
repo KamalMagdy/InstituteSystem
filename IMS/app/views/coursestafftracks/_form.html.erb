@@ -10,13 +10,20 @@
       </ul>
     </div>
   <% end %>
-  
-  <div class="field">
-  <%= form.label :course_id %>
-  <%= form.select :course_id, options_for_select(Course.all.map{|co|[co.name, co.id]}) %>
-</div>
+  <h5>Courses</h5>
+  <%= form.select(:course_id) do %>
+    <% @arrayofcoursenames.each_with_index do |course, index| %>
+      <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index]) %>
+    <% end %>
+  <% end %>
+
+  <br/>
+  <br/>
   <div class="field">
   <%= form.hidden_field :staff_id, :value => @staffid %>
+</div>
+<div class="field">
+  <%= form.hidden_field :track_id, :value => session[:track] %>
 </div>
 
 <div class="field">
@@ -28,10 +35,6 @@
   <%= form.text_field :material_name %>
   </div>
   <br/>
-  <div class="field">
-  <%= form.label :track_id %>
-  <%= form.select :track_id, options_for_select(Track.all.map{|tr|[tr.name, tr.id]}) %>
-</div>
   
   <br/>
   <div class="field">

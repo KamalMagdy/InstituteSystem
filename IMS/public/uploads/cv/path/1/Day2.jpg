@@ -1,0 +1,182 @@
+Day2 ruby on rails
+>>Rails follow mvc architecture
+(lazm a follow l best practise bta3 rails 3n tare2 any amshy wra l convention da) (convention over configuration)
+>>ay model l asm bta3o lazm yb2a singular (User.rb) yb2a l controller (Users_controller.rb) l routes 7atb2a /users
+>>lw l model information msln yb2a howa fahem an  controller by default asmo information
+>>Test driven development(bktb l test code l awl w b3d kda baktb l code nfso)
+>>BDD Behaviour driven development(y3ny aktb l code w b3d kda aktb l test code l ytesto)
+>>rails 3bara 3n gim gowaha dependencies kter mn dmnha ano byrequire jQuery
+>>bundle de gemaya mas2ola anha tnzl ba2y l gemat
+>>coffee script zy l sass bs msh m3 l css m3 l javascript 
+>>howa l http methos bs mzwed 3leha shwyt parametrs 3ashan yzwd feha features mo5tlfa 
+Rest (show,create,edit,update,destroy,store) + l routes l 3arfenaha
+>>ORM (azay ba3ml mapping b3n l object w ben l database)
+>>convention naming
+Model > awl 7arf capital w singular 
+Table > kolha small w gam3
+>>to generate new proj f l rails : rails new iti >> gim instal bundler (da awl gim 7aynzly ba2y l gims)
+>>gim list : da command 7aygbly asma2 kol l gimat l nazla 3ndy
+>>ay log 3l server 7ala2eh f l folder bta3 l lo >> ay file .rb 7ala2eh gowa bin >> ay 7aga mawgda f l public accessible mn l url
+>>ay 7aaga btt3ml f l backend l file bttcreate f l tmp w b3d kda bttms7
+>>Gem file da bdescribe feh kol l dependencies bta3ty zy l composer f l laravel w ba2ol 3awz version kam w kda 
+>>Rake file da by7oot 7agat f l bin 3ashan a2dr a run command asmo rake, lw 3awz azwd rake task baroo7 azwdha gowa l lib
+>>ls lib/ >> assets malesh da3wa beha 7ala2ey tasks >> lma aktb rake task_name 7yrunly l task l gowa
+>>da code monfsel 3n l logic malosh mkan tany a accesso beh
+>>lw 3awza ab3t emaill l email da leeh code w template da 77oto f folder mailers gowa l app 
+>>3awz a3ml schedule 77otha f flder jobs msh shart anha tkon schedule mmkn tkon background tasks bttrun f thread monfls a f l background
+>>task bttrun f l wt2 l 3awzo anadeha beh ,,  l job bttrun f w2t mo7dd y3ny msln kol yom l sa3a 4 
+>>assets de l feha l static contact bta3y swar msln
+>>channels de bft7 socket ben l server w l client msln 
+>>helpers da ben l controller w l view ba3ml processing 3la l data aktr w ab3tha ll view byrg3 html aw code (therefore accessible ll controller w l view bs msh l model)
+>>Gimfile da mkan gowa l prject ba2olo feh aoh mwasfat l dependencies l m7tagha f l project da 
+>>kol l gems mawgoda gowa site l m7atot lw 3awz a include 7aga tanya ba7oot asmha gowa l folder
+>>gem 'sqlite' >>7ghyrha l ay db 3awza ast5dmha
+>># lw 3ndy gemaya gdeda 7ast5dmha 
+gem 'activeadmin','~>1.2' #lw 3awzha b version number mo3yn
+w 7a3ml bundle install
+>>gem list | grep bundler >> lw 3awz a3rf l gem 3ndy asln wla la 
+>>lw 3awz a create rake tasks ba7otha gowa lib/tasks bs l rakes bta3t l rails nfso ana mabshofhash bs ba2dr any ast5dmha nfsha 
+>>tb lw 3awz anady key mo3yan gowa l yml da user() ???
+>>staging da concept ma3roof ll prelife 3ashan l changes maynf3sh ttl3 beha live 3latol
+>>gowa folder db >> migrate feha kol change 3awz a3mlo 3l db
+>>bundle install bttrun kol ma yb2a feh change f l gim file 
+-example 3la ater table f l rails 
+>> add_col :books, :rank, :integer, default:0
+7yzwd f table books column rank w yzwdlo l attributes de 
+>> rake db:seed >>byinsert l metadata gowa l file
+
+user:
+  address:
+    line_1: "aaaa"
+    line_2: "sss"
+  name: "mostafa"
+  emails:
+    mai1: "dena@gmail.com"
+    mail2: "dena2@gmail.com"
+
+>>to insert f table
+>>feh website t2rebn 2al 3leh rubybestpractise by2olk aih l 7aga l msh best practise f l code bta3ak 
+
+
+>> after first break::::
+migrations>> roll back 7yrun l f l down w l migrate byrun l up w feh change 
+>>7ngrbha 
+1- rails s >>7ystart server
+2- rails c >>7ystart console 
+>>rails console ay 7aga defined gowa l project a2dr accessha mn l rails console  msh zy l irb
+(genrate scaffold)>>7ygenerate l model bl view bl controller bl action 
+3- rails g scaffold user name:string email:string gender:inetegr >> 7ycreate 7agat kter shofeha views w controller w model
+
+>>mohm 
+class migration mawgod gowah logic by3ml aih ?
+by3ml instance mn class CreateUsers l ana lsa 3mlo da f l migrations w ynady feh 3la function change y3ny CreateUsers.new.change de bt7sl lma a2ol db:migrate
+4- rake db:migrate
+null: false >> y3ny maynf3sh ykon b null
+5- ra7 l models >>user.rb >> lw ana 3awza a3ml constraints 7aktbha hna 
+>>active records howa l mas2ol 3n l validations f l rails
+>>actioncontroller howa l mas2ol 3n l actiosn f l rails
+>> lw 3awzen ndwr 3la customization ndwr 3lhe a fl rails  msln rails custom routes
+>>rake routes >> 8atgbly kol l routes l 3ndy f l file 
+ Prefix Verb   URI Pattern               Controller#Action
+    users GET    /users(.:format)          users#index
+          POST   /users(.:format)          users#create
+ new_user GET    /users/new(.:format)      users#new
+edit_user GET    /users/:id/edit(.:format) users#edit
+     user GET    /users/:id(.:format)      users#show
+          PATCH  /users/:id(.:format)      users#update
+          PUT    /users/:id(.:format)      users#update
+          DELETE /users/:id(.:format)      users#destroy
+
+awl col da asm l helper l bynady 3la l route da w f l a5r _path de lazm 
+>>>min req to start a server bl tarteb
+1-migration
+2-model
+3-controller
+4-view
+6- rails s >>to start a server on development mode 
+5-route
+//mmkn a customize ,, bs lazm f l a5r _path
+<%= link_to 'New User', direct_me_to_a_new_user_path %>
+
+>>f l console irb
+u=User.new
+u.name="deena"
+u.save
+lw tl3ly error w 3awza a3rf bzbt howa aih 
+u.errors.full_messages
+User.find 2 ##lw 3awz a find bl id 
+User.find([2]) ##lw array of ids 7aa lw feha id wa7ed 7ayrg3ly array of objects 7ta lw leha object wa7ed
+>> lw mal2ash l id 7ayraise exception 404 tb lw msh 3awzha ttl3 exception 7ast5dm where
+{"key": "value"}
+{"key" => "value"}
+{:key => :value}
+{key: :value} //lw 
+{key: []}
+User.where(id: 5,name: "dena")
+
+>>>>>>>>>>>>>>>>>>>>after second break
+>>DSques:lw 3awz a store colors f db 7a3ml aih ????
+>>callbacks f l model btmap l trigger 3la l level bta3 l db
+
+>>f l console
+rails c
+
+u.gender
+ => "male" 
+2.5.1 :003 > u.gender.titleize
+ => "Male" 
+2.5.1 :004 > u.gender="female"
+ => "female" 
+2.5.1 :005 > u.gender.titleize
+ => "Female" 
+2.5.1 :006 > u.male?
+ => false 
+User.genders[u.gender]
+ => 0 
+>>7ft7 file config>environments 
+7la2y development w production  fehom l cashe classes w l leager load b false w true > dwry fehom 3ashan tfhmy lehom true w false mo5tlfen
+>>callbacks 3la l classes w l models msh events 3la l browser
+>>dirty object da feh state l obj abl ma ytsave w b3d ma ytsave 
+>>example to apply callback
+rails g migration add_last_name_and_full_name_to_users
+rake db:migrate
+
+>>>>>>>>>>>>>3awz a3ml method t get l males only
+resources :users do //hna da leeh collection? l2ny bgeb l males l f kol l users msh bdwr f user wa7d
+    #/users/male
+    collection do
+
+end
+
+>>3ashan a define variable w ykon accessible f l view 7a3mlo instance variable 
+l 7eta l fattny  flash, filters , w retreiving query params
+
+>> by default kol  layouts application , w kol l mailer mailer .txt
+>>ynf3 any wana ba3ml render ab3t ll page l layout mo3yan da l tmshy 3leh wlw mab3tsh 7tstick bl default 
+'form' ====> de shbah de :form
+>>form_with de rails method bast5dmha 3ashan t3ml l action w tzbt l csrf 
+>> rake routes >> 7atgbly kol l methods l 3awza a3rfha 
+>>Associations
+-user 1-m books (foreign key 3nd l books)
+bagy 3nd l model w a2olo anta 3ndk books kter w agy 3nd l book w a2olo anta belongs to one user
+
+
+has and belongs to many de l case l feha 2 ids
+has many : through de l case  l feh id w data 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

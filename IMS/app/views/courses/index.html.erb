@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Courses</h1>
-<%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
+
 
 <table>
   <thead>
@@ -12,12 +12,11 @@
   </thead>
 
   <tbody>
-    <% @courses.each do |course| %>
+    <% @courses.each_with_index do |course, index| %>
       <tr>
-        <td><%= course.name %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= @coursenames[index] %></td>
+        <td><%= link_to 'Show', course_path(@courseids[index]) %></td>
+
       </tr>
     <% end %>
   </tbody>
@@ -25,4 +24,3 @@
 
 <br>
 
-<%= link_to 'New Course', new_course_path %>

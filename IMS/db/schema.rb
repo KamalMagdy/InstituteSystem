@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_05_233648) do
+ActiveRecord::Schema.define(version: 2018_06_09_132009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,9 @@ ActiveRecord::Schema.define(version: 2018_06_05_233648) do
     t.inet "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
     t.string "role"
+    t.integer "social_no"
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -142,6 +144,21 @@ ActiveRecord::Schema.define(version: 2018_06_05_233648) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "cvs", force: :cascade do |t|
+    t.string "path"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "events", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.integer "admin_user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "groups", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -151,6 +168,23 @@ ActiveRecord::Schema.define(version: 2018_06_05_233648) do
   create_table "lists", force: :cascade do |t|
     t.integer "student_id"
     t.integer "track_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "sender_id"
+    t.string "sender_model"
+    t.integer "receiver_id"
+    t.string "receiver_model"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.text "body"
+    t.integer "student_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -187,7 +221,6 @@ ActiveRecord::Schema.define(version: 2018_06_05_233648) do
     t.datetime "birth"
     t.string "avatar"
     t.integer "group_id"
-    t.string "cv"
     t.string "mobile"
     t.index ["email"], name: "index_students_on_email", unique: true
     t.index ["reset_password_token"], name: "index_students_on_reset_password_token", unique: true

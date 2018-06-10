@@ -1,0 +1,97 @@
+mkdir IMS
+cd IMS
+sudo curl -fsSL get.docker.com -o get-docker.sh
+
+sudo sh get-docker.sh
+
+sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+=======================================================================
+touch Dockerfile
+nano Dockerfile
+*copy and paste
+---------------
+
+FROM ruby:2.5.1
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+RUN mkdir /IMS
+WORKDIR /IMS
+COPY Gemfile /IMS/Gemfile
+COPY Gemfile.lock /IMS/Gemfile.lock
+RUN bundle install
+COPY . /IMS
+
+ctrl+x
+y
+enter
+=======================================================================
+touch Gemfile.lock
+touch Gemfile
+nano Gemfile
+*copy and paste
+---------------
+
+source 'https://rubygems.org'
+gem 'rails', '5.2.0'
+
+ctrl+x
+y
+enter
+=======================================================================
+touch Gemfile
+nano Gemfile
+*copy and paste
+---------------
+
+source 'https://rubygems.org'
+gem 'rails', '5.0.0.1'
+
+ctrl+x
+y
+enter
+=======================================================================
+touch docker-compose.yml
+nano docker-compose.yml
+*copy and paste
+---------------
+
+version: '3.6'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/IMS
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+
+ctrl+x
+y
+enter
+=======================================================================
+docker-compose run web rails new . --force --database=postgresql
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

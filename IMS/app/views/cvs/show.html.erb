@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @cv.path %>
+</p>
+
+<p>
+  <strong>Student:</strong>
+  <%= @cv.student.name %>
+</p>
+
+<% @cvarray.each_with_index do |cv_comment, index| %>
+   <p> <%= @cvarray[index] %> </p>
+  <% end %>
+
+
+<%= link_to 'Edit', edit_cv_path(@cv) %> |
+<%= link_to 'Back', cvs_path %>

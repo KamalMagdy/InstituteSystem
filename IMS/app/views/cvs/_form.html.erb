@@ -1,0 +1,27 @@
+<%= form_with(model: cv, local: true) do |form| %>
+  <% if cv.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cv.errors.count, "error") %> prohibited this cv from being saved:</h2>
+
+      <ul>
+      <% cv.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :path %>
+    <%= form.file_field :path %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :student_id, value: current_student.id %>
+
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
