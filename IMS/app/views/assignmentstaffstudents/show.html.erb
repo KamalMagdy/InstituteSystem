@@ -20,9 +20,8 @@
       <% end %>
       <br/>
       <br/>
-
+      <% if @assignmentstaffstudent.codeReview==nil %>
       <form accept-charset="UTF-8" action="<%=  @assignmentstaffstudent.id %>/submitcodereview" method="post">
-<% if @assignmentstaffstudent.codeReview==nil %>
       <textarea name="codeReview" rows="4" cols="50"> </textarea>
       <% else %>
       <textarea name="codeReview" rows="4" cols="50"> <%= @assignmentstaffstudent.codeReview %> </textarea>

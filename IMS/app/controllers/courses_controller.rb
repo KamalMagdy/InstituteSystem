@@ -1,6 +1,6 @@
 class CoursesController < InheritedResources::Base
-  # before_action :authenticate_student!
-  # before_action :authenticate_admin_user!, only: [:new, :edit, :destroy] 
+  before_action :authenticate_student!, only: [:show]
+  before_action :authenticate_admin_user!, only: [:new, :edit, :destroy] 
   before_action :get_course, only: [:show]
   def index
     @coursenames=[]
@@ -60,8 +60,20 @@ class CoursesController < InheritedResources::Base
     course = Course.new
     course.name = params[:course][:name] 
     course.save!
-    @trackid=  params[:course][:track][:track_id]
+    @trackid =  params[:course][:track][:track_id]
+    @instid = params[:admin_user_id]
     @list = ActiveRecord::Base.connection.exec_query("insert into courses_tracks (course_id, track_id, created_at, updated_at) values ('#{course.id}', #{@trackid}, '#{course.created_at}', '#{course.updated_at}')")
+    @coursestaff = ActiveRecord::Base.connection.exec_query("insert into staffcourses (course_id, admin_user_id, created_at, updated_at) values ('#{course.id}', #{@instid}, '#{course.created_at}', '#{course.updated_at}')")
+  end
+  def new
+    @course = Course.new
+    @arrayofinstructornames=[]
+    @arrayofinstructorids=[]
+    @arrayofinstructors = ActiveRecord::Base.connection.exec_query("select * from admin_users where role='Instructor' ")
+    for @arrayodinstructor in @arrayofinstructors
+      @arrayofinstructornames.push(@arrayodinstructor['name'])
+      @arrayofinstructorids.push(@arrayodinstructor['id'])
+    end
   end
 
   private

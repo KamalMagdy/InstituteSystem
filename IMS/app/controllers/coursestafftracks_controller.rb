@@ -1,5 +1,5 @@
 class CoursestafftracksController < InheritedResources::Base
-  # before_action :authenticate_admin_user!
+  before_action :authenticate_admin_user!
   skip_before_action :verify_authenticity_token
   def beforenewpost
     session[:track]= params[:track_id]

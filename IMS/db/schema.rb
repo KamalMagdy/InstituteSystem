@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_09_132009) do
+ActiveRecord::Schema.define(version: 2018_06_11_112223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,13 +135,14 @@ ActiveRecord::Schema.define(version: 2018_06_09_132009) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "coursestudenttracks", primary_key: ["course_id", "student_id", "track_id"], force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "student_id", null: false
-    t.integer "track_id", null: false
+  create_table "coursestudenttracks", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "student_id"
+    t.integer "track_id"
     t.integer "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["id"], name: "index_coursestudenttracks_on_id"
   end
 
   create_table "cvs", force: :cascade do |t|
@@ -192,6 +193,13 @@ ActiveRecord::Schema.define(version: 2018_06_09_132009) do
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "staffcourses", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "admin_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

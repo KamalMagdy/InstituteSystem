@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :staffcourses
   get 'events/index'
   resources :messages
   get 'message' , to: 'messages#index'

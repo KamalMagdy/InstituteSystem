@@ -50,4 +50,6 @@
 
 <%= render template: "events/index" %>
 
+<% if current_admin_user==nil %>
 <%= link_to 'New Post', new_post_path %>
+<% end %>

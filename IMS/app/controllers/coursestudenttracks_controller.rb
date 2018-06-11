@@ -1,8 +1,8 @@
 class CoursestudenttracksController < InheritedResources::Base
   before_action :authenticate_admin_user!, only: [:index, :new]
   before_action :authenticate_student!, only: [:show]
-
   skip_before_action :verify_authenticity_token
+
   def new  
     @coursestudenttrack = Coursestudenttrack.new    
   end 
@@ -41,6 +41,7 @@ class CoursestudenttracksController < InheritedResources::Base
       if(params[:grade]["#{@counter}"]=="0")
       else
         @desiredrecord = Coursestudenttrack.find(@grades[0]["id"])
+        # @desiredrecord = Coursestudenttrack.find([@grades[0]["course_id"], @grades[0]["student_id"], @grades[0]["track_id"]])
         @desiredrecord.grade = params[:grade]["#{@counter}"]
         @desiredrecord.save!
       end
@@ -87,7 +88,8 @@ class CoursestudenttracksController < InheritedResources::Base
         coursestudenttrack.save!
         redirect_to :action => :index
       else
-        redirect_to :action => :new
+        flash[:notice] = "You have entered a grade for this student before, you can edit it now"
+        redirect_to :action => :index
       end
     end
   end

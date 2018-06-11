@@ -113,6 +113,8 @@ GEM
     commontator (5.1.0)
       jquery-rails
       rails (>= 5.0)
+    composite_primary_keys (6.0.5)
+      activerecord (>= 4.0.0)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
     devise (4.4.3)
@@ -341,6 +343,7 @@ DEPENDENCIES
   chromedriver-helper
   coffee-rails (~> 4.2)
   commontator (~> 5.1.0)
+  composite_primary_keys
   devise (~> 4.4, >= 4.4.3)
   figaro
   fog-google
