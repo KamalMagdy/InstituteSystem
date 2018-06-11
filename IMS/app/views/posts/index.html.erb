@@ -5,6 +5,7 @@
 <%= link_to 'All courses',"courses" %>
 <%= link_to 'upload cv',"cvs/new" %>
 <%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
+<%= link_to 'edit profile',"students/edit" %>
 <% else %>
 <% if current_admin_user.role=="Manager" %>
 <%= link_to 'Dashboard',"admin/dashboard" %>
