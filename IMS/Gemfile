@@ -9,6 +9,8 @@ gem 'devise', '~> 4.4', '>= 4.4.3'
 gem "fog-google"
 gem 'fullcalendar-rails'
 gem 'momentjs-rails'
+gem 'fasterer', '~> 0.4.1'
+gem "rubycritic", require: false
 # gem 'jquery-rails'
 #gem 'google-api-client', '~> 0.20.0'
 gem "mime-types"
