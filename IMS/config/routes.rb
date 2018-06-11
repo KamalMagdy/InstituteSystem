@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
   resources :staffcourses
   get 'events/index'
+  resources :events
   resources :messages
   get 'message' , to: 'messages#index'
 
   get 'notifications', to:'notifications#index' 
   get 'current_user' => "home#current_user"
-   
 
   resources :cvs do
     get 'company', on: :collection
@@ -56,6 +56,9 @@ get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :students, controllers: { registrations: 'students/registrations', sessions: "students/sessions" }
+  devise_for :students, controllers: { registrations: 'students/registrations' }
+  devise_scope :students do
+    get 'students/sign_in' => 'students/sessions#new'
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

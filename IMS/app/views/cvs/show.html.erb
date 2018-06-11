@@ -2,13 +2,18 @@
 
 <p>
   <strong>Path:</strong>
-  <%= @cv.path %>
+  <td><a href='<%=  @cv.path %>'><%= "cv of "+@cv.student.name  %></a></td>   
 </p>
 
 <p>
   <strong>Student:</strong>
-  <%= @cv.student_id %>
+  <%= @cv.student.name %>
 </p>
+
+<% @cvarray.each_with_index do |cv_comment, index| %>
+   <p> <%= @cvarray[index] %> </p>
+  <% end %>
+
 
 <%= link_to 'Edit', edit_cv_path(@cv) %> |
 <%= link_to 'Back', cvs_path %>

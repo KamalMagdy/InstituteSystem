@@ -22,34 +22,46 @@
 <% end %>
 <% end %>
 
- 
+<%= render template: "posts/new" %> 
 <h1>Posts</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Body</th>
-      <th>Student</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.body %></td>
-        <td><%= post.student.name %></td>
-        <td><%= link_to 'Show', post %></td>
+
+<% @posts.each do |post| %>
+  <div>
+    post body : <%= post.body %>
+    </br>
+    created by : <%= post.student.name %>
+    </br>
+
+   <% @postshow = Post.find(post.id)  %>
+    <%= link_to like_post_path(@postshow), method: :put do %>
+      Like
+      <%= @postshow.get_upvotes.size %>
+    <% end %>
+    
+    <%= link_to dislike_post_path(@postshow), method: :put do %>
+      DisLike
+      <%= @postshow.get_downvotes.size %>
+    <% end %>
+
+    <div id='tag_cloud'>
+  <% tag_cloud @postshow.tag_counts, %w{s m l} do |tag, css_class| %>
+    <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+  <% end %>
+</div>
+
+    <%= commontator_thread(@postshow) %>
+
+    <% if current_student == @postshow.student %>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
     <% end %>
-  </tbody>
-</table>
-
+  </div>
 <br>
-
+<% end %>
 <%= render template: "events/index" %>
 
 <% if current_admin_user==nil %>
 <%= link_to 'New Post', new_post_path %>
 <% end %>
+
