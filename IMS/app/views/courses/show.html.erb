@@ -42,6 +42,7 @@
       <td><%= @courseassignments_deadline[index]  %></td>
         <td><%= @courseassignments_description[index]  %></td>
         <td><%= @courseassignments_staff[index]  %></td>
+        <td><%= @courseassignments_name[index] %></td>
         <td><%= link_to upload_course_path(@courseassignments_id), method: :put do %>Upload<% end %></td>
       </tr>  
     <% end %>

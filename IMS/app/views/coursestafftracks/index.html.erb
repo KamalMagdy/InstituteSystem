@@ -1,27 +1,29 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Coursestafftracks</h1>
-
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th>Document Name</th>
+      <th>Document Type</th>
+      <th>Download Document</th>
+      <th>Course Name</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @coursestafftracks.each do |coursestafftrack| %>
-      <tr>
-      <td><%= coursestafftrack.material_name %></td>
-      <td><%= coursestafftrack.material_type %></td>
-      <td><%= link_to "Download", coursestafftrack.material_url %></td>
-        <td><%= link_to 'Edit', edit_coursestafftrack_path(coursestafftrack) %></td>
-        <td><%= link_to 'Destroy', coursestafftrack, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <% @lecture_names.each_with_index do |lecture_name, index| %>
+    <tr>
+      <td><%= @lecture_names[index] %></td>
+      <td><%= @lecture_types[index] %></td>
+      <td><%= link_to "Download", @lecture_links[index] %></td>
+      <td><%= @arrayofcoursenames[index] %></td>
+      <td><%= link_to 'Edit', edit_assignment_path(@lectureobject[index]) %></td>
+      <td><%= link_to 'Destroy', @lectureobject[index], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Coursestafftrack', 'tochoosetrack' %>

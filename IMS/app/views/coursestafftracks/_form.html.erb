@@ -13,26 +13,27 @@
   <h5>Courses</h5>
   <%= form.select(:course_id) do %>
     <% @arrayofcoursenames.each_with_index do |course, index| %>
+      <% if @coursestafftrack.course_id == @arrayofcourseids[index] %>
+      <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index], selected: true) %>
+      <% else %>
       <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index]) %>
+      <% end %>
     <% end %>
   <% end %>
 
   <br/>
   <br/>
   <div class="field">
-  <%= form.hidden_field :staff_id, :value => @staffid %>
+  <%= form.hidden_field :admin_user_id, :value => current_admin_user.id %>
 </div>
 <div class="field">
   <%= form.hidden_field :track_id, :value => session[:track] %>
 </div>
 
-<div class="field">
-  <%= form.hidden_field :group_id, :value => @groupid %>
-  </div>
 <p>Material name</p>
 <br/>
   <div class="field">
-  <%= form.text_field :material_name %>
+  <%= form.text_field :material_name, required: true %>
   </div>
   <br/>
   
@@ -46,11 +47,20 @@
   <br/>
   <br/>
 
-  <%= form.label :material %>   
-  <%= form.file_field :material %>  
+  <%= form.label :material %>  
+  <% if @coursestafftrack.material.blank? %>
+<br/>
+<%= form.file_field :material, required: true  %>
+<% else %>
+Old file uploaded if you want to change it submit a new one
+<br/> 
+<a href='<%= @coursestafftrack.material %>'><%= @coursestafftrack.material %></a>
+<br/>
+<%= form.file_field :material, value: @coursestafftrack.material  %>
+<% end %> 
 
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Submit" %>
   </div>
 <% end %>
