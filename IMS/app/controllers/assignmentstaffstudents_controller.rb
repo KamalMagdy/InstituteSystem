@@ -7,21 +7,17 @@ class AssignmentstaffstudentsController < InheritedResources::Base
     @assignmentstaffstudents = []
     @arrayofcourses = Staffcourse.where(admin_user_id: current_admin_user.id)
     for @arrayofcourse in @arrayofcourses
-    @assignmentstaffstudent = Assignmentstaffstudent.where(course_id: @arrayofcourse.id)
-    # @assignmentstaffstudent = ActiveRecord::Base.connection.exec_query("select * from assignmentstaffstudents where course_id=#{@arrayofcourse.id}")
-    puts @assignmentstaffstudent[0]
-    if(@assignmentstaffstudent[0] == nil)
-    else
-    @assignmentstaffstudents.push(@assignmentstaffstudent[0])
+    @assignmentstaffstudent = Assignmentstaffstudent.where(course_id: @arrayofcourse.course_id)
+    for @assignmentstaffstudentt in @assignmentstaffstudent
+    @assignmentstaffstudents.push(@assignmentstaffstudentt)
     end
     end
     @trackarray=[]
-    # sajhdajuhd
-    @assignmentstaffstudents.each_with_index do |assignmentss, index|  
-      puts @assignmentstaffstudents[index]
-        @coursestracks = CoursesTrack.where(course_id: @assignmentstaffstudent[0]["course_id"])
-        @trackname = Track.where(id: @coursestracks[0]["track_id"])
-        @trackarray.push(@trackname[0]["name"])
+    @assignmentstaffstudents.each_with_index do |assignmentss, index| 
+      puts @assignmentstaffstudents[index]["course_id"]
+      @coursestracks = CoursesTrack.where(course_id: @assignmentstaffstudents[index]["course_id"])
+      @trackname = Track.where(id: @coursestracks[0]["track_id"])
+      @trackarray.push(@trackname[0]["name"])
     end
   end
 
@@ -39,9 +35,6 @@ class AssignmentstaffstudentsController < InheritedResources::Base
     @assignmentstaffstudent = Assignmentstaffstudent.find(params[:id])
   end 
   def submitcodereview
-    puts "ana get fn l submit"
-    puts params[:codeReview]
-    puts params[:id]
     @assignments = Assignmentstaffstudent.find(params[:id])
     @assignments.codeReview = params[:codeReview]
     @assignments.save!

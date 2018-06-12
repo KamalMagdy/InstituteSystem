@@ -1,0 +1,18 @@
+<h4>List all courses and instructors</h4>
+<table>
+  <thead>
+    <tr>
+      <th>Course Name</th>
+      <th>Instructor Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% @coursenames.each_with_index do |course_name, index| %>
+    <tr>
+      <td><%= @coursenames[index] %></td>
+      <td><%= @instructornames[index] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

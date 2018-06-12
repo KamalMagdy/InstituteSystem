@@ -15,19 +15,20 @@
 <h5> Uploaded assignment: </h5>
       <% if @assignmentstaffstudent.file_url==nil %>
       <p></p>
+      <a href='<%=  @assignmentstaffstudent.derlivered_assignment %>'><%=  @assignmentstaffstudent.derlivered_assignment %></a>
       <% else %>
       <%= link_to "Download", @assignmentstaffstudent.file_url %>
+      <a href='<%=  @assignmentstaffstudent.derlivered_assignment %>'><%=  @assignmentstaffstudent.derlivered_assignment %></a>
       <% end %>
       <br/>
       <br/>
-      <% if @assignmentstaffstudent.codeReview==nil %>
       <form accept-charset="UTF-8" action="<%=  @assignmentstaffstudent.id %>/submitcodereview" method="post">
+      <% if @assignmentstaffstudent.codeReview==nil %>
       <textarea name="codeReview" rows="4" cols="50"> </textarea>
       <% else %>
       <textarea name="codeReview" rows="4" cols="50"> <%= @assignmentstaffstudent.codeReview %> </textarea>
       <% end %>
-
-<input type=submit value=Review />
-</form>
+      <input type=submit value=Review />
+      </form>
 <% end %>
 

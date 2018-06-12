@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   end
 end
 get 'tags/:tag', to: 'posts#index', as: :tag
+get "allcourses" => 'courses#allcourses'
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

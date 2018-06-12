@@ -12,22 +12,14 @@
   <% end %>
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name , required: true %>
   </div>
-  <br/>
-  <br/>
-  Track
-  <br/>
-  <br/>
-  <%= form.simple_fields_for(:track) do |entity_form| %>
-    <%= entity_form.collection_select :track_id, Track.all, :id, :name %>
-  <% end %>
   <br/>
   <br/>
   Instructors
   <br/>
   <br/>
-  <select name="admin_user_id">
+  <select required name="admin_user_id" >
   <% @arrayofinstructornames.each_with_index do |instructor, index| %>
       <option value="<%= @arrayofinstructorids[index] %>"><%= @arrayofinstructornames[index] %></option>
       <% end %>

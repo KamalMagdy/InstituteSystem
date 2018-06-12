@@ -14,15 +14,20 @@
 <%= link_to 'See the grades of the students',"coursestudenttracks" %> 
 <%= link_to 'Add a new grade for a student',"coursestudenttracks/new" %>
 <%= link_to 'Add a new course',"courses/new" %>
+<%= link_to 'All courses',"courses/allcourses" %>
 <% end %>
 <% if current_admin_user.role=="Instructor" %>
 <%= link_to 'see all assignments',"assignments" %>
 <%= link_to 'Upload new assignment',"totrack" %>
 <%= link_to 'see all uploaded assignments',"assignmentstaffstudents" %>
+<%= link_to 'Upload new Lecture',"tochoosetrack" %>
+<%= link_to 'see all uploaded Lectures',"coursestafftracks" %>
 <% end %>
 <% end %>
 
+<% if current_admin_user==nil %>
 <%= render template: "posts/new" %> 
+<% end %>
 <h1>Posts</h1>
 
 
@@ -61,7 +66,5 @@
 <% end %>
 <%= render template: "events/index" %>
 
-<% if current_admin_user==nil %>
-<%= link_to 'New Post', new_post_path %>
-<% end %>
+
 

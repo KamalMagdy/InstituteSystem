@@ -1,32 +1,38 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Assignmentstaffstudents</h1>
+<h1>Uploaded Assignments</h1>
 
 <table>
   <thead>
     <tr>
-      <th colspan="3"></th>
+      <th >Student Name</th>
+      <th >Uploaded assignment (File)</th>
+      <th >Uploaded assignment (Link)</th>
+      <th >Course Name</th>
+      <th >Track Name</th>
+      <th >Delivered Time</th>
+      <th >Actions</th>
     </tr>
   </thead>
 
   <tbody>
   <% @assignmentstaffstudents.each_with_index do |assignmentstaffstudent,index| %>
       <tr>
-      <td><%=  assignmentstaffstudent.student.name %></td>
-      <td><%= assignmentstaffstudent.assignment.name %></td>
-      <% if assignmentstaffstudent.file_url==nil %>
+      <% @assignmentstaffstudentt = Assignmentstaffstudent.find(@assignmentstaffstudents[index]["id"]) %>
+      <td><%= @assignmentstaffstudentt.student.name %></td>
+      <% if @assignmentstaffstudentt.file_url==nil %>
       <td> </td>
       <% else %>
-      <td><%= link_to "Download", assignmentstaffstudent.file_url %></td>
+      <td><%= link_to "Download", @assignmentstaffstudentt.file_url %></td>
       <% end %>
-      <td><%= assignmentstaffstudent.course.name %></td>
+      <td><a href='<%=  @assignmentstaffstudentt.derlivered_assignment %>'><%=  @assignmentstaffstudentt.derlivered_assignment %></a></td>   
+      <td><%= @assignmentstaffstudentt.course.name %></td>
       <td><%= @trackarray[index] %></td>
-      <td><a href='<%=  assignmentstaffstudent.derlivered_assignment %>'><%=  assignmentstaffstudent.derlivered_assignment %></a></td>   
-      <td><%= assignmentstaffstudent.created_at %></td>
-      <% if assignmentstaffstudent.codeReview==nil %> 
-      <td><%= link_to 'Review', assignmentstaffstudent %></td>
+      <td><%= @assignmentstaffstudentt.created_at %></td>
+      <% if @assignmentstaffstudentt.codeReview==nil %> 
+      <td><%= link_to 'Review', @assignmentstaffstudentt %></td>
       <% else %>
-      <td><%= link_to 'Reviewied', assignmentstaffstudent %></td>
+      <td><%= link_to 'Reviewied', @assignmentstaffstudentt %></td>
       <% end %>
       </tr>
       <% end %>
@@ -35,4 +41,3 @@
 
 <br>
 
-<%= link_to 'New Assignmentstaffstudent', new_assignmentstaffstudent_path %>
