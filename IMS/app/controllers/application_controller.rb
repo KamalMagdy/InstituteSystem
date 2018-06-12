@@ -7,11 +7,6 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit :account_update, keys: added_attrs
     end
 
-   	def after_sign_in_path_for(resource)
-      if current_admin_user.role=="Instructor"
-	    redirect '/home'
-  	  end
-    end
     def current_ability
       @current_ability ||= Ability.new(current_student)
     end
