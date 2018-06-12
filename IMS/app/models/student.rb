@@ -23,7 +23,7 @@ class Student < ActiveRecord::Base
   	# devise :database_authenticatable, :registerable,
    #       :recoverable, :rememberable, :trackable, :validatable
     
-    devise :database_authenticatable,
+    devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :trackable, :validatable
 
     def after_confirmation

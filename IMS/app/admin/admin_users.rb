@@ -1,7 +1,6 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :password, :password_confirmation, :role, :rolesupervisorcancreate, :social_no , :name,  track_ids: []
 
-  
   controller do 
     def create
       super

@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resources :staffcourses
+  devise_scope :student do
+     get "/" => "students/sessions#new" 
+    end
   get 'events/index'
   resources :events
   resources :messages
@@ -57,9 +60,18 @@ get "allcourses" => 'courses#allcourses'
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :students, controllers: { registrations: 'students/registrations' }
+  devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
   end
+class ActiveAdmin::Devise::SessionsController
+   	def after_sign_in_path_for(resource)
+    if current_admin_user.Instructor?
+        '/home'
+    else 
+        '/admin/dashboard'
+  	end
+    end
+end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

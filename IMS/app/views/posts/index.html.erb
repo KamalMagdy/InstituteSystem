@@ -5,6 +5,8 @@
 <%= link_to 'All courses',"courses" %>
 <%= link_to 'upload cv',"cvs/new" %>
 <%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
+<%= link_to 'edit profile',"students/edit" %>
+<%= link_to 'Logout', destroy_student_session_path, method: :get %>
 <% else %>
 <% if current_admin_user.role=="Manager" %>
 <%= link_to 'Dashboard',"admin/dashboard" %>
@@ -65,6 +67,12 @@
 <br>
 <% end %>
 <%= render template: "events/index" %>
+
+<iframe
+    width="350"
+    height="430"
+    src="https://console.dialogflow.com/api-client/demo/embedded/3d819ddd-e80a-4472-9e2c-aca88941f635">
+</iframe>
 
 
 
