@@ -51,6 +51,9 @@ Rails.application.routes.draw do
     put "dislike", to: "posts#downvote"
   end
 end
+
+match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
+
 get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config

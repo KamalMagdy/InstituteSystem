@@ -21,8 +21,9 @@
 <%= link_to 'see all uploaded assignments',"assignmentstaffstudents" %>
 <% end %>
 <% end %>
-
+<% if current_admin_user==nil %>
 <%= render template: "posts/new" %> 
+<% end %>
 <h1>Posts</h1>
 
 
@@ -51,7 +52,19 @@
 </div>
 
     <%= commontator_thread(@postshow) %>
+    <% @posts_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{post.id} and resource_type='Post'") %>
+    <% for @post_comment in @posts_comments %>
+    <% @user_admin= ActiveRecord::Base.connection.exec_query("select name from admin_users where id=#{@post_comment['author_id']}") %>
+    <p><%= @user_admin[0]['name'] %>:::
+       <%= @post_comment['body'] %></p> 
 
+   <% end %>
+
+   <% if current_admin_user!=nil %>
+   <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
+   <% end %>
+
+   
     <% if current_student == @postshow.student %>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>

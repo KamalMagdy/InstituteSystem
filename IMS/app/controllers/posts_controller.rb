@@ -75,6 +75,7 @@ end
     end
   end
 
+  
   protected
   def post_params
     params.require(:post).permit(:body, :student_id,:tag_list)
