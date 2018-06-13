@@ -29,6 +29,28 @@ class CvsController < InheritedResources::Base
     @cvs = Cv.all
   end
 
+  def create
+    if Cv.exists?(student_id: current_student.id)
+      @cvdata = Cv.new(cv_params)
+      @file_name = @cvdata.path.file.filename
+      @cv = Cv.find(current_student.id)
+     @update_cv = ActiveRecord::Base.connection.exec_query("UPDATE cvs SET path='#{@file_name}' WHERE student_id =#{current_student.id} ")
+     format.html { redirect_to @cv, notice: 'Cv was successfully updated.' }
+     format.json { render :show, status: :ok, location: @cv }
+    else
+      @cv = Cv.new(cv_params)
+    respond_to do |format|
+      if @cv.save
+        format.html { redirect_to @cv, notice: 'Cv was successfully created.' }
+        format.json { render :show, status: :created, location: @cv }
+      else
+        format.html { render :new }
+        format.json { render json: @cv.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  end
+
   private
 
     def cv_params

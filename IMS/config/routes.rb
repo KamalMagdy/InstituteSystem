@@ -66,6 +66,7 @@ get "allcourses" => 'courses#allcourses'
   devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
+    get 'students/sign_up' => 'errors/error404'
   end
 class ActiveAdmin::Devise::SessionsController
    	def after_sign_in_path_for(resource)

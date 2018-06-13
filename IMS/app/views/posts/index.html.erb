@@ -41,12 +41,17 @@
     </br>
 
    <% @postshow = Post.find(post.id)  %>
+
+   <% if current_admin_user==nil %> 
     <%= link_to like_post_path(@postshow), method: :put do %>
+   <% end %>
+   
       Like
       <%= @postshow.get_upvotes.size %>
     <% end %>
-    
+    <% if current_admin_user==nil %> 
     <%= link_to dislike_post_path(@postshow), method: :put do %>
+    <% end %>
       DisLike
       <%= @postshow.get_downvotes.size %>
     <% end %>
