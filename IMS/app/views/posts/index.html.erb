@@ -10,12 +10,14 @@
 <% else %>
 <% if current_admin_user.role=="Manager" %>
 <%= link_to 'Dashboard',"admin/dashboard" %>
+<%= link_to 'New Event',"events/new" %>
 <% end %>
 <% if current_admin_user.role=="Supervisor" %>
 <%= link_to 'Dashboard',"admin/dashboard" %>
 <%= link_to 'See the grades of the students',"coursestudenttracks" %> 
 <%= link_to 'Add a new grade for a student',"coursestudenttracks/new" %>
 <%= link_to 'Add a new course',"courses/new" %>
+<%= link_to 'New Event',"events/new" %>
 <% end %>
 <% if current_admin_user.role=="Instructor" %>
 <%= link_to 'see all assignments',"assignments" %>

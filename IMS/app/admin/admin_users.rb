@@ -7,6 +7,7 @@ ActiveAdmin.register AdminUser do
     end
   end
 
+
     after_create do |user|
       @trackid=  params[:admin_user][:track_ids]
       @staff = ActiveRecord::Base.connection.exec_query("insert into staffs (admin_user_id, track_id, created_at, updated_at) values ('#{@admin_user.id}', #{@trackid}, '#{@admin_user.created_at}', '#{@admin_user.updated_at}')")
