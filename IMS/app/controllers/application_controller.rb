@@ -12,5 +12,13 @@ end
     def current_ability
       @current_ability ||= Ability.new(current_student)
     end
+
+    def render_404
+      render file: "#{Rails.root}/public/404", status: :not_found
+  end
+  
+    def not_found
+      raise ActionController::RoutingError.new('Not Found')
+    end
       
   end

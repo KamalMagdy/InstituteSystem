@@ -11,8 +11,14 @@
 </p>
 
 <% @cvarray.each_with_index do |cv_comment, index| %>
-   <p> <%= @cvarray[index] %> </p>
+   <% @adminarray.each_with_index do |cv_comment, index| %>
+   <% @user_admin= ActiveRecord::Base.connection.exec_query("select name from admin_users where id=#{@adminarray[index]}") %>
+   <p> <%= @user_admin[0]['name'] %> : 
+     <%= @cvarray[index] %> </p>
+    <% end %>
   <% end %>
+
+
 
 
 <%= link_to 'Edit', edit_cv_path(@cv) %> |

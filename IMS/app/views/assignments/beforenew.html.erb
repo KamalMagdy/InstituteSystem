@@ -1,10 +1,11 @@
 <strong> choose track </strong>
-<form accept-charset="UTF-8" action="assignments/1/beforenew" method="post">
+<form accept-charset="UTF-8" action="assignments/1/beforenew" method="post"> 
 <select name="track_id">
-<% Track.all.each_with_index do |track, index| %>
-    <option value="<%= track.id %>"><%= track.name %></option>
-    <% end %>
-</select>
+  <% @arrayoftracks.each_with_index do |instructor, index| %>
+      <option value="<%= @arrayoftracks[index] %>"><%= @arrayoftracksnames[index] %></option>
+      <% end %>
+  </select>
+
 <br/>
 <br/>
 <input type=submit value=Next />

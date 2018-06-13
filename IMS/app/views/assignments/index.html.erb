@@ -6,21 +6,23 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Download Assignment</th>
       <th>Deadline</th>
       <th>Course</th>
-      <th colspan="3"></th>
+      <th>Actions</th>
     </tr>
   </thead>
 
   <tbody>
-    <% @assignments.each_with_index do |assignment, index| %>
+
+    <% @assignames.each_with_index do |assignment, index| %>
       <tr>
-        <td><%= assignment.name %></td>
-        <td><%= assignment.deadline %></td>
+        <td><%= @assignames[index] %></td>
+        <td><%= @assigdeadlines[index] %></td>
+        <td><%= link_to 'Download', @assignmentlink[index] %></td>
         <td><%= @arrayofcoursenames[index] %></td>
-        <td><%= link_to 'Show', assignment %></td>
-        <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
-        <td><%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_assignment_path(@assignmentobject[index]) %></td>
+        <td><%= link_to 'Destroy', @assignmentobject[index], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +30,3 @@
 
 <br>
 
-<%= link_to 'New Assignment', 'totrack' %>
