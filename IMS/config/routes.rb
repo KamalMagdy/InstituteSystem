@@ -57,6 +57,9 @@ Rails.application.routes.draw do
     put "dislike", to: "posts#downvote"
   end
 end
+
+match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
+
 get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
@@ -64,6 +67,7 @@ get 'tags/:tag', to: 'posts#index', as: :tag
   devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
+    get 'students/sign_up' => 'errors/error404'
   end
 class ActiveAdmin::Devise::SessionsController
    	def after_sign_in_path_for(resource)

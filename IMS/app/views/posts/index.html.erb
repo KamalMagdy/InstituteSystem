@@ -11,6 +11,7 @@
 <% else %>
 <% if current_admin_user.role=="Manager" %>
 <%= link_to 'Dashboard',"admin/dashboard" %>
+<%= link_to 'New Event',"events/new" %>
 <% end %>
 <% if current_admin_user.role=="Supervisor" %>
 <%= link_to 'Dashboard',"admin/dashboard" %>
@@ -19,6 +20,7 @@
 <%= link_to 'Add a new course',"courses/new" %>
 <%= link_to 'All courses',"courses/1/allcourses" %>
 <%= link_to 'Upload Timetable', "timetables/new"%>
+<%= link_to 'New Event',"events/new" %>
 <% end %>
 <% if current_admin_user.role=="Instructor" %>
 <%= link_to 'see all assignments',"assignments" %>
@@ -43,12 +45,17 @@
     </br>
 
    <% @postshow = Post.find(post.id)  %>
+
+   <% if current_admin_user==nil %> 
     <%= link_to like_post_path(@postshow), method: :put do %>
+   <% end %>
+   
       Like
       <%= @postshow.get_upvotes.size %>
     <% end %>
-    
+    <% if current_admin_user==nil %> 
     <%= link_to dislike_post_path(@postshow), method: :put do %>
+    <% end %>
       DisLike
       <%= @postshow.get_downvotes.size %>
     <% end %>
@@ -60,7 +67,19 @@
 </div>
 
     <%= commontator_thread(@postshow) %>
+    <% @posts_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{post.id} and resource_type='Post'") %>
+    <% for @post_comment in @posts_comments %>
+    <% @user_admin= ActiveRecord::Base.connection.exec_query("select name from admin_users where id=#{@post_comment['author_id']}") %>
+    <p><%= @user_admin[0]['name'] %>:::
+       <%= @post_comment['body'] %></p> 
 
+   <% end %>
+
+   <% if current_admin_user!=nil %>
+   <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
+   <% end %>
+
+   
     <% if current_student == @postshow.student %>
         <td><%= link_to 'Edit', edit_post_path(post) %></td>
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>

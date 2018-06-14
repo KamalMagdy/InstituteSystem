@@ -5,7 +5,7 @@ class PostsController < InheritedResources::Base
     @post.upvote_by current_student
     @posts = Post.all
     @events = Event.all
-    render action: "index"
+    redirect_to :controller => 'posts', :action => 'index'
   end 
 
   def downvote
@@ -13,7 +13,7 @@ class PostsController < InheritedResources::Base
     @post.downvote_by current_student
     @posts = Post.all
     @events = Event.all
-    render action: "index"
+    redirect_to :controller => 'posts', :action => 'index'
   end
 
   def index 
@@ -75,6 +75,7 @@ end
     end
   end
 
+  
   protected
   def post_params
     params.require(:post).permit(:body, :student_id,:tag_list)
