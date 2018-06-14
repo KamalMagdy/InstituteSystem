@@ -19,10 +19,14 @@
   Instructors
   <br/>
   <br/>
-  <select required name="admin_user_id" >
-  <% @arrayofinstructornames.each_with_index do |instructor, index| %>
-      <option value="<%= @arrayofinstructorids[index] %>"><%= @arrayofinstructornames[index] %></option>
+  <select name="admin_user_id" > 
+    <% @arrayofinstructornames.each_with_index do |instructor, index| %>
+      <% if @arrayofinstructorids[index] == @instructorid %>
+      <%= content_tag(:option, @arrayofinstructornames[index], value: @arrayofinstructorids[index], selected: true) %>
+      <% else %>
+      <%= content_tag(:option, @arrayofinstructornames[index], value: @arrayofinstructorids[index]) %>
       <% end %>
+    <% end %>
   </select>
 
   <div class="actions">

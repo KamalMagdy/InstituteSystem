@@ -6,6 +6,7 @@
 <%= link_to 'upload cv',"cvs/new" %>
 <%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
 <%= link_to 'edit profile',"students/edit" %>
+<%= link_to 'Download Current TimeTable',"timetables" %>
 <%= link_to 'Logout', destroy_student_session_path, method: :get %>
 <% else %>
 <% if current_admin_user.role=="Manager" %>
@@ -16,7 +17,8 @@
 <%= link_to 'See the grades of the students',"coursestudenttracks" %> 
 <%= link_to 'Add a new grade for a student',"coursestudenttracks/new" %>
 <%= link_to 'Add a new course',"courses/new" %>
-<%= link_to 'All courses',"courses/allcourses" %>
+<%= link_to 'All courses',"courses/1/allcourses" %>
+<%= link_to 'Upload Timetable', "timetables/new"%>
 <% end %>
 <% if current_admin_user.role=="Instructor" %>
 <%= link_to 'see all assignments',"assignments" %>

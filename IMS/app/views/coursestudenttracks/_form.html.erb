@@ -31,7 +31,7 @@
 
 <div class="field">
   <%= form.label :grade %>   
-  <%= form.number_field :grade , required: true %>
+  <%= form.number_field :grade , required: true, min: 0 %>
   </div>
 
   <div class="actions">

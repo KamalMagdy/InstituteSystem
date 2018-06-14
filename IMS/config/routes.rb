@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :timetables
   resources :staffcourses
   devise_scope :student do
      get "/" => "students/sessions#new" 
@@ -38,6 +39,7 @@ Rails.application.routes.draw do
     member do
       put "upload", to: "assignmentstaffstudents#new"
       get "grades", to:"coursestudenttracks#show"
+      get "allcourses", to: "courses#allcourses"
     end 
   end
   resources :assignments do
@@ -56,7 +58,6 @@ Rails.application.routes.draw do
   end
 end
 get 'tags/:tag', to: 'posts#index', as: :tag
-get "allcourses" => 'courses#allcourses'
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

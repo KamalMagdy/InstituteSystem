@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  before_action :authenticate_admin_user|authenticate_student!
   def index
     session[:conversations] ||= []
 
