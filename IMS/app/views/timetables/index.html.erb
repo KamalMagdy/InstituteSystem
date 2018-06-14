@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Created at</th>
+      <th>Link of Timetable</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <tr>
+        <td><%= @timetable.created_at %></td>
+        <td><%= link_to "Download Timetable", @timetable.timetable_link_url %></td>
+      </tr>
+  </tbody>
+</table>
+
+<br>
+

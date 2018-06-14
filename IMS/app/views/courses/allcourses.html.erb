@@ -4,6 +4,7 @@
     <tr>
       <th>Course Name</th>
       <th>Instructor Name</th>
+      <th>Actions</th>
     </tr>
   </thead>
 
@@ -12,6 +13,8 @@
     <tr>
       <td><%= @coursenames[index] %></td>
       <td><%= @instructornames[index] %></td>
+      <td><%= link_to 'Edit', edit_course_path(@courseobjects[index]) %></td>
+      <td><%= link_to 'Destroy', @courseobjects[index], method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
   </tbody>

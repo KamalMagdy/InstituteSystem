@@ -68,6 +68,7 @@ class CoursestudenttracksController < InheritedResources::Base
     redirect_to :action => :index
   end
   def index
+    @coursestudenttrackk = Coursestudenttrack.all
     @trackid =  Staff.where(admin_user_id: current_admin_user.id)
     @coursenames=[]
     @studentnames=[]

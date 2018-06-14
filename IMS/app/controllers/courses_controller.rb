@@ -16,14 +16,17 @@ class CoursesController < InheritedResources::Base
 
   def allcourses
     @coursenames=[]
+    @courseobjects=[]
     @instructornames=[]
-    @track = ActiveRecord::Base.connection.exec_query("select track_id from lists where student_id=#{current_student.id}")
+    @track = ActiveRecord::Base.connection.exec_query("select track_id from staffs where admin_user_id=#{current_admin_user.id}")
     @courses = CoursesTrack.where(track_id: @track[0]["track_id"])
     for @course in @courses
       @name = Course.where(id: @course.course_id)
       @coursenames.push("#{@name[0]['name']}")
+      @courseobjects.push(@name[0])
       @instructorname = Staffcourse.where(course_id: @course.course_id)
-      @instructornames.push("#{@instructorname[0]['admin_user_id']}")
+      @instructorname = AdminUser.find(@instructorname[0]['admin_user_id'])
+      @instructornames.push("#{@instructorname.name}")
     end
   end
 
@@ -72,7 +75,6 @@ class CoursesController < InheritedResources::Base
     end
   end
   def create
-
     course = Course.new
     course.name = params[:course][:name] 
     existcourse = Course.where(name: course.name)
@@ -97,6 +99,30 @@ class CoursesController < InheritedResources::Base
       @arrayofinstructornames.push(@arrayodinstructor['name'])
       @arrayofinstructorids.push(@arrayodinstructor['id'])
     end
+  end
+  
+  def edit
+    @course = Course.find(params[:id])
+    session[:course] = params[:id]
+    @arrayofinstructornames=[]
+    @arrayofinstructorids=[]
+    @instructorid = Staffcourse.where(course_id: params[:id])
+    @instructorid = @instructorid[0]["admin_user_id"]
+    @arrayofinstructors = ActiveRecord::Base.connection.exec_query("select * from admin_users where role='Instructor' ")
+    for @arrayodinstructor in @arrayofinstructors
+      @arrayofinstructornames.push(@arrayodinstructor['name'])
+      @arrayofinstructorids.push(@arrayodinstructor['id'])
+    end
+  end
+  def update
+    course = Course.find(session[:course])
+    course.name = params[:course][:name]
+    course.save!
+    existcoursefortheinstructor = Staffcourse.where(course_id: session[:course])
+    updateinst = Staffcourse.find(existcoursefortheinstructor[0]["id"])
+    updateinst.admin_user_id = params[:admin_user_id]
+    updateinst.save! 
+    redirect_to posts_path
   end
 
   private

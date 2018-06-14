@@ -6,6 +6,7 @@ class AssignmentsController < InheritedResources::Base
     session[:track]= params[:track_id]
     redirect_to :action => :new
   end
+
   def index 
     @arrayofcoursenames=[]
     @assignames=[]
@@ -27,6 +28,7 @@ class AssignmentsController < InheritedResources::Base
       end
     end
   end
+  
   def new
     @assignment = Assignment.new
     @arrayofcourseids=[]

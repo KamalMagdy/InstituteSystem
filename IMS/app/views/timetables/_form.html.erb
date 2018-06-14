@@ -1,0 +1,22 @@
+<%= form_with(model: timetable, local: true) do |form| %>
+  <% if timetable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(timetable.errors.count, "error") %> prohibited this timetable from being saved:</h2>
+
+      <ul>
+      <% timetable.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+  <%= form.hidden_field :track_id, :value => @trackid[0]["track_id"] %>
+</div>
+<%= form.label :timetable_link %> 
+<%= form.file_field :timetable_link, required: true  %>
+
+  <div class="actions">
+    <%= form.submit "Upload TimeTable"%>
+  </div>
+<% end %>

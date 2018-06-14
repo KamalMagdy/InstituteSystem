@@ -21,6 +21,8 @@
 //= require jquery3
 //= require popper 
 //= require bootstrap 
+//= require highcharts
+//= require chartkick
 $('#calendar').fullCalendar({});
 
 
