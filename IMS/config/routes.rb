@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :staffcourses
   devise_scope :student do
      get "/" => "students/sessions#new" 
-    end
+  end
   get 'events/index'
   resources :events
   resources :messages
