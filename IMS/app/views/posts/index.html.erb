@@ -1,7 +1,7 @@
 
 <p>sidebar</p>
-<% if current_admin_user==nil %>
 <%= link_to 'Home',"home" %>
+<% if current_admin_user==nil %>
 <%= link_to 'All courses',"courses" %>
 <%= link_to 'upload cv',"cvs/new" %>
 <%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
@@ -28,6 +28,7 @@
 <%= link_to 'see all uploaded assignments',"assignmentstaffstudents" %>
 <%= link_to 'Upload new Lecture',"tochoosetrack" %>
 <%= link_to 'see all uploaded Lectures',"coursestafftracks" %>
+<%= link_to 'Logout', destroy_student_session_path, method: :get %>
 <% end %>
 <% end %>
 

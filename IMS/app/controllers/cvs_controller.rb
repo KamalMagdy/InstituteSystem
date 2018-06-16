@@ -1,5 +1,5 @@
 class CvsController < InheritedResources::Base
-  before_action :authenticate_admin_user| authenticate_student!, only: [:index]
+  #before_action :authenticate_admin_user| authenticate_student!, only: [:index]
   before_action :authenticate_student!, only: [:new, :edit]
 
   def company
