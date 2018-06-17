@@ -15,6 +15,9 @@
 //= require turbolinks
 //= require_tree .
 //= require commontator/application
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
 //= require moment 
 //= require fullcalendar
 //= require fullcalendar/gcal

@@ -12,12 +12,11 @@ gem 'momentjs-rails'
 gem 'fasterer', '~> 0.4.1'
 gem "rubycritic", require: false
 gem 'api-ai-ruby'
-# group :development do
-# end
 gem "chartkick"
 gem "mime-types"
 gem "cancan"
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
+gem 'jquery-rails'
 
 gem 'pusher'
 gem 'figaro'

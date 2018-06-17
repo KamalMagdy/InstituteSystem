@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit :account_update, keys: added_attrs
     end
 def authenticate_admin_user!
-  super
-  raise SecurityError if current_admin_user.try(:Instructor)
+super
+ raise SecurityError if current_admin_user.try(:Instructor)
 end
     def current_ability
       @current_ability ||= Ability.new(current_student)
