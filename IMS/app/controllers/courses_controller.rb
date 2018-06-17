@@ -88,8 +88,20 @@ class CoursesController < InheritedResources::Base
         course.save!
         @trackid =  Staff.where(admin_user_id: current_admin_user.id)
         @instid = params[:admin_user_id]
-        @list = ActiveRecord::Base.connection.exec_query("insert into courses_tracks (course_id, track_id, created_at, updated_at) values ('#{course.id}', #{@trackid[0]["track_id"]}, '#{course.created_at}', '#{course.updated_at}')")
-        @coursestaff = ActiveRecord::Base.connection.exec_query("insert into staffcourses (course_id, admin_user_id, created_at, updated_at) values ('#{course.id}', #{@instid}, '#{course.created_at}', '#{course.updated_at}')")
+        @list = CoursesTrack.new
+        @list.course_id = course.id
+        @list.track_id = @trackid[0]["track_id"]
+        @list.created_at = course.created_at
+        @list.updated_at = course.updated_at 
+        @list.save!
+        @coursestaff = Staffcourse.new
+        @coursestaff.course_id = course.id
+        @coursestaff.admin_user_id = @instid
+        @coursestaff.created_at = course.created_at
+        @coursestaff.updated_at = course.updated_at
+        @coursestaff.save!
+        # @list = ActiveRecord::Base.connection.exec_query("insert into courses_tracks (course_id, track_id, created_at, updated_at) values ('#{course.id}', #{@trackid[0]["track_id"]}, '#{course.created_at}', '#{course.updated_at}')")
+        # @coursestaff = ActiveRecord::Base.connection.exec_query("insert into staffcourses (course_id, admin_user_id, created_at, updated_at) values ('#{course.id}', #{@instid}, '#{course.created_at}', '#{course.updated_at}')")
         redirect_to posts_path
       else
         flash[:notice] = "The course name must be unique"
