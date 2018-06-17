@@ -1,35 +1,75 @@
+<div class="container">
+  <div class="row my-wrapper">
+    <div class="col-sm-8">
+     <div class="my-inputs">
+      <form>
+          <div class="form-group">
+          <textarea class="form-control publish-post" rows="3" placeholder="Publish a new post.."></textarea>
+          <input type="text" class="form-control my-tags" placeholder="Enter tags">
+        </div>
+        <div class="btn-div">
+          <a class="btn btn-primary" href="#" role="button">Publish Post</a>
+        </div>
+    </form>
+     </div>
 
-<p>sidebar</p>
-<% if current_admin_user==nil %>
-<%= link_to 'Home',"home" %>
-<%= link_to 'All courses',"courses" %>
-<%= link_to 'upload cv',"cvs/new" %>
-<%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %>
-<%= link_to 'edit profile',"students/edit" %>
-<%= link_to 'Download Current TimeTable',"timetables" %>
-<%= link_to 'Logout', destroy_student_session_path, method: :get %>
-<% else %>
-<% if current_admin_user.role=="Manager" %>
-<%= link_to 'Dashboard',"admin/dashboard" %>
-<%= link_to 'New Event',"events/new" %>
-<% end %>
-<% if current_admin_user.role=="Supervisor" %>
-<%= link_to 'Dashboard',"admin/dashboard" %>
-<%= link_to 'See the grades of the students',"coursestudenttracks" %> 
-<%= link_to 'Add a new grade for a student',"coursestudenttracks/new" %>
-<%= link_to 'Add a new course',"courses/new" %>
-<%= link_to 'All courses',"courses/1/allcourses" %>
-<%= link_to 'Upload Timetable', "timetables/new"%>
-<%= link_to 'New Event',"events/new" %>
-<% end %>
-<% if current_admin_user.role=="Instructor" %>
-<%= link_to 'see all assignments',"assignments" %>
-<%= link_to 'Upload new assignment',"totrack" %>
-<%= link_to 'see all uploaded assignments',"assignmentstaffstudents" %>
-<%= link_to 'Upload new Lecture',"tochoosetrack" %>
-<%= link_to 'see all uploaded Lectures',"coursestafftracks" %>
-<% end %>
-<% end %>
+    <% @posts.each do |post| %>
+     <div class="my-post">
+      <div class="post-info">
+        <h1><%= post.student.name %></h1>
+        <div id='tag_cloud'>
+      <% tag_cloud Post.tag_counts, %w{s m l} do |tag, css_class| %>
+        <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+      <% end %>
+    </div>
+      </div>
+      <p><%= post.body %></p>
+      <div class="post-likes">
+        <a href="#"><%=image_tag("like.png")%></a>
+        <a href="#"><%=image_tag("dislike.png")%></a>
+      </div>
+     </div>
+    </div>
+    <% end %>
+    <div class="col-sm-4">
+      <div class="feed">
+        <div class="card">
+          <div class="card-header">
+            Deadlines
+          </div>
+          <div class="card-body">
+            <% @events.each do |event| %>
+            <h5 class="card-title"><%= event.title %></h5>
+            <p class="card-text"><%= event.body %></p>
+            <% end %>
+            <% @events.each do |event| %>
+            <h5 class="card-title"><%= event.title %></h5>
+            <p class="card-text"><%= event.body %></p>
+            <% end %>
+            <% @events.each do |event| %>
+            <h5 class="card-title"><%= event.title %></h5>
+            <p class="card-text"><%= event.body %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="feed">
+        <div class="card">
+          <div class="card-header">
+            Events
+          </div>
+          <div class="card-body">
+            <% @events.each do |event| %>
+            <h5 class="card-title"><%= event.title %></h5>
+            <p class="card-text"><%= event.body %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <% if current_admin_user==nil %>
 <%= render template: "posts/new" %> 
@@ -87,13 +127,9 @@
   </div>
 <br>
 <% end %>
-<%= render template: "events/index" %>
 
 <iframe
     width="350"
     height="430"
     src="https://console.dialogflow.com/api-client/demo/embedded/3d819ddd-e80a-4472-9e2c-aca88941f635">
 </iframe>
-
-
-

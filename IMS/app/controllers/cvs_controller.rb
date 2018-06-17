@@ -14,7 +14,6 @@ class CvsController < InheritedResources::Base
     @cv_comments= ActiveRecord::Base.connection.exec_query("select * from cvs where student_id=#{current_student.id}")
     @cvs_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{ @cv_comments[0]['id']} and resource_type='Cv'")
     for @cv_comment in @cvs_comments 
-
     @cvarray.push( @cv_comment["body"])
     puts @cv_comment['author_id']
     @adminarray.push(@cv_comment['author_id'])
