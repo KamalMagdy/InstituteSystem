@@ -2,12 +2,12 @@ ActiveAdmin.register Student do
 
     permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :group_id,  track_ids: []
 
-
   controller do 
     def create
       super
     end
   end
+
 
     after_create do |user|
       
@@ -17,6 +17,7 @@ ActiveAdmin.register Student do
     # after_create do |user|
     #   UserNotifierMailer.welcome_email(@student).deliver_now
     # end
+
 
   index do
     selectable_column

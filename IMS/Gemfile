@@ -11,8 +11,9 @@ gem 'fullcalendar-rails'
 gem 'momentjs-rails'
 gem 'fasterer', '~> 0.4.1'
 gem "rubycritic", require: false
-# gem 'jquery-rails'
-#gem 'google-api-client', '~> 0.20.0'
+gem 'api-ai-ruby'
+
+gem "chartkick"
 gem "mime-types"
 gem "cancan"
 gem 'bootstrap', '~> 4.1', '>= 4.1.1'
@@ -20,6 +21,11 @@ gem 'jquery-rails'
 
 gem 'pusher'
 gem 'figaro'
+# gem 'composite_primary_keys', '= 11.0.0'
+# gem 'composite_primary_keys', {
+#   :git => 'git://github.com/composite-primary-keys/composite_primary_keys.git',
+#   :branch => 'ar_4.1.x'
+# }
 
 #gem 'paperclip-googledrive'
 #gem 'oauth2'

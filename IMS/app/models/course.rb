@@ -1,4 +1,5 @@
 class Course < ApplicationRecord
+    validates_uniqueness_of :name
     has_many :students, :through => :coursestudenttracks
     has_many :tracks, :through => :coursestudenttracks
 

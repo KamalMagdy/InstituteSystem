@@ -11,26 +11,30 @@
     </div>
   <% end %>
 
-<div class="field">
-  <%= form.label :track_id %>
-  <%= form.select :track_id, options_for_select(Track.all.map{|s|[s.name, s.id]}) %>
-</div>
+  <div class="field">
+  <%= form.select(:student_id) do %>
+    <% @studentnames.each_with_index do |student, index| %>
+      <%= content_tag(:option, @studentnames[index], value: @studentids[index]) %>
+    <% end %>
+  <% end %>
+  </div>
+  
 
 <div class="field">
-  <%= form.label :student_id %>
-  <%= form.select :student_id, options_for_select(Student.all.map{|st|[st.name, st.id]}) %>
+<%= form.select(:course_id) do %>
+  <% @coursenames.each_with_index do |course, index| %>
+    <%= content_tag(:option, @coursenames[index], value: @courseids[index]) %>
+  <% end %>
+<% end %>
 </div>
 
-<div class="field">
-  <%= form.label :course_id %>
-  <%= form.select :course_id, options_for_select(Course.all.map{|co|[co.name, co.id]}) %>
-</div>
+
 <div class="field">
   <%= form.label :grade %>   
-  <%= form.number_field :grade %>
+  <%= form.number_field :grade , required: true, min: 0 %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Upload Grade"%>
   </div>
 <% end %>

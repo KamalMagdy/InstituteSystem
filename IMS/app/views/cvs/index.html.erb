@@ -16,7 +16,7 @@
   <tbody>
     <% @cvs.each do |cv| %>
       <tr>
-        <td><a href='<%=  cv.path %>'><%=  cv.path %></a></td>   
+        <td><a href='<%=  cv.path %>'><%= "cv of "+cv.student.name %></a></td>   
 
         <td><%= cv.student.name %></td>
         <% if current_student == cv.student %>
@@ -29,10 +29,8 @@
 </table>
 <br>
 
-<% puts "ooooooooooooooooo" %>
-<% puts @students_arr %>
 
-<% if @students_arr.include? current_student.id %> 
+<% unless @students_arr.include? current_student.id %> 
 <%= link_to 'New Cv', new_cv_path %>
 <% end %>
 <% end %>

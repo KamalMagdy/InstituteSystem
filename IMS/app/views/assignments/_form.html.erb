@@ -19,7 +19,7 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, required: true %>
   </div>
 
   <div class="field">
@@ -31,15 +31,30 @@
 
 <%= form.select(:course_id) do %>
   <% @arrayofcoursenames.each_with_index do |course, index| %>
+    <% if @assignment.course_id == @arrayofcourseids[index] %>
+    <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index], selected: true) %>
+    <% else %>
     <%= content_tag(:option, @arrayofcoursenames[index], value: @arrayofcourseids[index]) %>
+    <% end %>
   <% end %>
 <% end %>
 
 <br/>
 <br/>
 
-<%= form.label :assignmentfile %>   
-<%= form.file_field :assignmentfile %>  
+<%= form.label :assignmentfile %>  
+<% if @assignment.assignmentfile.blank? %>
+<br/>
+<%= form.file_field :assignmentfile, required: true  %>
+<% else %>
+Old file uploaded if you want to change it submit a new one
+<br/> 
+<a href='<%= @assignment.assignmentfile %>'><%= @assignment.assignmentfile %></a>
+<br/>
+<%= form.file_field :assignmentfile, value: @assignment.assignmentfile  %>
+<% end %>
+
+  
 
   <div class="actions">
     <%= form.submit %>

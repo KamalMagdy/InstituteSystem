@@ -1,17 +1,26 @@
 class AssignmentstaffstudentsController < InheritedResources::Base
-  # before_action :authenticate_admin_user!, only: [:index]
+  before_action :authenticate_user!, only: [:index]
   before_action :authenticate_student!, only: [:new]
   skip_before_action :verify_authenticity_token
 
   def index
-    @assignmentstaffstudents = Assignmentstaffstudent.all
+    @assignmentstaffstudents = []
+    @arrayofcourses = Staffcourse.where(admin_user_id: current_admin_user.id)
+    for @arrayofcourse in @arrayofcourses
+    @assignmentstaffstudent = Assignmentstaffstudent.where(course_id: @arrayofcourse.course_id)
+    for @assignmentstaffstudentt in @assignmentstaffstudent
+    @assignmentstaffstudents.push(@assignmentstaffstudentt)
+    end
+    end
     @trackarray=[]
-    for @assignmentstaffstudent in @assignmentstaffstudents
-      @coursestracks = CoursesTrack.where(course_id: @assignmentstaffstudent["course_id"])
+    @assignmentstaffstudents.each_with_index do |assignmentss, index| 
+      puts @assignmentstaffstudents[index]["course_id"]
+      @coursestracks = CoursesTrack.where(course_id: @assignmentstaffstudents[index]["course_id"])
       @trackname = Track.where(id: @coursestracks[0]["track_id"])
       @trackarray.push(@trackname[0]["name"])
     end
   end
+
   def new  
     session[:student]=current_student
     @assignments = Assignment.find(params[:id])
@@ -24,12 +33,8 @@ class AssignmentstaffstudentsController < InheritedResources::Base
   end 
   def show 
     @assignmentstaffstudent = Assignmentstaffstudent.find(params[:id])
-    # @assignmentstaffstudent = ActiveRecord::Base.connection.exec_query("select * from assignmentstaffstudents where id=#{params[:id]}")
   end 
   def submitcodereview
-    puts "ana get fn l submit"
-    puts params[:codeReview]
-    puts params[:id]
     @assignments = Assignmentstaffstudent.find(params[:id])
     @assignments.codeReview = params[:codeReview]
     @assignments.save!

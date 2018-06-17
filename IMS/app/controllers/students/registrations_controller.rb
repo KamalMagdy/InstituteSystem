@@ -16,7 +16,8 @@ class Students::RegistrationsController < Devise::RegistrationsController
     student = @students.first
     redirect_to student
   end
-  before_action :check_captcha
+
+  #before_action :check_captcha
   private
     def check_captcha
       unless verify_recaptcha
@@ -118,5 +119,8 @@ class Students::RegistrationsController < Devise::RegistrationsController
   def user_params
     params.require(:student).permit(:name, :email, :password, :birth, :gender, :mobile, :avatar, :group_id, track_attributes:[:track_id])
   end
-
+  protected
+  def after_update_path_for(resource)
+    return '/home'
+  end
 end

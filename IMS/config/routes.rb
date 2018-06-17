@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :timetables
+  resources :staffcourses
+  devise_scope :student do
+     get "/" => "students/sessions#new" 
+  end
   get 'events/index'
   resources :events
   resources :messages
@@ -34,6 +39,7 @@ Rails.application.routes.draw do
     member do
       put "upload", to: "assignmentstaffstudents#new"
       get "grades", to:"coursestudenttracks#show"
+      get "allcourses", to: "courses#allcourses"
     end 
   end
   resources :assignments do
@@ -51,13 +57,26 @@ Rails.application.routes.draw do
     put "dislike", to: "posts#downvote"
   end
 end
+
+match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
+
 get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  devise_for :students, controllers: { registrations: 'students/registrations' }
+  devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
+    get 'students/sign_up' => 'errors/error404'
   end
+class ActiveAdmin::Devise::SessionsController
+   	def after_sign_in_path_for(resource)
+    if current_admin_user.Instructor?
+        '/home'
+    else 
+        '/admin/dashboard'
+  	end
+    end
+end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

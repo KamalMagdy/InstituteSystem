@@ -10,15 +10,24 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name , required: true %>
   </div>
   <br/>
-  <%= form.simple_fields_for(:track) do |entity_form| %>
-    <%= entity_form.collection_select :track_id, Track.all, :id, :name %>
-  <% end %>
+  <br/>
+  Instructors
+  <br/>
+  <br/>
+  <select name="admin_user_id" > 
+    <% @arrayofinstructornames.each_with_index do |instructor, index| %>
+      <% if @arrayofinstructorids[index] == @instructorid %>
+      <%= content_tag(:option, @arrayofinstructornames[index], value: @arrayofinstructorids[index], selected: true) %>
+      <% else %>
+      <%= content_tag(:option, @arrayofinstructornames[index], value: @arrayofinstructorids[index]) %>
+      <% end %>
+    <% end %>
+  </select>
 
   <div class="actions">
     <%= form.submit %>
