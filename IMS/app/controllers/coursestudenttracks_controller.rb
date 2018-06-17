@@ -116,13 +116,15 @@ class CoursestudenttracksController < InheritedResources::Base
       @gradesarray=[]
       @gradesum = 0
       for @course in @courses  
-        @grades = ActiveRecord::Base.connection.exec_query("select grade from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{@student['student_id']} and course_id=#{@course['course_id']}")
-        if (@grades.empty?)
+        @grades = Coursestudenttrack.where(track_id: @trackid[0]["track_id"], student_id: @student['student_id'], course_id: @course['course_id'])
+        # @grades = ActiveRecord::Base.connection.exec_query("select grade from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{@student['student_id']} and course_id=#{@course['course_id']}")
+        if (@grades.blank?)
           @gradesarray.push(0)
           @gradesum = @gradesum + 0
         else
-          @gradesarray.push(@grades[0]["grade"])
-          @gradesum = @gradesum + @grades[0]["grade"]
+          @grades = @grades[0]["grade"]
+          @gradesarray.push(@grades)
+          @gradesum = @gradesum + @grades
         end
       end
       @arrayfordrawingchart.push([@tempstudent.name, @gradesum])

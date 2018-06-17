@@ -5,20 +5,24 @@ ActiveAdmin.register Student do
   controller do 
     def create
       super 
-      track_id = 1
+      # track_id = 1
     end
   end
-
+     before_create do |order|
+       params[:tracks] = params[:student][:track_ids]
+     end
 
     after_create do |user|
-      if current_admin_user.role != "Supervisor"
-      @trackid=  params[:student][:track_ids]
-      else 
-        @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
-        @trackid = @tracks_data.track_id
+      unless @student.id.blank?
+        if current_admin_user.role != "Supervisor"
+        @trackid= params[:student][:track_ids]
+        else 
+          @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
+          @trackid = @tracks_data.track_id
+        end
+        UserNotifierMailer.welcome_email(@student).deliver_now
+        @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@student.id}', #{@trackid}, '#{@student.created_at}', '#{@student.updated_at}')")
       end
-
-      @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@student.id}', #{@trackid}, '#{@student.created_at}', '#{@student.updated_at}')")
     end
 
     after_update do |user|
@@ -31,9 +35,17 @@ ActiveAdmin.register Student do
 
       @list = ActiveRecord::Base.connection.exec_query("update lists set track_id = '#{@trackid}' where student_id = '#{@student.id}'")
     end
-    # after_create do |user|
-    #   UserNotifierMailer.welcome_email(@student).deliver_now
-    # end
+  controller do 
+    def destroy 
+      student = Student.find(params[:id])
+      sttrack = List.where(student_id: params[:id])
+      student.destroy!
+
+      
+      sttrack = List.find(sttrack[0]["id"])
+      sttrack.destroy!
+    end  
+  end
 
 
   index do
@@ -43,7 +55,6 @@ ActiveAdmin.register Student do
     column :email
     column :birth
     column :created_at
-    # column :cv
     actions
   end
 
@@ -66,7 +77,6 @@ ActiveAdmin.register Student do
       f.input :tracks, :as => :radio, collection => Track.all
       end
       f.input :group
-      #f.input :lists
     end
     f.actions
   end

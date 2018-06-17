@@ -17,6 +17,7 @@ ActiveAdmin.register AdminUser do
     end
   end
 
+
   controller do 
   def update  
     if(params[:admin_user][:role] == "Supervisor")
@@ -49,7 +50,6 @@ end
       if current_admin_user.role == "Supervisor"
         @role = ActiveRecord::Base.connection.exec_query("update admin_users set role = 'Instructor' where id = '#{@admin_user.id}'")
       end
-
       if (params[:admin_user][:role]=='Supervisor')
       @trackid=  params[:admin_user][:track_ids]
       @staff = ActiveRecord::Base.connection.exec_query("insert into staffs (admin_user_id, track_id, created_at, updated_at) values ('#{@admin_user.id}', #{@trackid}, '#{@admin_user.created_at}', '#{@admin_user.updated_at}')")
