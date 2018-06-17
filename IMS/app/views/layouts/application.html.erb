@@ -12,6 +12,78 @@
   </head>
 
   <body>
+  <div class="container-fluid">
+   <div class="row">
+    <div class="col-sm-2 sidebar">
+      <nav>
+      <a class="navbar-brand logo" href="#"><%=image_tag("logo.png")%></a>
+        <ul>
+        <% if current_admin_user==nil %>
+          <li><%= link_to 'Home',"home" %></li>
+          <li><%= link_to 'All courses',"courses" %></li>
+          <li><%= link_to 'upload cv',"cvs/new" %></li>
+          <li><%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %></li>
+        <% else %>
+        <% if current_admin_user.role=="Manager" %>
+          <li><%= link_to 'Dashboard',"admin/dashboard" %></li>
+        <% end %>
+        <% if current_admin_user.role=="Supervisor" %>
+          <li><%= link_to 'Dashboard',"admin/dashboard" %></li>
+          <li><%= link_to 'See the grades of the students',"coursestudenttracks" %> </li>
+          <li><%= link_to 'Add a new grade for a student',"coursestudenttracks/new" %></li>
+          <li><%= link_to 'Add a new course',"courses/new" %></li>
+          <% end %>
+          <% if current_admin_user.role=="Instructor" %>
+          <li><%= link_to 'see all assignments',"assignments" %></li>
+          <li><%= link_to 'Upload new assignment',"totrack" %></li>
+          <li><%= link_to 'see all uploaded assignments',"assignmentstaffstudents" %></li>
+          <% end %>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
+    <div class="col-sm-10 my-content">
+    <nav class="navbar navbar-expand-lg navbar-light bg-secondary my-nav">
+  
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav portal-name col-sm-2">
+     <li class="nav-item">
+     <% if current_admin_user==nil %>
+        <a class="nav-link" href="#">Student Portal</a>
+        <% else %>
+        <% if current_admin_user.role=="Manager" %>
+        <a class="nav-link" href="#">Manager Portal</a>
+        <% end %>
+        <% if current_admin_user.role=="Supervisor" %>
+        <a class="nav-link" href="#">Supervisor Portal</a>
+          <% end %>
+          <% if current_admin_user.role=="Instructor" %>
+        <a class="nav-link" href="#">Instructor Portal</a>
+          <% end %>
+          <% end %>
+      </li>
+    </ul>
+    <ul class="navbar-nav nav-icons col-sm-10 justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><%=image_tag("notification.png")%></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><%=image_tag("chat-outline.png")%></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#"><%=image_tag("002-user-1.png")%></a>
+      </li>
+    </ul>
+  </div>
+</nav>
     <%= yield %>
+    </div>
+   </div>
+  </div>
+  
+    
   </body>
 </html>
