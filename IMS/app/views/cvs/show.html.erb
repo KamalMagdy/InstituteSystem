@@ -10,14 +10,14 @@
   <%= @cv.student.name %>
 </p>
 
-<% @cvarray.each_with_index do |cv_comment, index| %>
    <% @adminarray.each_with_index do |cv_comment, index| %>
-   <% @user_admin= ActiveRecord::Base.connection.exec_query("select name from admin_users where id=#{@adminarray[index]}") %>
-   <p> <%= @user_admin[0]['name'] %> : 
-     <%= @cvarray[index] %> </p>
-    <% end %>
+   <p>
+    <% @admin_name = AdminUser.where(id: @adminarray[index]).take %>
+    <%= @admin_name.name  %> 
+    <%= "::" %>
+    <%= @cvarray[index] %> 
+    </p>
   <% end %>
-
 
 
 

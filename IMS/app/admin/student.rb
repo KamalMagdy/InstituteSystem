@@ -4,15 +4,32 @@ ActiveAdmin.register Student do
 
   controller do 
     def create
-      super
+      super 
+      track_id = 1
     end
   end
 
 
     after_create do |user|
-      
+      if current_admin_user.role != "Supervisor"
       @trackid=  params[:student][:track_ids]
+      else 
+        @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
+        @trackid = @tracks_data.track_id
+      end
+
       @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@student.id}', #{@trackid}, '#{@student.created_at}', '#{@student.updated_at}')")
+    end
+
+    after_update do |user|
+      if current_admin_user.role != "Supervisor"
+      @trackid=  params[:student][:track_ids]
+      else 
+        @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
+        @trackid = @tracks_data.track_id
+      end
+
+      @list = ActiveRecord::Base.connection.exec_query("update lists set track_id = '#{@trackid}' where student_id = '#{@student.id}'")
     end
     # after_create do |user|
     #   UserNotifierMailer.welcome_email(@student).deliver_now
@@ -45,7 +62,9 @@ ActiveAdmin.register Student do
       f.input :birth, :as => :datepicker
       f.input :avatar
       f.input :mobile
+      if current_admin_user.role != "Supervisor"
       f.input :tracks, :as => :radio, collection => Track.all
+      end
       f.input :group
       #f.input :lists
     end

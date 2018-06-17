@@ -135,10 +135,10 @@ ActiveRecord::Schema.define(version: 2018_06_14_005342) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "coursestudenttracks", primary_key: ["course_id", "student_id", "track_id"], force: :cascade do |t|
-    t.integer "course_id", null: false
-    t.integer "student_id", null: false
-    t.integer "track_id", null: false
+  create_table "coursestudenttracks", force: :cascade do |t|
+    t.integer "course_id"
+    t.integer "student_id"
+    t.integer "track_id"
     t.integer "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

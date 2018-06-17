@@ -1,8 +1,6 @@
 ActiveAdmin.register Cv do
     permit_params :path, :student_id
     actions :index, :show , :company
-    
-
   member_action :download, :method=>:get do
 
 end
