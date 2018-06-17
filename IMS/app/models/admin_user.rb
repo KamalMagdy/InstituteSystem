@@ -2,6 +2,9 @@ class AdminUser < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   
+  validates :name, presence: true
+  validates :social_no, uniqueness: true, presence: true
+  validates :role, presence: true
 
   has_many :events
   has_many :assignments, :through => :assignmentstaffstudents

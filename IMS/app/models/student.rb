@@ -1,4 +1,8 @@
 class Student < ActiveRecord::Base
+  validates :email, presence: true
+  validates :gender, presence: true
+  validates :name, presence: true 
+  validates :group_id, presence: true
 
     #belongs_to :track
     has_many :messages
@@ -18,11 +22,7 @@ class Student < ActiveRecord::Base
     has_many :tracks, :through => :coursestudenttracks
     
     enum gender: {male: 0, female: 1, any: 2}
-    # enum group: {group1: 0, group2: 1}
 
-  	# devise :database_authenticatable, :registerable,
-   #       :recoverable, :rememberable, :trackable, :validatable
-    
     devise :database_authenticatable, :registerable,
         :recoverable, :rememberable, :trackable, :validatable
 

@@ -7,9 +7,7 @@ ActiveAdmin.register AdminUser do
     end
   end
 
-
     after_create do |user|
-      puts "anaaaaaaaaaaaaaaaaaaaaaaaa"
       puts params[:admin_user][:role]
       if (params[:admin_user][:role]=='Supervisor')
       @trackid=  params[:admin_user][:track_ids]
