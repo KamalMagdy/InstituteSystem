@@ -1,3 +1,10 @@
+<html>
+<body class="container">
+<h1>Uploading Timetable</h1>
+<br/>
+<br/>
+<br/>
+<div class="container center_div">
 <%= form_with(model: timetable, local: true) do |form| %>
   <% if timetable.errors.any? %>
     <div id="error_explanation">
@@ -13,10 +20,19 @@
   <div class="field">
   <%= form.hidden_field :track_id, :value => @trackid[0]["track_id"] %>
 </div>
-<%= form.label :timetable_link %> 
-<%= form.file_field :timetable_link, required: true  %>
 
-  <div class="actions">
-    <%= form.submit "Upload TimeTable"%>
+<div  class="form-group">
+<label >Upload the Timetable File</label>  
+<br/>
+<%= form.file_field :timetable_link, required: true  %>
   </div>
+  <br/>
+  <br/>
+
+<div class="actions">
+<button type="submit" class="btn btn-primary btn-block">Upload Timetable</button>
+</div>
 <% end %>
+</div>
+</body>
+</html>

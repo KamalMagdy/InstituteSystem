@@ -1,3 +1,10 @@
+<html>
+<body class="container">
+<h1>Upload your Cv</h1>
+<br/>
+<br/>
+<br/>
+<div class="container center_div">
 <%= form_with(model: cv, local: true) do |form| %>
   <% if cv.errors.any? %>
     <div id="error_explanation">
@@ -11,17 +18,20 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :path %>
+  <div  class="form-group">
+  <label >Upload the CV file</label>  
+  <br/>
     <%= form.file_field :path, required: true %>
   </div>
 
   <div class="field">
     <%= form.hidden_field :student_id, value: current_student.id %>
-
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <button type="submit" class="btn btn-primary btn-block">Upload Cv</button>
   </div>
 <% end %>
+</div>
+</body>
+</html>

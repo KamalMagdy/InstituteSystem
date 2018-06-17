@@ -1,73 +1,80 @@
 <p id="notice"><%= notice %></p>
+<h1><%= @course.name %></h1>
+<br/>
+<br/>
+<br/>
 
-<p>
-  <strong>Name:</strong>
-  <%= @course.name %>
-</p>
 
-<p> Course Materials </p>
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
+<h4> Course Materials </h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr class="d-flex">
+      <th class="col-4">Document Name</th>
+      <th class="col-4">Document Type</th>
+      <th class="col-4">Document file</th>
     </tr>
   </thead>
 
   <tbody>
     <% @materials_material.each_with_index do |onematerial,index| %>
-      <tr>
-      <td><%= link_to "Download", "http://localhost:3000/uploads/coursestafftrack/material/" + @materials_material_id[index] + "/" + @materials_material[index] %></td>
-        <td><%= @materials_material_name[index] %></td>
-        <td><%= @materials_material_type[index]  %></td>
+      <tr class="d-flex">
+      <th scope="row" class="col-4"><%= @materials_material_name[index] %></th>
+      <td class="col-4"><%= @materials_material_type[index]  %></td>
+      <td class="col-4"><%= link_to "Download", @materials_material[index] %></td>
       </tr>  
     <% end %>
   </tbody>
 </table>
-
-<p> Course Assignments </p>
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
+<br/>
+<br/>
+<h4>Course Assignments </h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr class="d-flex">
+  <th class="col-3">Assignment Name</th>
+  <th class="col-3">Assignment Deadline</th>
+  <th class="col-3">Assignment file</th>
+  <th class="col-3">Action</th>
     </tr>
   </thead>
   <tbody>
     <% @courseassignments_deadline.each_with_index do |onecourseassignment,index| %>
-      <tr>
+      <tr class="d-flex">
+      <th scope="row" class="col-3"><%= @courseassignments_name[index] %></th>
+      <td class="col-3"><%= @courseassignments_deadline[index]  %></td>
       <% if @courseassignments_assignmentfile[index].empty? %>
-      <td> </td>
+      <td class="col-3"> </td>
       <% else %>
-      <td><%= link_to "Download", "http://localhost:3000/uploads/assignment/assignmentfile/" + @courseassignments_id[index] + "/" + @courseassignments_assignmentfile[index] %></td>
+      <td class="col-3"><%= link_to "Download",  @courseassignments_assignmentfile[index] %></td>
       <% end %>
-      <td><%= @courseassignments_deadline[index]  %></td>
-        <td><%= @courseassignments_description[index]  %></td>
-        <td><%= @courseassignments_staff[index]  %></td>
-        <td><%= @courseassignments_name[index] %></td>
-        <td><%= link_to upload_course_path(@courseassignments_id), method: :put do %>Upload<% end %></td>
+        <td class="col-3"><%= link_to upload_course_path(@courseassignments_id[index]), method: :put do %>Upload<% end %></td>
       </tr>  
     <% end %>
   </tbody>
 </table>
-
-<p> Uploaded Assignments </p>
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
+<br/>
+<br/>
+<h4>Your Uploaded Assignments </h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr class="d-flex">
+  <th class="col-3">Your Answer (file)</th>
+  <th class="col-3">Your Answer (URL)</th>
+  <th class="col-3">Delivery Time</th>
+  <th class="col-3">Instructor Comment</th>
     </tr>
   </thead>
   <tbody>
     <% @assignments_id.each_with_index do |oneassignment,index| %>
-      <tr>
-      <% if @assignments_file[index].empty? %>
-      <td> </td>
+      <tr class="d-flex">
+      <% if @assignmentfile[index].empty? %>
+      <th scope="row" class="col-3"> </th>
       <% else %>
-      <td><%= link_to "Download", "http://localhost:3000/uploads/assignmentstaffstudent/file/" + @assignments_id[index] + "/" + @assignments_file[index] %></td>
+      <th scope="row" class="col-3"><%= link_to "Download", @assignmentfile[index] %></th>
       <% end %>
-      <td><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
-        <td><%= @assignments_createdat[index]  %></td>
-        <td><%= @assignments_staff[index]  %></td>
-        <td><%= @assignments_review[index]  %></td>
+      <td class="col-3"><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
+        <td class="col-3"><%= @assignments_createdat[index]  %></td>
+        <td class="col-3"><%= @assignments_review[index]  %></td>
       </tr>  
     <% end %>
   </tbody>
@@ -75,6 +82,3 @@
 
 
 
-
-
-<%= link_to 'Back', courses_path %>

@@ -1,5 +1,5 @@
 class AssignmentstaffstudentsController < InheritedResources::Base
-  before_action :authenticate_user!, only: [:index]
+  before_action :authenticate_admin_user!, only: [:index]
   before_action :authenticate_student!, only: [:new]
   skip_before_action :verify_authenticity_token
 
@@ -39,6 +39,10 @@ class AssignmentstaffstudentsController < InheritedResources::Base
     @assignments.codeReview = params[:codeReview]
     @assignments.save!
     redirect_to :action => :index
+  end
+  def create 
+    params[:assignmentstaffstudent][:derlivered_assignment] = params[:derlivered_assignment]
+    super
   end
   private
     def assignmentstaffstudent_params   

@@ -1,19 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Description:</strong>
+  <h4>Description:</h4>
   <%= @assignment.name %>
-</p>
+<br/>
+<br/>
 
-<p>
-  <strong>Deadline:</strong>
+  <h4>Deadline:</h4>
   <%= @assignment.deadline %>
-</p>
+<br/>
+<br/>
 
-<p>
-  <strong>Course:</strong>
+  <h4>Course:</h4>
   <%= @assignment.course_id %>
-</p>
-
-<%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<%= link_to 'Back', assignments_path %>

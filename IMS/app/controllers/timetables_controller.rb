@@ -17,13 +17,18 @@ class TimetablesController < InheritedResources::Base
       updatetimetable = Timetable.find(@timetable[0]["id"])
       updatetimetable.timetable_link = params[:timetable][:timetable_link]
       updatetimetable.save! 
+      puts updatetimetable
     end
     redirect_to posts_path
   end
   def index
     @trackid =  List.where(student_id: current_student.id)
     @timetable = Timetable.where(track_id: @trackid[0]["track_id"])
+    if @timetable.empty?
+      @timetable="empty"
+    else
     @timetable = Timetable.find(@timetable[0]["id"])  
+    end
   end
 
   private

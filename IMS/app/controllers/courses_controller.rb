@@ -37,7 +37,7 @@ class CoursesController < InheritedResources::Base
     @materials_material_type=[]
     @materials_material_id=[]
     @assignments_delivered=[]
-    @assignments_file=[]
+    @assignmentfile=[]
     @assignments_createdat=[]
     @assignments_staff=[]
     @assignments_id=[]
@@ -50,7 +50,9 @@ class CoursesController < InheritedResources::Base
     @courseassignments_id=[]
     materials = ActiveRecord::Base.connection.exec_query("select * from coursestafftracks where course_id=#{@course.id}")
     for material in materials
-    @materials_material.push("#{material['material']}")
+    @mat = Coursestafftrack.find(material['id'])
+    # @materials_material.push("#{material['material']}")
+    @materials_material.push(@mat.material_url)
     @materials_material_id.push("#{material['id']}")
     @materials_material_name.push("#{material['material_name']}")
     @materials_material_type.push("#{material['material_type']}")
@@ -58,7 +60,9 @@ class CoursesController < InheritedResources::Base
     assignmentsuploaded = ActiveRecord::Base.connection.exec_query("select * from assignmentstaffstudents where course_id=#{@course.id} and student_id=#{session[:student].id}")
     for assignmentuploaded in assignmentsuploaded
     @assignments_delivered.push("#{assignmentuploaded['derlivered_assignment']}")
-    @assignments_file.push("#{assignmentuploaded['file']}")
+    @assig = Assignmentstaffstudent.find(assignmentuploaded['id'])
+    # @assignments_file.push("#{assignmentuploaded['file']}")
+    @assignmentfile.push(@assig.file_url)
     @assignments_createdat.push("#{assignmentuploaded['created_at']}")
     @assignments_staff.push("#{assignmentuploaded['staff']}")
     @assignments_id.push("#{assignmentuploaded['id']}")
@@ -68,7 +72,9 @@ class CoursesController < InheritedResources::Base
     for courseassignment in courseassignments
     @courseassignments_deadline.push("#{courseassignment['deadline']}")
     @courseassignments_description.push("#{courseassignment['description']}")
-    @courseassignments_assignmentfile.push("#{courseassignment['assignmentfile']}")
+    # @courseassignments_assignmentfile.push("#{courseassignment['assignmentfile']}")
+    @co = Assignment.find(courseassignment['id'])
+    @courseassignments_assignmentfile.push(@co.assignmentfile_url)
     @courseassignments_staff.push("#{courseassignment['staff']}")
     @courseassignments_id.push("#{courseassignment['id']}")
     @courseassignments_name.push("#{courseassignment['name']}")
@@ -76,7 +82,7 @@ class CoursesController < InheritedResources::Base
   end
   def create
     course = Course.new
-    course.name = params[:course][:name] 
+    course.name = params[:name] 
     existcourse = Course.where(name: course.name)
       if existcourse.empty?
         course.save!
@@ -90,14 +96,29 @@ class CoursesController < InheritedResources::Base
         redirect_to posts_path
       end
   end
+  # def destroy
+  #   course = Course.find(params[:id])
+  #   course.destroy!
+  #   coursetrack = CoursesTrack.where(course_id: params[:id])
+  #   coursetrack = CoursesTrack.find(coursetrack[0]["id"])
+  #   coursetrack.destroy!
+  #   staffcourse = Staffcourse.where(course_id: params[:id])
+  #   staffcourse = Staffcourse.find(staffcourse[0]["id"])
+  #   staffcourse.destroy!
+  # end
   def new
     @course = Course.new
     @arrayofinstructornames=[]
     @arrayofinstructorids=[]
     @arrayofinstructors = ActiveRecord::Base.connection.exec_query("select * from admin_users where role='Instructor' ")
-    for @arrayodinstructor in @arrayofinstructors
-      @arrayofinstructornames.push(@arrayodinstructor['name'])
-      @arrayofinstructorids.push(@arrayodinstructor['id'])
+    if @arrayofinstructors.blank?
+      flash[:notice] = "There is no instructors, add a new instructor first to assign it to the course"
+      redirect_to posts_path
+    else
+      for @arrayodinstructor in @arrayofinstructors
+        @arrayofinstructornames.push(@arrayodinstructor['name'])
+        @arrayofinstructorids.push(@arrayodinstructor['id'])
+      end
     end
   end
   

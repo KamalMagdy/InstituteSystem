@@ -1,3 +1,10 @@
+<html>
+<body class="container">
+<h1>Adding Grades for Students</h1>
+<br/>
+<br/>
+<br/>
+<div class="container center_div">
 <%= form_with(model: coursestudenttrack, local: true) do |form| %>
   <% if coursestudenttrack.errors.any? %>
     <div id="error_explanation">
@@ -11,30 +18,44 @@
     </div>
   <% end %>
 
-  <div class="field">
-  <%= form.select(:student_id) do %>
-    <% @studentnames.each_with_index do |student, index| %>
-      <%= content_tag(:option, @studentnames[index], value: @studentids[index]) %>
-    <% end %>
+  <div  class="form-group">
+  <label >Select the Student Name</label>
+  <br/>
+  <select name="student_id"  class="form-control select form-control-lg"> 
+  <% @studentnames.each_with_index do |student, index| %>
+    <%= content_tag(:option, @studentnames[index], value: @studentids[index]) %>
   <% end %>
+  </select>
   </div>
+  <br/>
+  <br/>
   
 
-<div class="field">
-<%= form.select(:course_id) do %>
-  <% @coursenames.each_with_index do |course, index| %>
-    <%= content_tag(:option, @coursenames[index], value: @courseids[index]) %>
-  <% end %>
+<div class="form-group">
+<label >Select the Course Name</label>
+<br/>
+<select name="course_id"  class="form-control select form-control-lg"> 
+<% @coursenames.each_with_index do |course, index| %>
+  <%= content_tag(:option, @coursenames[index], value: @courseids[index]) %>
 <% end %>
+</select>
 </div>
+<br/>
+<br/>
 
 
-<div class="field">
-  <%= form.label :grade %>   
-  <%= form.number_field :grade , required: true, min: 0 %>
+<div  class="form-group">
+<label >Enter the Grade of the Student</label>  
+<br/>
+  <input type="number" class="form-control form-control-lg input-lg" data-bv-integer="true" placeholder="0" min=0 required=true name="grade">
   </div>
+  <br/>
+  <br/>
 
   <div class="actions">
-    <%= form.submit "Upload Grade"%>
+    <button type="submit" class="btn btn-primary btn-block">Upload Grade</button>
   </div>
 <% end %>
+</div>
+</body>
+</html>

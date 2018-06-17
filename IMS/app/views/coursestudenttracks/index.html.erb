@@ -10,33 +10,36 @@
 </head>
 <body>
 <p id="notice"><%= notice %></p>
-<h1>Coursestudenttracks</h1>
+<h1>Students grades</h1>
+<br/>
+<br/>
+<br/>
 
-<table>
-  <thead>
+<table class="table table-striped">
+  <thead class="thead-dark">
     <tr>
-    <th>Students/Courses</th>
+    <th scope="col">Students/Courses</th>
     <% @coursenames.each_with_index do |course, index| %>
-        <th><%= @coursenames[index] %></th>
+        <th scope="col"><%= @coursenames[index] %></th>
     <% end %>
-    <th>Actions</th>
+    <th scope="col">Actions</th>
     </tr>
   </thead>
 
   <tbody>
     <% @studentnames.each_with_index do |student, index| %>
       <tr>
-        <td><%= @studentnames[index] %></td>
+        <th scope="row"><%= @studentnames[index] %></th>
           <% @coursenames.each_with_index do |course, index1| %>
             <td><%= @gradesforeachstudent[index][index1] %></td> 
           <% end %>
-        <td><%= link_to 'Edit', edit_coursestudenttrack_path(@studentids[index]) %></td>
+        <td><button type="button" class="btn btn-info" onclick=" location.href = '<%= edit_coursestudenttrack_path(@studentids[index]) %>' ">Edit</button></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 <br>
-<%= bar_chart @coursestudenttrackk.group(:student_id).count %>
+<%= column_chart @arrayfordrawingchart %> 
 
 </body>
 </html>

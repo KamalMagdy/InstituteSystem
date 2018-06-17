@@ -22,14 +22,25 @@ class CoursestudenttracksController < InheritedResources::Base
       @studentnames.push("#{@tempstudent.name}")
       @studentids.push("#{@student["student_id"]}")
     end
+    if @students.blank?
+      flash[:notice] = "There is no students yet you can't enter a grade"
+      redirect_to posts_path
+    else
+      if @courses.blank?
+        flash[:notice] = "There is no courses yet you can't enter a grade"
+        redirect_to posts_path
+      end
+    end
   end 
   def show
     session[:student]=current_student
     @coursename=[]; 
     @coursestudenttracks = ActiveRecord::Base.connection.exec_query("select * from coursestudenttracks where student_id=#{session[:student].id}")
     for coursestudenttrack in @coursestudenttracks
-      result = ActiveRecord::Base.connection.exec_query("select * from courses where id=#{coursestudenttrack['course_id']}")
-      @coursename.push(result[0]['name'])
+      # result = ActiveRecord::Base.connection.exec_query("select * from courses where id=#{coursestudenttrack['course_id']}")
+      result = Course.find(coursestudenttrack['course_id'])
+      # @coursename.push(result[0]['name'])
+      @coursename.push(result.name)
     end
   end
   def edit
@@ -42,13 +53,27 @@ class CoursestudenttracksController < InheritedResources::Base
       @coursenames.push("#{@tempcourse.name}")
     end
       @gradesarray=[]
+      flag = 0
       for @course in @courses  
-        @grades = ActiveRecord::Base.connection.exec_query("select grade from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{@student.id} and course_id=#{@course['course_id']}")
-        if (@grades.empty?)
-          @gradesarray.push(0)
+        # @grades = ActiveRecord::Base.connection.exec_query("select grade from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{@student.id} and course_id=#{@course['course_id']}")
+        @grades = Coursestudenttrack.where(track_id: @trackid[0]["track_id"], student_id: @student.id, course_id: @course['course_id'])
+        if(@grades.blank?)
+          @gradesarray.push("empty")
         else
-          @gradesarray.push(@grades[0]["grade"])
+          @grades = Coursestudenttrack.find(@grades[0]["id"])
+          if (@grades.blank?)
+            @gradesarray.push("empty")
+          else
+            @grades = @grades.grade
+            flag = 1
+            # @gradesarray.push(@grades[0]["grade"])
+            @gradesarray.push(@grades)
+          end
         end
+      end
+      if flag ==0
+        flash[:notice] = "You haven't entered a grade for this student before"
+        redirect_to :action => :index
       end
   end
   def update
@@ -56,10 +81,13 @@ class CoursestudenttracksController < InheritedResources::Base
     @counter=0
     @courses = ActiveRecord::Base.connection.exec_query("select * from courses_tracks where track_id=#{@trackid[0]["track_id"]}")
     for @course in @courses
-      @grades = ActiveRecord::Base.connection.exec_query("select * from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{params[:student]} and course_id=#{@course['course_id']}")
-      if(params[:grade]["#{@counter}"]=="0")
+      # @grades = ActiveRecord::Base.connection.exec_query("select * from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{params[:student]} and course_id=#{@course['course_id']}")
+      @grades = Coursestudenttrack.where(track_id: @trackid[0]["track_id"], student_id: params[:student], course_id: @course['course_id'])
+      @grades = Coursestudenttrack.find(@grades[0]["id"])
+      if(params[:grade]["#{@counter}"]=="empty")
       else
-        @desiredrecord = Coursestudenttrack.find(@grades[0]["id"])
+        # @desiredrecord = Coursestudenttrack.find(@grades[0]["id"])
+        @desiredrecord = Coursestudenttrack.find(@grades.id)
         @desiredrecord.grade = params[:grade]["#{@counter}"]
         @desiredrecord.save!
       end
@@ -70,6 +98,7 @@ class CoursestudenttracksController < InheritedResources::Base
   def index
     @coursestudenttrackk = Coursestudenttrack.all
     @trackid =  Staff.where(admin_user_id: current_admin_user.id)
+    @arrayfordrawingchart=[]
     @coursenames=[]
     @studentnames=[]
     @studentids=[]
@@ -85,26 +114,36 @@ class CoursestudenttracksController < InheritedResources::Base
       @studentnames.push("#{@tempstudent.name}")
       @studentids.push("#{@student["student_id"]}")
       @gradesarray=[]
+      @gradesum = 0
       for @course in @courses  
         @grades = ActiveRecord::Base.connection.exec_query("select grade from coursestudenttracks where track_id=#{@trackid[0]["track_id"]} and student_id=#{@student['student_id']} and course_id=#{@course['course_id']}")
         if (@grades.empty?)
           @gradesarray.push(0)
+          @gradesum = @gradesum + 0
         else
           @gradesarray.push(@grades[0]["grade"])
+          @gradesum = @gradesum + @grades[0]["grade"]
         end
       end
+      @arrayfordrawingchart.push([@tempstudent.name, @gradesum])
       @gradesforeachstudent.push(@gradesarray)
     end
+
   end
   def create 
     begin
-      @track = ActiveRecord::Base.connection.exec_query("select track_id from lists where student_id=#{params[:coursestudenttrack][:student_id]}")
+      # @track = ActiveRecord::Base.connection.exec_query("select track_id from lists where student_id=#{params[:student_id]}")
+      @track = List.where(student_id: params[:student_id])
+      @track = List.find(@track[0]["id"])
+      @track = @track.track_id
       coursestudenttrack = Coursestudenttrack.new
-      coursestudenttrack.grade = params[:coursestudenttrack][:grade]
-      coursestudenttrack.course_id = params[:coursestudenttrack][:course_id]
-      coursestudenttrack.track_id = @track[0]["track_id"]
-      coursestudenttrack.student_id = params[:coursestudenttrack][:student_id]
-      existcourse = Coursestudenttrack.where(track_id: @track[0]["track_id"], student_id: coursestudenttrack.student_id, course_id: params[:coursestudenttrack][:course_id])
+      coursestudenttrack.grade = params[:grade]
+      coursestudenttrack.course_id = params[:course_id]
+      # coursestudenttrack.track_id = @track[0]["track_id"]
+      coursestudenttrack.track_id = @track
+      coursestudenttrack.student_id = params[:student_id]
+      # existcourse = Coursestudenttrack.where(track_id: @track[0]["track_id"], student_id: coursestudenttrack.student_id, course_id: params[:course_id])
+      existcourse = Coursestudenttrack.where(track_id: @track, student_id: coursestudenttrack.student_id, course_id: params[:course_id])
       if existcourse.empty?
         coursestudenttrack.save!
         redirect_to :action => :index

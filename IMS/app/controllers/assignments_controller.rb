@@ -6,6 +6,11 @@ class AssignmentsController < InheritedResources::Base
     session[:track]= params[:track_id]
     redirect_to :action => :new
   end
+  def create 
+    params[:assignment][:name] = params[:name]
+    params[:assignment][:course_id] = params[:course_id]
+    super
+  end
 
   def index 
     @arrayofcoursenames=[]
@@ -14,6 +19,7 @@ class AssignmentsController < InheritedResources::Base
     @assigids=[]
     @assignmentobject=[]
     @assignmentlink=[]
+    @assignmentid=[]
     @arrayofcourses = Staffcourse.where(admin_user_id: current_admin_user.id)
     for @arrayofcourse in @arrayofcourses
       @assignments = Assignment.where(course_id: @arrayofcourse.course_id)
@@ -22,6 +28,7 @@ class AssignmentsController < InheritedResources::Base
         @assignmentobject.push(@assignmentt)
         @assignmentlink.push(@assignmentt.assignmentfile_url)
         @assigdeadlines.push(@assignmentt.deadline)
+        @assignmentid.push(@assignmentt.id)
         @assigids.push(@assignmentt.id)
         @name = Course.find(@assignmentt.course_id)
         @arrayofcoursenames.push(@name.name)
@@ -71,6 +78,10 @@ class AssignmentsController < InheritedResources::Base
           @trackname = Track.find(@track[0]["track_id"])
           @arrayoftracksnames.push(@trackname.name) unless @arrayoftracksnames.include?(@trackname.name)
         end
+    end
+    if @arrayoftracksnames.empty?
+      flash[:notice] = "There is no courses assigned to you yet"
+      redirect_to posts_path
     end
   end
   

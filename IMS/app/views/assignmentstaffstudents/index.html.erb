@@ -1,17 +1,20 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Uploaded Assignments</h1>
+<br/>
+<br/>
+<br/>
 
-<table>
-  <thead>
+<table class="table">
+  <thead class="thead-dark">
     <tr>
-      <th >Student Name</th>
-      <th >Uploaded assignment (File)</th>
-      <th >Uploaded assignment (Link)</th>
-      <th >Course Name</th>
-      <th >Track Name</th>
-      <th >Delivered Time</th>
-      <th >Actions</th>
+      <th scope="col">Student Name</th>
+      <th scope="col">Uploaded assignment (File)</th>
+      <th scope="col">Uploaded assignment (Link)</th>
+      <th scope="col">Course Name</th>
+      <th scope="col">Track Name</th>
+      <th scope="col">Delivered Time</th>
+      <th scope="col">Actions</th>
     </tr>
   </thead>
 
@@ -19,7 +22,7 @@
   <% @assignmentstaffstudents.each_with_index do |assignmentstaffstudent,index| %>
       <tr>
       <% @assignmentstaffstudentt = Assignmentstaffstudent.find(@assignmentstaffstudents[index]["id"]) %>
-      <td><%= @assignmentstaffstudentt.student.name %></td>
+      <th scope="row"><%= @assignmentstaffstudentt.student.name %></th>
       <% if @assignmentstaffstudentt.file_url==nil %>
       <td> </td>
       <% else %>

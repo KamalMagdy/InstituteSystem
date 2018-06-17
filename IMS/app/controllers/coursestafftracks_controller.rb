@@ -57,6 +57,10 @@ class CoursestafftracksController < InheritedResources::Base
           @arrayoftracksnames.push(@trackname.name) unless @arrayoftracksnames.include?(@trackname.name)
         end
     end
+    if @arrayoftracksnames.blank?
+      flash[:notice] = "There is no courses assigned to you yet"
+      redirect_to posts_path
+    end
   end 
 
   def edit
@@ -72,6 +76,13 @@ class CoursestafftracksController < InheritedResources::Base
         @arrayofcoursenames.push(@name.name)
       end
     end 
+  end
+
+  def create
+    params[:coursestafftrack][:material_type] = params[:material_type]
+    params[:coursestafftrack][:course_id] = params[:course_id]
+    params[:coursestafftrack][:material_name] = params[:material_name]
+    super
   end
 
   private
