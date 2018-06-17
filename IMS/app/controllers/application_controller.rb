@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     end
 def authenticate_admin_user!
   super
-  raise SecurityError if current_admin_user.try(:Instructor?)
+  raise SecurityError if current_admin_user.try(:Instructor)
 end
     def current_ability
       @current_ability ||= Ability.new(current_student)

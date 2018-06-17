@@ -44,7 +44,9 @@ class CoursestafftracksController < InheritedResources::Base
     end
   end  
   def beforenew
+    puts "okkkkkkkkkkkkkkk"
     @arrayofcourses = Staffcourse.where(admin_user_id: current_admin_user.id)
+    puts current_admin_user.id
     @arrayoftracks=[]
     @arrayoftracksnames=[]
     for @arrayofcourse in @arrayofcourses

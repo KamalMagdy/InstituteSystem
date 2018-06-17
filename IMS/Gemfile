@@ -13,7 +13,6 @@ gem 'fasterer', '~> 0.4.1'
 gem "rubycritic", require: false
 gem 'api-ai-ruby'
 # group :development do
-gem 'rails-erd'
 # end
 gem "chartkick"
 gem "mime-types"

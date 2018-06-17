@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   resources :courses_tracks
   resources :lists
+  resources :tags, only: [:show]
+
   resources :coursestudenttracks do
     member do
       put "/update", to: "coursestudenttracks#update"
@@ -60,7 +62,6 @@ end
 
 match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
 
-get 'tags/:tag', to: 'posts#index', as: :tag
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

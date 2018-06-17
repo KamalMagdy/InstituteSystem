@@ -46,31 +46,31 @@
 
    <% @postshow = Post.find(post.id)  %>
 
-   <% if current_admin_user==nil %> 
-    <%= link_to like_post_path(@postshow), method: :put do %>
-   <% end %>
-   
+   <% if current_admin_user==nil %>
+    <%= link_to like_post_path(@postshow), method: :put do %> 
       Like
       <%= @postshow.get_upvotes.size %>
+      <% end %>
     <% end %>
+    
     <% if current_admin_user==nil %> 
     <%= link_to dislike_post_path(@postshow), method: :put do %>
-    <% end %>
       DisLike
       <%= @postshow.get_downvotes.size %>
+    <% end %>
     <% end %>
 
     <div id='tag_cloud'>
   <% tag_cloud @postshow.tag_counts, %w{s m l} do |tag, css_class| %>
-    <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+    <%= link_to tag.name, tag_path(tag.id), class: css_class %>
   <% end %>
 </div>
 
     <%= commontator_thread(@postshow) %>
     <% @posts_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{post.id} and resource_type='Post'") %>
     <% for @post_comment in @posts_comments %>
-    <% @user_admin= ActiveRecord::Base.connection.exec_query("select name from admin_users where id=#{@post_comment['author_id']}") %>
-    <p><%= @user_admin[0]['name'] %>:::
+    <% @admin_name = AdminUser.where(id: @post_comment['author_id']).take %>
+    <p><%= @admin_name.name %>:::
        <%= @post_comment['body'] %></p> 
 
    <% end %>
