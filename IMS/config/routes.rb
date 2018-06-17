@@ -72,7 +72,8 @@ match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
   end
 class ActiveAdmin::Devise::SessionsController
    	def after_sign_in_path_for(resource)
-    if current_admin_user.Instructor?
+    # if current_admin_user.Instructor
+    if current_admin_user.role == "Instructor"
         '/home'
     else 
         '/admin/dashboard'
