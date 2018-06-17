@@ -25,13 +25,19 @@ class PostsController < InheritedResources::Base
       @posts = Post.all
       @events = Event.all
     end
+
   end
 
 
   def create 
     @posts = Post.all
     @events = Event.all
-    @post=Post.create(post_params)
+    # @post=Post.create(post_params)
+    @post = Post.new
+    @post.student_id = params[:post][:student_id]
+    @post.body = params[:body]
+    @post.tag_list = params[:tag_list]
+    @post.save!
     respond_to do |format|
       if @post.save
         @post.tag_list.add(@post.tag_list, parse: true)
