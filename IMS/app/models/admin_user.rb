@@ -26,4 +26,5 @@ class AdminUser < ApplicationRecord
   has_many :messages
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
+  mount_uploader :avatar_image, AvatarImageUploader
 end

@@ -1,5 +1,6 @@
 ActiveAdmin.register AdminUser do
-  permit_params :email, :password, :password_confirmation, :role, :rolesupervisorcancreate, :social_no , :name,  track_ids: []
+  permit_params :email, :banned, :password, :password_confirmation, :role, :avatar_image, :rolesupervisorcancreate, :social_no , :name,  track_ids: []
+  actions :index, :show ,:edit
 
   controller do 
     def create
@@ -18,6 +19,14 @@ ActiveAdmin.register AdminUser do
         end
       end
     end
+
+    # controller do 
+    #   def destroy 
+    #     @adminuser = AdminUser.find(params[:id])
+    #     @adminuser.banned = true
+    #     @adminuser.save!
+    #   end  
+    # end
 
     after_update do |user|
       if (params[:admin_user][:role]=='Supervisor')
@@ -57,6 +66,7 @@ ActiveAdmin.register AdminUser do
       f.input :password_confirmation
       f.input :role, :as => :select 
       f.input :social_no
+      f.input :avatar_image
       f.input :tracks, :as => :radio, collection => Track.all
     end
     f.actions

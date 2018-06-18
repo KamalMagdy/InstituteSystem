@@ -42,6 +42,7 @@ class CoursesController < InheritedResources::Base
     @assignments_staff=[]
     @assignments_id=[]
     @assignments_review=[]
+    @assignments_name=[]
     @courseassignments_deadline=[]
     @courseassignments_description=[]
     @courseassignments_assignmentfile=[]
@@ -67,6 +68,8 @@ class CoursesController < InheritedResources::Base
     @assignments_staff.push("#{assignmentuploaded['staff']}")
     @assignments_id.push("#{assignmentuploaded['id']}")
     @assignments_review.push("#{assignmentuploaded['codeReview']}")
+    @assname = Assignment.find(assignmentuploaded['assignment_id'])
+    @assignments_name.push("#{@assname.name}")
     end
     courseassignments = ActiveRecord::Base.connection.exec_query("select * from assignments where course_id=#{@course.id}")
     for courseassignment in courseassignments
@@ -100,8 +103,6 @@ class CoursesController < InheritedResources::Base
         @coursestaff.created_at = course.created_at
         @coursestaff.updated_at = course.updated_at
         @coursestaff.save!
-        # @list = ActiveRecord::Base.connection.exec_query("insert into courses_tracks (course_id, track_id, created_at, updated_at) values ('#{course.id}', #{@trackid[0]["track_id"]}, '#{course.created_at}', '#{course.updated_at}')")
-        # @coursestaff = ActiveRecord::Base.connection.exec_query("insert into staffcourses (course_id, admin_user_id, created_at, updated_at) values ('#{course.id}', #{@instid}, '#{course.created_at}', '#{course.updated_at}')")
         redirect_to posts_path
       else
         flash[:notice] = "The course name must be unique"

@@ -2,8 +2,8 @@
 
 class Students::SessionsController < Devise::SessionsController
  # require 'recaptcha.rb'
-
-      #before_action :check_captcha
+      #before_action :check_captcha 
+      # before_action :banned?      
   private
     def check_captcha
       unless verify_recaptcha
@@ -14,6 +14,19 @@ class Students::SessionsController < Devise::SessionsController
       end 
     end
   def after_sign_in_path_for(resource)
+    if resource.is_a?(Student) && resource.banned?
+      sign_out resource
+      flash[:notice] = "This account has been banned"
+      return '/students/sign_in'
+    else
+      # if current_admin_user.banned?
+      #   sign_out resource
+      #   flash[:notice] = "This account has been banned"
+      #   return '/admin/login'
+      # else
+        super
+      # end
+    end
     if resource.sign_in_count == 1
         return '/students/edit'
     else

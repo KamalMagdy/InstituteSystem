@@ -58,8 +58,9 @@
 <table class="table table-striped">
   <thead class="thead-dark">
   <tr class="d-flex">
-  <th class="col-3">Your Answer (file)</th>
-  <th class="col-3">Your Answer (URL)</th>
+  <th class="col-2">Assignment Name</th>
+  <th class="col-2">Your Answer (file)</th>
+  <th class="col-2">Your Answer (URL)</th>
   <th class="col-3">Delivery Time</th>
   <th class="col-3">Instructor Comment</th>
     </tr>
@@ -67,12 +68,13 @@
   <tbody>
     <% @assignments_id.each_with_index do |oneassignment,index| %>
       <tr class="d-flex">
-      <% if @assignmentfile[index].empty? %>
-      <th scope="row" class="col-3"> </th>
+      <th scope="row" class="col-2"><%= @assignments_name[index] %></th>
+      <% if @assignmentfile[index].blank? %>
+      <th class="col-2"> </th>
       <% else %>
-      <th scope="row" class="col-3"><%= link_to "Download", @assignmentfile[index] %></th>
+      <th class="col-2"><%= link_to "Download", @assignmentfile[index] %></th>
       <% end %>
-      <td class="col-3"><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
+      <td class="col-2"><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
         <td class="col-3"><%= @assignments_createdat[index]  %></td>
         <td class="col-3"><%= @assignments_review[index]  %></td>
       </tr>  

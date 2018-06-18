@@ -5,7 +5,6 @@ ActiveAdmin.register Student do
   controller do 
     def create
       super 
-      # track_id = 1
     end
   end
      before_create do |order|
@@ -32,18 +31,14 @@ ActiveAdmin.register Student do
         @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
         @trackid = @tracks_data.track_id
       end
-
       @list = ActiveRecord::Base.connection.exec_query("update lists set track_id = '#{@trackid}' where student_id = '#{@student.id}'")
     end
+
   controller do 
     def destroy 
-      student = Student.find(params[:id])
-      sttrack = List.where(student_id: params[:id])
-      student.destroy!
-
-      
-      sttrack = List.find(sttrack[0]["id"])
-      sttrack.destroy!
+      @st = Student.find(params[:id])
+      @st.banned = true
+      @st.save!
     end  
   end
 

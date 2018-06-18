@@ -41,8 +41,13 @@ class AssignmentstaffstudentsController < InheritedResources::Base
     redirect_to :action => :index
   end
   def create 
-    params[:assignmentstaffstudent][:derlivered_assignment] = params[:derlivered_assignment]
-    super
+    if params[:derlivered_assignment].blank? && params[:assignmentstaffstudent][:file].blank?
+      flash[:notice] = "You can't submit an empty answer"
+      redirect_to courses_path
+    else
+      params[:assignmentstaffstudent][:derlivered_assignment] = params[:derlivered_assignment]
+      super
+    end
   end
   private
     def assignmentstaffstudent_params   

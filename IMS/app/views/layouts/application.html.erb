@@ -17,10 +17,10 @@
 
     <div class="col-sm-2 sidebar">
       <nav>
-      <a class="navbar-brand logo" href="#"><%=image_tag("logo.png")%></a>
+      <a class="navbar-brand logo" href="#"><%=image_tag("35526972_1706158386165401_3881246350645395456_n.png", size: "80x70")%></a>
         <ul>
         <% if current_admin_user==nil %>
-                           <% if current_student!=nil %>
+          <% if current_student!=nil %>
 
           <li><%= link_to 'Home',"/home" %></li>
           <li><%= link_to 'All courses',"/courses" %></li>
@@ -61,6 +61,8 @@
       </nav>
     </div>
     <div class="col-sm-10 my-content">
+       <% if current_admin_user==nil && current_student==nil%>
+       <% else %>
     <nav class="navbar navbar-expand-lg navbar-light bg-secondary my-nav">
   
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,17 +88,30 @@
     </ul>
     <ul class="navbar-nav nav-icons col-sm-10 justify-content-end">
       <li class="nav-item">
-        <a class="nav-link" href="#"><%=image_tag("notification.png")%></a>
+        <%=image_tag("notification.png")%>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><%=image_tag("chat-outline.png")%></a>
+        <%=image_tag("chat-outline.png")%>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#"><%=image_tag("002-user-1.png")%></a>
+      <% if current_student.blank? %>
+        <% if current_admin_user.avatar_image.blank? %>
+          <%=image_tag("no_image_user.png", size: "50x50")%>
+        <% else %>
+          <%=image_tag(current_admin_user.avatar_image_url, size: "50x50")%>
+        <% end %>
+      <% else %>
+        <% if current_student.avatar.blank? %>
+          <%=image_tag("no_image_user.png", size: "50x50")%>
+        <% else %>
+          <%=image_tag(current_student.avatar_url, size: "50x50")%>
+        <% end %>
+      <% end %>
       </li>
     </ul>
   </div>
 </nav>
+<% end %>
 <div class="container my-container">
     <%= yield %>
     </div>

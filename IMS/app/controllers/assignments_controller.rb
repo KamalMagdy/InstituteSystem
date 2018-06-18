@@ -9,7 +9,10 @@ class AssignmentsController < InheritedResources::Base
   def create 
     params[:assignment][:name] = params[:name]
     params[:assignment][:course_id] = params[:course_id]
-    super
+    super do |format|
+      flash[:notice] = "Assignment was Successfuly created"
+      redirect_to assignments_path and return if resource.valid?
+    end
   end
 
   def index 
