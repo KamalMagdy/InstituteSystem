@@ -2,16 +2,15 @@
 <div class="container chat-container clearfix">
     <div class="people-list" id="people-list">
       <div class="search">
-        <input type="text" id="myInput" placeholder="Search for names.." onkeyup="myFunction()" />
+        <input type="text" placeholder="search" />
         <i class="fa fa-search"></i>
       </div>
       <ul class="list">
-      
-      <% @students.each do |student| %>
-        <li class="clearfix">  
-          <a href="/students/messages/<%= student.id  %>"><img src="<%=  student.avatar  %>" class="rounded" width="50px" alt="avatar"/></a>
+      <% @admins.each do |admin| %>
+        <li class="clearfix">
+          <a href="/admins/messages/<%= admin.id  %>"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar"/></a>
           <div class="about">
-            <a href="/students/messages/<%= student.id  %>"><div class="name"><%= student.name %></div></a>
+            <a href="/admins/messages/<%= admin.id  %>"><div class="name"><%= admin.name %></div></a>
           </div>
         </li>
         <% end %>  
@@ -24,11 +23,11 @@
         <i class="fa fa-chevron-right"></i>
       </div>
       <div class="chat-header clearfix">
-        <img src="<%= @student.avatar  %>" width="50px" class="rounded" alt="avatar" />
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
         
         <div class="chat-about">
-          <div class="chat-with">Chat with <%= @student.name %></div>
-          <div class="chat-num-messages">already<%= @messages.count %> messages</div>
+          <div class="chat-with">Chat with <%= @admin.name %></div>
+          <div class="chat-num-messages">already <%= @messages.count %> messages</div>
         </div>
       </div> 
 
@@ -44,7 +43,7 @@
           <%  if message.sender_id == @sender_id then %>
             <div class="message-data align-right">
               <span class="message-data-time" ><%= message.created_at.strftime(' %A  %FT %I:%M %p') %></span> &nbsp; &nbsp;
-              <span class="message-data-name" ><%= @student.name %></span> <i class="fa fa-circle me"></i>
+              <span class="message-data-name" ><%= @admin.name %></span> <i class="fa fa-circle me"></i>
             </div>
             <div class="message other-message float-right">
             <%= message.message %>
@@ -81,14 +80,12 @@
 </div>
 
 
-
     <script>  
+
+
     $(document).on('click','.open-list', function(){
       $('.people-list').hasClass('people-list-opened') ? $('.people-list').removeClass('people-list-opened') : $('.people-list').addClass('people-list-opened');
     })
-
-   
-
       
       
       
@@ -100,7 +97,7 @@
         channel = pusher.subscribe('chat-<%= @sender_model  %>-<%= @sender_id %>');
         channel.bind('chat', function(data) {
           console.log(data)
-          $('#chat_chat').append('<li><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i><%= @student.name %></span><span class="message-data-time">10:20 AM, Today</span></div><div class="message my-message">' +data.message+ '</div></li>');
+          $('#chat_chat').append('<li><div class="message-data"><span class="message-data-name"><i class="fa fa-circle online"></i><%= @admin.name %></span><span class="message-data-time">10:20 AM, Today</span></div><div class="message my-message">' +data.message+ '</div></li>');
           $(".chat-history").scrollTop($(".chat-history")[0].scrollHeight);
         });
     $('#send').on('click',function(){
@@ -108,13 +105,13 @@
         '</div><div class="message other-message float-right">'+ $('#message-to-send').val() +'</div></li>');
         $(".chat-history").scrollTop($(".chat-history")[0].scrollHeight);
       $.ajax({
-        url : '<%= message_url  %>',
+        url : '<%= message2_url  %>',
         method : 'POST',
         data :{ 'message' : $('#message-to-send').val() ,
                 'sender_id' : '<%= @sender_id  %>',
                 'sender_model' : '<%= @sender_model  %>',
-                'receiver_id' : '<%= @student.id  %>',
-                'receiver_model' : 'student',
+                'receiver_id' : '<%= @admin.id  %>',
+                'receiver_model' : 'admin',
                 },
         headers: {
         'X-CSRF-Token': document.querySelector("meta[name=csrf-token]").content

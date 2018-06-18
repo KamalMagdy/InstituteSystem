@@ -2,8 +2,25 @@
 
 class Students::SessionsController < Devise::SessionsController
  # require 'recaptcha.rb'
-      #before_action :check_captcha 
-      # before_action :banned?      
+
+  def after_sign_in_path_for(resource)
+    if resource.sign_in_count == 1
+        return '/students/edit'
+    else
+        return '/home'
+    end
+  end
+
+     
+      #before_action :check_captcha
+      def new
+          if current_admin_user.present?
+            redirect_to '/admin', flash: {error: 'You are logged as an admin!'}
+          else
+            super
+          end  
+      end
+
   private
     def check_captcha
       unless verify_recaptcha

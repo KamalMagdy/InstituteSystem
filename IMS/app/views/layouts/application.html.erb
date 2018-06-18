@@ -5,16 +5,18 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
+
   <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
 
   <body>
   <div class="container-fluid">
    <div class="row">
-
     <div class="col-sm-2 sidebar">
       <nav>
       <a class="navbar-brand logo" href="#"><%=image_tag("35526972_1706158386165401_3881246350645395456_n.png", size: "80x70")%></a>
@@ -44,7 +46,7 @@
           <li><%= link_to 'Add a new course',"/courses/new" %></li>
            <li><%= link_to 'All courses',"/courses/1/allcourses" %></li>
            <li><%= link_to 'Upload Timetable', "/timetables/new"%></li>
-           <li><%= link_to 'New Event',"/events/new" %></li>
+           <li><%= link_to 'New Event',"/admin/events/new" %></li>
 
           <% end %>
           <% if current_admin_user.role=="Instructor" %>
@@ -86,6 +88,7 @@
           <% end %>
       </li>
     </ul>
+
     <ul class="navbar-nav nav-icons col-sm-10 justify-content-end">
       <li class="nav-item">
         <%=image_tag("notification.png")%>
@@ -119,6 +122,5 @@
    </div>
   </div>
   
-    
-  </body>
+</body>
 </html>

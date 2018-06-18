@@ -5,8 +5,9 @@ class Student < ActiveRecord::Base
   validates :group_id, presence: true
 
     #belongs_to :track
-    has_many :messages
-    has_many :notifications
+    has_many :messages, as: :sender
+    has_many :messages, as: :receiver
+    has_many :usernotifications
     belongs_to :group
     has_one :cv
     acts_as_commontator

@@ -1,34 +1,87 @@
 <div class="container">
   <div class="row my-wrapper">
     <div class="col-sm-8">
+    <% if current_admin_user==nil %>
      <div class="my-inputs">
-        <form>
+     <%= form_for @post , html: { multipart: true } do |f| %>
+      <% if @post.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(post.errors.count, "error") %> prohibited this track from being saved:</h2>
+    
+          <ul>
+          <% @post.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+        <div class="field">
+        <%= f.hidden_field :student_id, value: current_student.id %>
+      </div>
           <div class="form-group">
-          <textarea class="form-control publish-post" rows="3" placeholder="Publish a new post.."></textarea>
-          <input type="text" class="form-control my-tags" placeholder="Enter tags">
+          <textarea class="form-control publish-post" name="body"  rows="3" placeholder="Publish a new post.."></textarea>
+          <input type="text" class="form-control my-tags" name="tag_list" placeholder="Enter tags">
         </div>
         <div class="btn-div">
-          <a class="btn btn-primary" href="#" role="button">Publish Post</a>
+          <button class="btn btn-primary" type="submit">Publish Post</button>
         </div>
-        </form>
+        <% end %>
      </div>
-
+    <% end %>
+    
     <% @posts.each do |post| %>
      <div class="my-post">
       <div class="post-info">
         <h1><%= post.student.name %></h1>
-        <div id='tag_cloud'>
-      <% tag_cloud Post.tag_counts, %w{s m l} do |tag, css_class| %>
-        <%= link_to tag.name, tag_path(tag.name), class: css_class %>
+        
+    
+      </div>
+
+      
+      <p><%= post.body %></p>
+
+      <% @postshow = Post.find(post.id)  %>
+      <div id='tag_cloud'>
+      <% tag_cloud @postshow.tag_counts, %w{s m l} do |tag, css_class| %>
+        <%= link_to tag.name, tag_path(tag.id), class: css_class %>
       <% end %>
     </div>
-      </div>
-      <p><%= post.body %></p>
       <div class="post-likes">
-        <a href="#"><%=image_tag("like.png")%></a>
-        <a href="#"><%=image_tag("dislike.png")%></a>
-      </div>
+      <% if current_admin_user==nil %>
+      <%= link_to like_post_path(@postshow), method: :put do %> 
+        <%=image_tag("like.png")%>
+        <%= @postshow.get_upvotes.size %>
+        <% end %>
+      <% end %>
+      
+      <% if current_admin_user==nil %> 
+      <%= link_to dislike_post_path(@postshow), method: :put do %>
+        <%=image_tag("dislike.png")%>
+        <%= @postshow.get_downvotes.size %>
+      <% end %>
+      <% end %>
+            </div>
+
+            <%= commontator_thread(@postshow) %>
+            <% @posts_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{post.id} and resource_type='Post'") %>
+            <% for @post_comment in @posts_comments %>
+            <% @admin_name = AdminUser.where(id: @post_comment['author_id']).take %>
+            <p><%= @admin_name.name %>:::
+               <%= @post_comment['body'] %></p> 
+        
+           <% end %>
+
+           <% if current_admin_user!=nil %>
+   <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
+   <% end %>
+
+   
+    <% if current_student == @postshow.student %>
+        <td><%= link_to 'Edit', edit_post_path(post) %></td>
+        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
      </div>
+     
     </div>
     <% end %>
     <div class="col-sm-4">
@@ -69,64 +122,6 @@
     </div>
   </div>
 </div>
-
-
-<% if current_admin_user==nil %>
-<%= render template: "posts/new" %> 
-<% end %>
-<h1>Posts</h1>
-
-
-<% @posts.each do |post| %>
-  <div>
-    post body : <%= post.body %>
-    </br>
-    created by : <%= post.student.name %>
-    </br>
-
-   <% @postshow = Post.find(post.id)  %>
-
-   <% if current_admin_user==nil %>
-    <%= link_to like_post_path(@postshow), method: :put do %> 
-      Like
-      <%= @postshow.get_upvotes.size %>
-      <% end %>
-    <% end %>
-    
-    <% if current_admin_user==nil %> 
-    <%= link_to dislike_post_path(@postshow), method: :put do %>
-      DisLike
-      <%= @postshow.get_downvotes.size %>
-    <% end %>
-    <% end %>
-
-    <div id='tag_cloud'>
-  <% tag_cloud @postshow.tag_counts, %w{s m l} do |tag, css_class| %>
-    <%= link_to tag.name, tag_path(tag.id), class: css_class %>
-  <% end %>
-</div>
-
-    <%= commontator_thread(@postshow) %>
-    <% @posts_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{post.id} and resource_type='Post'") %>
-    <% for @post_comment in @posts_comments %>
-    <% @admin_name = AdminUser.where(id: @post_comment['author_id']).take %>
-    <p><%= @admin_name.name %>:::
-       <%= @post_comment['body'] %></p> 
-
-   <% end %>
-
-   <% if current_admin_user!=nil %>
-   <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
-   <% end %>
-
-   
-    <% if current_student == @postshow.student %>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    <% end %>
-  </div>
-<br>
-<% end %>
 
 <iframe
     width="350"
