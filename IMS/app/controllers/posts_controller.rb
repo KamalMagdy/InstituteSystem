@@ -1,5 +1,6 @@
 class PostsController < InheritedResources::Base
-  
+  # before_action :require_login
+
   def upvote 
     @post = Post.find(params[:id])
     @post.upvote_by current_student
@@ -81,6 +82,11 @@ end
     end
   end
 
+  # def require_login
+  #   unless current_student || current
+  #     redirect_to "http://localhost:3000/students/sign_in"
+  #   end
+  # end
   
   protected
   def post_params

@@ -2,12 +2,31 @@ ActiveAdmin.register Student do
 
   permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :group_id,  track_ids: []
 
-controller do 
-  def create
-    super 
-    # track_id = 1
+  controller do 
+    def create
+      if params[:student][:track_ids] == nil
+        flash[:notice] = "please select your track"
+        redirect_to :action => :new
+      else
+    super
+      end 
+      # track_id = 1
+    end
   end
-end
+
+
+  controller do 
+    def update
+      if params[:student][:track_ids] == nil
+        flash[:notice] = "please select your track"
+        redirect_to :action => :edit
+      else
+    super
+      end 
+      # track_id = 1
+    end
+  end
+
    before_create do |order|
      params[:tracks] = params[:student][:track_ids]
    end

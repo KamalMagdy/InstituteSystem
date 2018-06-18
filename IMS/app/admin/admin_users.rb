@@ -44,6 +44,17 @@ controller do
   end
 end 
 
+controller do
+  def scoped_collection
+    
+    if current_admin_user.role == "Manager"
+    AdminUser.all
+    else
+      AdminUser.where(:role => "Instructor")
+    end
+  end
+  end
+
     after_create do |user|
       if current_admin_user.role == "Supervisor"
         @role = ActiveRecord::Base.connection.exec_query("update admin_users set role = 'Instructor' where id = '#{@admin_user.id}'")
