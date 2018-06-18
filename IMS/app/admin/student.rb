@@ -4,24 +4,32 @@ ActiveAdmin.register Student do
 
   controller do 
     def create
+      if current_admin_user.role != "Supervisor"
       if params[:student][:track_ids] == nil
         flash[:notice] = "please select your track"
         redirect_to :action => :new
       else
     super
       end 
+    else
+      super
+    end
     end
   end
 
 
   controller do 
     def update
+      if current_admin_user.role != "Supervisor"
       if params[:student][:track_ids] == nil
         flash[:notice] = "please select your track"
         redirect_to :action => :edit
       else
     super
       end 
+    else
+      super
+    end
     end
   end
 
