@@ -17,7 +17,6 @@ ActiveAdmin.register AdminUser do
     end
   end
 
-
   controller do 
   def update  
     if(params[:admin_user][:role] == "Supervisor")
@@ -36,7 +35,6 @@ end
 
 controller do
   def index
-puts "djjjjjjjjjjjjjjjjj"
    if current_admin_user.role == "Manager"
       @users = AdminUser.where(:role => "Manager")
    else

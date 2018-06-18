@@ -3,7 +3,15 @@
 class Students::SessionsController < Devise::SessionsController
  # require 'recaptcha.rb'
 
-      #before_action :check_captcha
+  def after_sign_in_path_for(resource)
+    if resource.sign_in_count == 1
+        return '/students/edit'
+    else
+        return '/home'
+    end
+  end
+
+      # before_action :check_captcha
   private
     def check_captcha
       unless verify_recaptcha
@@ -13,14 +21,6 @@ class Students::SessionsController < Devise::SessionsController
         respond_with resource
       end 
     end
-  def after_sign_in_path_for(resource)
-    if resource.sign_in_count == 1
-        return '/students/edit'
-    else
-        return '/home'
-    end
-  end
-
 
   # before_action :configure_sign_in_params, only: [:create]
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # get '/rails/db', to: '/home'
   resources :timetables
   resources :staffcourses
   devise_scope :student do
@@ -8,7 +9,6 @@ Rails.application.routes.draw do
   resources :events
   resources :messages
   get 'message' , to: 'messages#index'
-
   get 'notifications', to:'notifications#index' 
   get 'current_user' => "home#current_user"
 
@@ -69,6 +69,7 @@ match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
     get 'students/sign_up' => 'errors/error404'
+    # get 'rails/db' => 'errors/error404'
   end
 class ActiveAdmin::Devise::SessionsController
    	def after_sign_in_path_for(resource)

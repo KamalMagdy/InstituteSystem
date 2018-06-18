@@ -14,7 +14,6 @@
   <body>
   <div class="container-fluid">
    <div class="row">
-
     <div class="col-sm-2 sidebar">
       <nav>
       <a class="navbar-brand logo" href="#"><%=image_tag("logo.png")%></a>
@@ -44,7 +43,7 @@
           <li><%= link_to 'Add a new course',"/courses/new" %></li>
            <li><%= link_to 'All courses',"/courses/1/allcourses" %></li>
            <li><%= link_to 'Upload Timetable', "/timetables/new"%></li>
-           <li><%= link_to 'New Event',"/events/new" %></li>
+           <li><%= link_to 'New Event',"/admin/events/new" %></li>
 
           <% end %>
           <% if current_admin_user.role=="Instructor" %>
@@ -84,6 +83,7 @@
           <% end %>
       </li>
     </ul>
+
     <ul class="navbar-nav nav-icons col-sm-10 justify-content-end">
       <li class="nav-item">
         <a class="nav-link" href="#"><%=image_tag("notification.png")%></a>
@@ -104,6 +104,5 @@
    </div>
   </div>
   
-    
-  </body>
+\  </body>
 </html>
