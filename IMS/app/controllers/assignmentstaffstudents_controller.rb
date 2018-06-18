@@ -49,4 +49,3 @@ class AssignmentstaffstudentsController < InheritedResources::Base
     params.require(:assignmentstaffstudent).permit(:derlivered_assignment, :assignment_id, :student_id, :admin_user_id, :file, :course_id, :codeReview)
     end
 end
-

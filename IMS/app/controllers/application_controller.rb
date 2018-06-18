@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
       devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
       devise_parameter_sanitizer.permit :account_update, keys: added_attrs
     end
+
 def authenticate_admin_user!
    super
    puts current_admin_user.role
@@ -13,7 +14,7 @@ def authenticate_admin_user!
 end
 # def after_sign_in_path_for(admin_user)
 #   admin_user.Instructor? ? admin_dashboard_path : root_path 
-# end
+
 
     def current_ability
       @current_ability ||= Ability.new(current_student)

@@ -11,7 +11,16 @@ class Students::SessionsController < Devise::SessionsController
     end
   end
 
-      # before_action :check_captcha
+     
+      #before_action :check_captcha
+      def new
+          if current_admin_user.present?
+            redirect_to '/admin', flash: {error: 'You are logged as an admin!'}
+          else
+            super
+          end  
+      end
+
   private
     def check_captcha
       unless verify_recaptcha

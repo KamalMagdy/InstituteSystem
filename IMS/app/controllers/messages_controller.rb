@@ -1,44 +1,75 @@
 class MessagesController < ApplicationController
-  def index
+  before_action :authenticate
+
+  def authenticate
     if current_student.present? 
-      session[:user_id] = current_student.id
-      session[:user_model] = 'student'
+      authenticate_student!
     else
-      session[:user_id] = current_admin_user.id
-      session[:user_model] = 'admin'  
-    end 
-    @messages = Message.all
-    @message = Message.new
-  end
-
-  def new
-    @message = Message.new
-  end
-
-  def create
-    message = Message.new
-    message.message = params[:message]
-    message.sender_id = params[:sender_id]
-    message.sender_model= params[:sender_model]
-    message.receiver_id= params[:receiver_id]
-    message.receiver_model= params[:receiver_model]
-    message.save
-
-    #Pusher.trigger("chat-1", "chat", {'username':'khaled'})
-    respond_to do |format|
-      if message.save
-        puts 'aaa'
-        format.html { redirect_to message, notice: 'Message was successfully posted.' }
-        format.json { render :show, status: :created, location: @message }
-      else
-        puts "ssss"
-        format.html { render :new }
-        format.json { render json: message.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-end  
-
-
+      authenticate_admin_user!
+    end  
+  end  
+    def index
+        if current_student.present? then 
+          @sender_id = current_student.id
+          @sender_model = 'student'
+          @sender_name = current_student.name   
+        else 
+          @sender_id = current_admin_user.id
+          @sender_model = 'admin'
+          @sender_name = current_admin_user.name 
         
+        end
+        @receiver_model = 'student'   
+        @student = Student.find(params[:id])
+        @students = Student.all.where.not(id: current_student)
+        
+        @messages = Message.where('sender_id=? AND receiver_id=?  AND sender_model=?',
+        @sender_id , params[:id] , @sender_model  )
+                  .or(Message.where('sender_id=? AND receiver_id=?  AND receiver_model=?',
+        params[:id], @sender_id , @sender_model ))
 
+    end
+    def index2
+        if current_student.present? then 
+          @sender_id = current_student.id
+          @sender_model = 'student'
+          @sender_name = current_student.name
+        else 
+          @sender_id = current_admin_user.id
+          @sender_model = 'admin'
+          @sender_name = current_admin_user.name  
+        end
+        @admin = AdminUser.find(params[:id])
+        @admins = AdminUser.all.where.not(id: current_admin_user)
+        @messages = Message.where('sender_id=? AND receiver_id=?  AND sender_model=?',
+        @sender_id , params[:id] , @sender_model ).or(Message.where('sender_id=? AND receiver_id=?  AND receiver_model=?',
+        params[:id], @sender_id , @sender_model ))
+    end  
+    
+    def create  
+      Pusher.trigger("chat-student-#{params[:receiver_id]}",
+       "chat", 
+    { "message":  params[:message]}) 
+    @message = Message.create(message_params)
+      render :layout => false
+    end
+
+    def create2
+      Pusher.trigger("chat-admin-#{params[:receiver_id]}",
+      "chat", 
+    { "message":  params[:message]}) 
+      @message = Message.create(message_params)
+     render :layout => false
+    end  
+  
+    private
+    def message_params
+      params.permit(:message, :sender_id, :sender_model, :receiver_id, :receiver_model )
+    end
+    def current_user
+      if current_student.present? 
+         @user = current_student.id
+         render json: @user   
+       end
+   end
+  end

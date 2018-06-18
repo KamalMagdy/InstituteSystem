@@ -1,5 +1,6 @@
 class CvsController < InheritedResources::Base
   before_action :authenticate_admin_user!, only: [:index]
+  # before_action :authenticate_admin_user| authenticate_student!, only: [:index]
   before_action :authenticate_student!, only: [:new, :edit]
 
   def company
@@ -62,4 +63,3 @@ class CvsController < InheritedResources::Base
       params.require(:cv).permit(:path, :student_id)
     end
 end
-

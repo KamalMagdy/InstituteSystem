@@ -1,3 +1,3 @@
 class Notification < ApplicationRecord
-    belongs_to :student
+    has_many :usernotifications
 end

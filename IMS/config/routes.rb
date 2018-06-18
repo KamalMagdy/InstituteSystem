@@ -6,11 +6,19 @@ Rails.application.routes.draw do
      get "/" => "students/sessions#new" 
   end
   get 'events/index'
+
   resources :events
-  resources :messages
-  get 'message' , to: 'messages#index'
+  
+
+
+  get 'students/messages/:id' , to: "messages#index", as: 'user'
+  post 'messages/students' , to: "messages#create",  as: 'message'
+
+  get 'admins/messages/:id' , to: "messages#index2"
+  post 'messages/admins' , to: "messages#create2",  as: 'message2'
+
   get 'notifications', to:'notifications#index' 
-  get 'current_user' => "home#current_user"
+  
 
   resources :cvs do
     get 'company', on: :collection
@@ -53,7 +61,10 @@ Rails.application.routes.draw do
   get "/tochoosetrack", to: "coursestafftracks#beforenew"
   resources :tracks
   resources :groups
-  resources :posts, path: 'home' do
+
+
+  resources :posts ,path:'home' do
+
   member do
     put "like", to: "posts#upvote"
     put "dislike", to: "posts#downvote"
@@ -65,6 +76,7 @@ match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
   devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do
     get 'students/sign_in' => 'students/sessions#new'
@@ -72,6 +84,14 @@ match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
     # get 'rails/db' => 'errors/error404'
   end
 class ActiveAdmin::Devise::SessionsController
+    def new
+        if current_student.present?
+          redirect_to '/home', flash: {error: 'You logged in as a student!'}
+        else 
+            super
+        end  
+    end  
+
    	def after_sign_in_path_for(resource)
     # if current_admin_user.Instructor
     if current_admin_user.role == "Instructor"
@@ -80,6 +100,7 @@ class ActiveAdmin::Devise::SessionsController
         '/admin/dashboard'
   	end
     end
+
 end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+# For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
