@@ -37,13 +37,7 @@ ActiveAdmin.register Student do
     end
   controller do 
     def destroy 
-      student = Student.find(params[:id])
-      sttrack = List.where(student_id: params[:id])
-      student.destroy!
-
       
-      sttrack = List.find(sttrack[0]["id"])
-      sttrack.destroy!
     end  
   end
 

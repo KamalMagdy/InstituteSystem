@@ -4,11 +4,19 @@ class Students::SessionsController < Devise::SessionsController
  # require 'recaptcha.rb'
 
   def after_sign_in_path_for(resource)
-    if resource.sign_in_count == 1
+        if resource.is_a?(Student) && resource.banned?
+      sign_out resource
+      flash[:error] = "This account has been suspended for violation"
+      root_path
+    else
+          if resource.sign_in_count == 1
         return '/students/edit'
     else
         return '/home'
     end
+
+    end
+   end
   end
 
       # before_action :check_captcha
