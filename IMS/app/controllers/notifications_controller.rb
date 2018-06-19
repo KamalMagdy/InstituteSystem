@@ -7,9 +7,15 @@ class NotificationsController < ApplicationController
       puts @count_of_notifications
     end  
   end
-  # private 
-  #   def push_notifications(id , notification)
-  #     Pusher.trigger("notifications-#{id}", "new_notification", 
-  #     { "body": notification} ) 
-  #   end
+
+  def seen
+    puts params[:id]
+    @notifications = Usernotification.where("student_id = ? AND seen = ?",params[:id], 0)
+      for  @notification in @notifications
+         @notification.seen = 1
+         @notification.save 
+      end  
+      
+  end  
+   
 end

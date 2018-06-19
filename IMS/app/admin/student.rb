@@ -2,12 +2,37 @@ ActiveAdmin.register Student do
 
   permit_params :email, :password, :password_confirmation, :name, :birth, :mobile, :gender, :avatar, :group_id,  track_ids: []
 
-controller do 
-  def create
-    super 
-    # track_id = 1
+  controller do 
+    def create
+      if current_admin_user.role != "Supervisor"
+        if params[:student][:track_ids] == nil
+          flash[:notice] = "please select your track"
+          redirect_to :action => :new
+        else
+          super
+        end 
+      else
+        super
+      end
+    end
   end
-end
+
+
+  controller do 
+    def update
+      if current_admin_user.role != "Supervisor"
+        if params[:student][:track_ids] == nil
+          flash[:notice] = "please select your track"
+          redirect_to :action => :edit
+        else
+          super
+        end 
+      else
+        super
+      end
+    end
+  end
+
    before_create do |order|
      params[:tracks] = params[:student][:track_ids]
    end
@@ -25,6 +50,14 @@ end
     end
   end
 
+  controller do 
+    def destroy 
+      @st = Student.find(params[:id])
+      @st.banned = true
+      @st.save!
+    end  
+   end
+
   after_update do |user|
     if current_admin_user.role != "Supervisor"
     @trackid=  params[:student][:track_ids]
@@ -32,9 +65,9 @@ end
       @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
       @trackid = @tracks_data.track_id
     end
-
     @list = ActiveRecord::Base.connection.exec_query("update lists set track_id = '#{@trackid}' where student_id = '#{@student.id}'")
   end
+
 controller do 
   def destroy 
     student = Student.find(params[:id])
@@ -74,7 +107,7 @@ form do |f|
     f.input :avatar
     f.input :mobile
     if current_admin_user.role != "Supervisor"
-    f.input :tracks, :as => :radio, collection => Track.all
+      f.input :tracks, :as => :radio, collection => Track.all
     end
     f.input :group
   end

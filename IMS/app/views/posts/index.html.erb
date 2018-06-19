@@ -17,10 +17,10 @@
       <% end %>
         <div class="field">
         <%= f.hidden_field :student_id, value: current_student.id %>
-      </div>
+        </div>
           <div class="form-group">
           <textarea class="form-control publish-post" name="body"  rows="3" placeholder="Publish a new post.."></textarea>
-          <input type="text" class="form-control my-tags" name="tag_list" placeholder="Enter tags">
+          <input type="text" class="form-control my-tags" name="tag_list" placeholder="Enter tags separated by commas">
         </div>
         <div class="btn-div">
           <button class="btn btn-primary" type="submit">Publish Post</button>
@@ -28,16 +28,30 @@
         <% end %>
      </div>
     <% end %>
-    
+    </div>
+        <div class="col-sm-4">
+      <div class="feed">
+        <div class="card">
+          <div class="card-header">
+            Events
+          </div>
+          <div class="card-body">
+            <% @events.each do |event| %>
+            <h5 class="card-title"><%= event.title %></h5>
+            <p class="card-text"><%= event.body %></p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <% @posts.each do |post| %>
+    <div class="col-sm-8">
+    <br/>
      <div class="my-post">
       <div class="post-info">
         <h1><%= post.student.name %></h1>
-        
-    
       </div>
-
-      
       <p><%= post.body %></p>
 
       <% @postshow = Post.find(post.id)  %>
@@ -45,7 +59,7 @@
       <% tag_cloud @postshow.tag_counts, %w{s m l} do |tag, css_class| %>
         <%= link_to tag.name, tag_path(tag.id), class: css_class %>
       <% end %>
-    </div>
+      </div>
       <div class="post-likes">
       <% if current_admin_user==nil %>
       <%= link_to like_post_path(@postshow), method: :put do %> 
@@ -72,8 +86,8 @@
            <% end %>
 
            <% if current_admin_user!=nil %>
-   <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
-   <% end %>
+          <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
+          <% end %>
 
    
     <% if current_student == @postshow.student %>
@@ -81,45 +95,8 @@
         <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     <% end %>
      </div>
-     
     </div>
     <% end %>
-    <div class="col-sm-4">
-      <div class="feed">
-        <div class="card">
-          <div class="card-header">
-            Deadlines
-          </div>
-          <div class="card-body">
-            <% @events.each do |event| %>
-            <h5 class="card-title"><%= event.title %></h5>
-            <p class="card-text"><%= event.body %></p>
-            <% end %>
-            <% @events.each do |event| %>
-            <h5 class="card-title"><%= event.title %></h5>
-            <p class="card-text"><%= event.body %></p>
-            <% end %>
-            <% @events.each do |event| %>
-            <h5 class="card-title"><%= event.title %></h5>
-            <p class="card-text"><%= event.body %></p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <div class="feed">
-        <div class="card">
-          <div class="card-header">
-            Events
-          </div>
-          <div class="card-body">
-            <% @events.each do |event| %>
-            <h5 class="card-title"><%= event.title %></h5>
-            <p class="card-text"><%= event.body %></p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 

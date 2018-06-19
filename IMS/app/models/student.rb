@@ -1,6 +1,6 @@
 class Student < ActiveRecord::Base
   validates :email, presence: true
-  validates :gender, presence: true
+  # validates :gender, presence: true
   validates :name, presence: true 
   validates :group_id, presence: true
 

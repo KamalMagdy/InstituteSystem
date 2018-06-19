@@ -5,18 +5,26 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
     <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <script>
-$(document).ready(function(){
-    pusher = new Pusher('ca9e35c50a6cc67c009f', {
+  $(document).ready(function(){
+   
+         var id = $('#noti_Button').attr('flag')
+         console.log(id)
+         if(id)
+        {     
+            pusher = new Pusher('ca9e35c50a6cc67c009f', {
         cluster: 'eu',
         encrypted: true
         })
-         var id = "<%=  %>"
-        var notificationsChannel = pusher.subscribe('notifications-'+id);
+        
+              var notificationsChannel = pusher.subscribe('notifications-'+id);
         notificationsChannel.bind('new_notification', function(notification){
                 console.log(notification)
                     var notif = notification.body;
@@ -30,12 +38,14 @@ $(document).ready(function(){
                         $('#noti_Counter').text(1)
                     }
                         $("#notifications div").append('<p>'+notif+ '</p>')
+                        
+                        
             });
         
     
     $('#noti_Counter')
         .css({ opacity: 0 })
-        .text('<%= @count_of_notifications %>') 
+        .text($('#noti_Button').attr('flag1')) 
         .css({ top: '15px'  ,  left: '-12px'})
         .animate({ top: '12px', opacity: 1 }, 500);
 
@@ -46,6 +56,12 @@ $(document).ready(function(){
             }
             else $('#noti_Button').css('background-color', '#FFF');
         });
+        $.ajax({
+          url : '<%= seen_url  %>',
+          method : 'POST',
+          data : {id : id},
+          success :function(){console.log("success")}
+                        });
 
         
 
@@ -65,16 +81,13 @@ $(document).ready(function(){
 
     $('#notifications').click(function () {
         return false;       
-    });
+    }); 
 
-
-        
-        
-        
+        }
+            
 });
-
-    </script>
-    
+  </script>
+   
 
   <script src='https://www.google.com/recaptcha/api.js'></script>
   </head>
@@ -84,11 +97,10 @@ $(document).ready(function(){
    <div class="row">
     <div class="col-sm-2 sidebar">
       <nav>
-      <a class="navbar-brand logo" href="#"><%=image_tag("logo.png")%></a>
+      <a class="navbar-brand logo" href="#"><%=image_tag("35526972_1706158386165401_3881246350645395456_n.png", size: "80x70")%></a>
         <ul>
         <% if current_admin_user==nil %>
-                           <% if current_student!=nil %>
-
+          <% if current_student!=nil %>
           <li><%= link_to 'Home',"/home" %></li>
           <li><%= link_to 'All courses',"/courses" %></li>
           <li><%= link_to 'upload cv',"/cvs/new" %></li>
@@ -96,14 +108,12 @@ $(document).ready(function(){
           <li><%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %></li>
            <li><%= link_to 'Download Current TimeTable',"/timetables" %></li>
           <li><%= link_to 'Logout', destroy_student_session_path, method: :get %></li>
-               <% end %>
-
+          <% end %>
         <% else %>
-        <% if current_admin_user.role=="Manager" %>
-          <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
-           <li><%= link_to 'New Event',"/admin/events/new" %></li>
-
-        <% end %>
+          <% if current_admin_user.role=="Manager" %>
+            <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
+            <li><%= link_to 'New Event',"/admin/events/new" %></li>
+          <% end %>
         <% if current_admin_user.role=="Supervisor" %>
           <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
           <li><%= link_to 'See the grades of the students',"/coursestudenttracks" %> </li>
@@ -128,6 +138,8 @@ $(document).ready(function(){
       </nav>
     </div>
     <div class="col-sm-10 my-content">
+       <% if current_admin_user==nil && current_student==nil%>
+       <% else %>
     <nav class="navbar navbar-expand-lg navbar-light bg-secondary my-nav">
   
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,52 +165,64 @@ $(document).ready(function(){
     </ul>
 
     <ul class="navbar-nav nav-icons col-sm-10 justify-content-end">
-      <li class="nav-item " id='noti_Container'>
-                  <div id="noti_Counter"></div>   
-                  <div id="noti_Button" class='nav-link'><%= image_tag 'notification.png' %></div>    
-                  <div id="notifications">
-                      <h3>Notifications</h3>
-                      <div>
-
-                      <% if @notifications.blank? %>
-                      <p>no notifications yet</p>
-                      <% else %>
-                      <% @notifications.each do |notification| %>
-                          <p><%= notification.notification.body %></p>
-                          <% end %> 
-                      <% end %>
-
-                      </div>
-                  </div>
+    <li class="nav-item " id='noti_Container'>
+        <div id="noti_Counter"></div>
+             <% if current_student!= nil   
+             @notifications = Usernotification.where("student_id = ? AND seen = ?",current_student.id, 0)
+             @count_of_notifications = @notifications.count
+             %>
+        <div id="noti_Button" flag='<%= current_student.id %>' flag1='<%= @count_of_notifications   %>' class='nav-link'><%= image_tag 'notification.png' %></div> 
+                <% end  %>
+        <div id="notifications">
+        <h3>Notifications</h3>
+        <div>
+                <% if @notifications.blank? %>
+                <p>no notifications yet</p>
+                <% else %>
+                <% @notifications.each do |notification| %>
+                    <p><%= notification.notification.body %></p>
+                    <% end %> 
+                <% end %>
+        </div>
+        </div>
     </li>
-
-
-
-
-
-
-
-      </li>
       <li class="nav-item">
                 <% if current_student.present?  then %>
-                      <a class="nav-link" href="/students/messages/<%= current_student.id  %>"><%=image_tag("chat-outline.png")%></a>
-                 <%  else %>
-                      <a class="nav-link" href='/students/messages/1'><%=image_tag("chat-outline.png")%></a>
-                <% end %>
+                <a class="nav-link" href="/students/messages/<%= current_student.id  %>"><%=image_tag("chat-outline.png")%></a>
+            <%  else %>
+                <a class="nav-link" href='/students/messages/1'><%=image_tag("chat-outline.png")%></a>
+            <% end %>
       </li>
+
       <li class="nav-item">
-              <% if current_student.present?  then %>
-                    <a class="nav-link" href='/admins/messages/1'><%=image_tag("chat-outline.png")%></a>
-               <%  else %>
-                    <a class="nav-link" href='/admins/messages/<%= current_admin_user.id %> '><%=image_tag("chat-outline.png")%></a>
-              <% end %>
-    </li>
+            <% if current_student.present?  then %>
+                <a class="nav-link" href='/admins/messages/1'><%=image_tag("chat2.png" , size: "30x30")%></a>
+            <%  else %>
+                <a class="nav-link" href='/admins/messages/<%= current_admin_user.id %> '><%=image_tag("chat2.png" , size: "30x30")%></a>
+            <% end %>
+                    
+      </li>
+
+
       <li class="nav-item">
-        <a class="nav-link disabled" href="#"><%=image_tag("002-user-1.png")%></a>
+      <% if current_student.blank? %>
+        <% if current_admin_user.avatar_image.blank? %>
+          <%=image_tag("no_image_user.png", size: "50x50")%>
+        <% else %>
+          <%=image_tag(current_admin_user.avatar_image_url, size: "50x50")%>
+        <% end %>
+      <% else %>
+        <% if current_student.avatar.blank? %>
+          <%=image_tag("no_image_user.png", size: "50x50")%>
+        <% else %>
+          <%=image_tag(current_student.avatar_url, size: "50x50")%>
+        <% end %>
+      <% end %>
       </li>
     </ul>
   </div>
 </nav>
+<% end %>
 <div class="container my-container">
     <%= yield %>
     </div>
@@ -206,5 +230,5 @@ $(document).ready(function(){
    </div>
   </div>
   
-  </body>
+</body>
 </html>

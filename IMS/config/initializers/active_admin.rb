@@ -51,7 +51,7 @@ ActiveAdmin.setup do |config|
   # Active Admin will automatically call an authentication
   # method in a before filter of all controller actions to
   # ensure that there is a currently logged in admin user.
-  #
+  
   # This setting changes the method which Active Admin calls
   # within the application controller.
   config.authentication_method = :authenticate_admin_user!

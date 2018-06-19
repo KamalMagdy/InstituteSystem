@@ -1,14 +1,19 @@
 <div class="chat-body">
 <div class="container chat-container clearfix">
-    <div class="people-list" id="people-list">
-      <div class="search">
-        <input type="text" placeholder="search" />
-        <i class="fa fa-search"></i>
-      </div>
+  <div class='row'>
+    <div class="people-list col-sm-3" id="people-list">
       <ul class="list">
+		 <h4> Lists of admins users   <h4>
       <% @admins.each do |admin| %>
         <li class="clearfix">
-          <a href="/admins/messages/<%= admin.id  %>"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar"/></a>
+         
+	<% if admin.avatar_image.blank? %>
+            <a href="/admins/messages/<%= admin.id  %>"><img src='/assets/no_image_user.png' class='rounded'  width='35px' alt='avatar' /></a>
+        <% else %>
+            <a href="/admins/messages/<%= admin.id  %>"><img src="<%= admin.avatar_image %>" class="rounded" width="50px" alt="avatar"/></a>
+        <% end %>
+
+
           <div class="about">
             <a href="/admins/messages/<%= admin.id  %>"><div class="name"><%= admin.name %></div></a>
           </div>
@@ -23,8 +28,11 @@
         <i class="fa fa-chevron-right"></i>
       </div>
       <div class="chat-header clearfix">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
-        
+		 <% if @admin.avatar_image.blank? %> 
+		<img src="/assets/no_image_user.png" width="50px" class="rounded" alt="avatar" />
+	      <% else %>
+	      <img src='<%= @admin.avatar_image  %>' width="50px" class="rounded" alt="avatar" />
+	      <% end %>  
         <div class="chat-about">
           <div class="chat-with">Chat with <%= @admin.name %></div>
           <div class="chat-num-messages">already <%= @messages.count %> messages</div>
@@ -36,7 +44,7 @@
 
     
       
-      <div class="chat-history">
+      <div class="chat-history col-sm-9">
         <ul id="chat_chat">
         <% @messages.each do |message| %>
           <li class="clearfix">
