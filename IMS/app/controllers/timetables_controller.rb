@@ -37,4 +37,3 @@ class TimetablesController < InheritedResources::Base
       params.require(:timetable).permit(:track_id, :timetable_link)
     end
 end
-

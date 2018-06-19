@@ -17,14 +17,10 @@ end
   index do
     selectable_column
     id_column
-    column :student_id
+    column :student
     column :path do |cv|
     link_to 'Download', cv.path_url
     end
-    # column :path do |cv|
-      # link_to cv.path.url, path_url  
-    # end
-    # column() { |cv| link_to 'Download', download, method: :get }
     actions
   end  
 

@@ -5,6 +5,8 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password',name: 'admin',role: 'Manager') if Rails.env.development?
+AdminUser.create!(email: 'admin@example.com', social_no: '45678908765678', password: 'password', password_confirmation: 'password',name: 'admin',role: 'Manager') if Rails.env.development?
 Track.create!(name: 'os',intake: '38',typeoftrack: '9 month') if Rails.env.development?
 Group.create!(name: 'A') if Rails.env.development?
+Student.create!(email: 'student@example.com', password: '123456', password_confirmation: '123456',name: 'student1' ,gender: 0 ,group_id: 1 ) if Rails.env.development?
+List.create!( student_id: 1, track_id: 1 ) if Rails.env.development?

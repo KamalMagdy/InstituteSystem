@@ -12,7 +12,6 @@ gem 'momentjs-rails'
 gem 'fasterer', '~> 0.4.1'
 gem "rubycritic", require: false
 gem 'api-ai-ruby'
-
 gem "chartkick"
 gem "mime-types"
 gem "cancan"
@@ -91,5 +90,5 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'acts_as_votable', '~> 0.11.1' 
+gem 'acts_as_votable', '~> 0.11.1'
 gem 'commontator', '~> 5.1.0'

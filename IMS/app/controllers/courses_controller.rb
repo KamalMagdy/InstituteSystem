@@ -42,6 +42,7 @@ class CoursesController < InheritedResources::Base
     @assignments_staff=[]
     @assignments_id=[]
     @assignments_review=[]
+    @assignments_name=[]
     @courseassignments_deadline=[]
     @courseassignments_description=[]
     @courseassignments_assignmentfile=[]
@@ -51,7 +52,6 @@ class CoursesController < InheritedResources::Base
     materials = ActiveRecord::Base.connection.exec_query("select * from coursestafftracks where course_id=#{@course.id}")
     for material in materials
     @mat = Coursestafftrack.find(material['id'])
-    # @materials_material.push("#{material['material']}")
     @materials_material.push(@mat.material_url)
     @materials_material_id.push("#{material['id']}")
     @materials_material_name.push("#{material['material_name']}")
@@ -61,18 +61,18 @@ class CoursesController < InheritedResources::Base
     for assignmentuploaded in assignmentsuploaded
     @assignments_delivered.push("#{assignmentuploaded['derlivered_assignment']}")
     @assig = Assignmentstaffstudent.find(assignmentuploaded['id'])
-    # @assignments_file.push("#{assignmentuploaded['file']}")
     @assignmentfile.push(@assig.file_url)
     @assignments_createdat.push("#{assignmentuploaded['created_at']}")
     @assignments_staff.push("#{assignmentuploaded['staff']}")
     @assignments_id.push("#{assignmentuploaded['id']}")
     @assignments_review.push("#{assignmentuploaded['codeReview']}")
+    @assname = Assignment.find(assignmentuploaded['assignment_id'])
+    @assignments_name.push("#{@assname.name}")
     end
     courseassignments = ActiveRecord::Base.connection.exec_query("select * from assignments where course_id=#{@course.id}")
     for courseassignment in courseassignments
     @courseassignments_deadline.push("#{courseassignment['deadline']}")
     @courseassignments_description.push("#{courseassignment['description']}")
-    # @courseassignments_assignmentfile.push("#{courseassignment['assignmentfile']}")
     @co = Assignment.find(courseassignment['id'])
     @courseassignments_assignmentfile.push(@co.assignmentfile_url)
     @courseassignments_staff.push("#{courseassignment['staff']}")
@@ -100,24 +100,12 @@ class CoursesController < InheritedResources::Base
         @coursestaff.created_at = course.created_at
         @coursestaff.updated_at = course.updated_at
         @coursestaff.save!
-        # @list = ActiveRecord::Base.connection.exec_query("insert into courses_tracks (course_id, track_id, created_at, updated_at) values ('#{course.id}', #{@trackid[0]["track_id"]}, '#{course.created_at}', '#{course.updated_at}')")
-        # @coursestaff = ActiveRecord::Base.connection.exec_query("insert into staffcourses (course_id, admin_user_id, created_at, updated_at) values ('#{course.id}', #{@instid}, '#{course.created_at}', '#{course.updated_at}')")
         redirect_to posts_path
       else
         flash[:notice] = "The course name must be unique"
         redirect_to posts_path
       end
   end
-  # def destroy
-  #   course = Course.find(params[:id])
-  #   course.destroy!
-  #   coursetrack = CoursesTrack.where(course_id: params[:id])
-  #   coursetrack = CoursesTrack.find(coursetrack[0]["id"])
-  #   coursetrack.destroy!
-  #   staffcourse = Staffcourse.where(course_id: params[:id])
-  #   staffcourse = Staffcourse.find(staffcourse[0]["id"])
-  #   staffcourse.destroy!
-  # end
   def new
     @course = Course.new
     @arrayofinstructornames=[]
@@ -149,13 +137,13 @@ class CoursesController < InheritedResources::Base
   end
   def update
     course = Course.find(session[:course])
-    course.name = params[:course][:name]
+    course.name = params[:name]
     course.save!
     existcoursefortheinstructor = Staffcourse.where(course_id: session[:course])
     updateinst = Staffcourse.find(existcoursefortheinstructor[0]["id"])
     updateinst.admin_user_id = params[:admin_user_id]
     updateinst.save! 
-    redirect_to posts_path
+    redirect_to :action => :allcourses
   end
 
   private

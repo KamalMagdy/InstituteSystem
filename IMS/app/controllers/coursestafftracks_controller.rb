@@ -44,9 +44,7 @@ class CoursestafftracksController < InheritedResources::Base
     end
   end  
   def beforenew
-    puts "okkkkkkkkkkkkkkk"
     @arrayofcourses = Staffcourse.where(admin_user_id: current_admin_user.id)
-    puts current_admin_user.id
     @arrayoftracks=[]
     @arrayoftracksnames=[]
     for @arrayofcourse in @arrayofcourses
@@ -84,7 +82,10 @@ class CoursestafftracksController < InheritedResources::Base
     params[:coursestafftrack][:material_type] = params[:material_type]
     params[:coursestafftrack][:course_id] = params[:course_id]
     params[:coursestafftrack][:material_name] = params[:material_name]
-    super
+    super do |format|
+      flash[:notice] = "Lecture was Successfuly created"
+      redirect_to coursestafftracks_path and return if resource.valid?
+    end
   end
 
   private

@@ -22,8 +22,9 @@ class AdminUser < ApplicationRecord
   has_many :staffs
   has_many :tracks, :through => :staffs
   accepts_nested_attributes_for :tracks
-
-  has_many :messages
+  has_many :messages, as: :sender
+  has_many :messages, as: :receiver
   devise :database_authenticatable, 
          :recoverable, :rememberable, :trackable, :validatable
+  mount_uploader :avatar_image, AvatarImageUploader
 end

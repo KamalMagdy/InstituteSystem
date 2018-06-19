@@ -1,7 +1,7 @@
 class AssignmentsController < InheritedResources::Base
   before_action :authenticate_admin_user!
   skip_before_action :verify_authenticity_token
-
+  
   def beforenewpost
     session[:track]= params[:track_id]
     redirect_to :action => :new
@@ -9,7 +9,10 @@ class AssignmentsController < InheritedResources::Base
   def create 
     params[:assignment][:name] = params[:name]
     params[:assignment][:course_id] = params[:course_id]
-    super
+    super do |format|
+      flash[:notice] = "Assignment was Successfuly created"
+      redirect_to assignments_path and return if resource.valid?
+    end
   end
 
   def index 
@@ -34,6 +37,8 @@ class AssignmentsController < InheritedResources::Base
         @arrayofcoursenames.push(@name.name)
       end
     end
+    
+
   end
   
   def new
