@@ -5,15 +5,15 @@ ActiveAdmin.register Student do
   controller do 
     def create
       if current_admin_user.role != "Supervisor"
-      if params[:student][:track_ids] == nil
-        flash[:notice] = "please select your track"
-        redirect_to :action => :new
+        if params[:student][:track_ids] == nil
+          flash[:notice] = "please select your track"
+          redirect_to :action => :new
+        else
+          super
+        end 
       else
-    super
-      end 
-    else
-      super
-    end
+        super
+      end
     end
   end
 
@@ -21,15 +21,15 @@ ActiveAdmin.register Student do
   controller do 
     def update
       if current_admin_user.role != "Supervisor"
-      if params[:student][:track_ids] == nil
-        flash[:notice] = "please select your track"
-        redirect_to :action => :edit
+        if params[:student][:track_ids] == nil
+          flash[:notice] = "please select your track"
+          redirect_to :action => :edit
+        else
+          super
+        end 
       else
-    super
-      end 
-    else
-      super
-    end
+        super
+      end
     end
   end
 
@@ -45,8 +45,10 @@ ActiveAdmin.register Student do
         @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
         @trackid = @tracks_data.track_id
       end
-      @list = ActiveRecord::Base.connection.exec_query("update lists set track_id = '#{@trackid}' where student_id = '#{@student.id}'")
+      UserNotifierMailer.welcome_email(@student).deliver_now
+      @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@student.id}', #{@trackid}, '#{@student.created_at}', '#{@student.updated_at}')")
     end
+  end
 
   controller do 
     def destroy 
@@ -54,10 +56,7 @@ ActiveAdmin.register Student do
       @st.banned = true
       @st.save!
     end  
-      UserNotifierMailer.welcome_email(@student).deliver_now
-      @list = ActiveRecord::Base.connection.exec_query("insert into lists (student_id, track_id, created_at, updated_at) values ('#{@student.id}', #{@trackid}, '#{@student.created_at}', '#{@student.updated_at}')")
-    end
-  end
+   end
 
   after_update do |user|
     if current_admin_user.role != "Supervisor"
@@ -66,9 +65,9 @@ ActiveAdmin.register Student do
       @tracks_data= Staff.where(admin_user_id: current_admin_user.id).take
       @trackid = @tracks_data.track_id
     end
-
     @list = ActiveRecord::Base.connection.exec_query("update lists set track_id = '#{@trackid}' where student_id = '#{@student.id}'")
   end
+
 controller do 
   def destroy 
     student = Student.find(params[:id])
@@ -108,7 +107,7 @@ form do |f|
     f.input :avatar
     f.input :mobile
     if current_admin_user.role != "Supervisor"
-    f.input :tracks, :as => :radio, collection => Track.all
+      f.input :tracks, :as => :radio, collection => Track.all
     end
     f.input :group
   end

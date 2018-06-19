@@ -75,7 +75,7 @@ match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
 
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
+  ActiveAdmin.routes(self)  ##>>>>>>>>>>>>>>>>>>de feha moshkla
 
   devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do
@@ -93,12 +93,11 @@ class ActiveAdmin::Devise::SessionsController
     end  
 
    	def after_sign_in_path_for(resource)
-    # if current_admin_user.Instructor
-    if current_admin_user.role == "Instructor"
-        '/home'
-    else 
-        '/admin/dashboard'
-  	end
+      if current_admin_user.role == "Instructor"
+          '/home'
+      else 
+          '/admin/dashboard'
+      end
     end
 
 end

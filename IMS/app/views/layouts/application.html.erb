@@ -23,7 +23,6 @@
         <ul>
         <% if current_admin_user==nil %>
           <% if current_student!=nil %>
-
           <li><%= link_to 'Home',"/home" %></li>
           <li><%= link_to 'All courses',"/courses" %></li>
           <li><%= link_to 'upload cv',"/cvs/new" %></li>
@@ -31,14 +30,12 @@
           <li><%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %></li>
            <li><%= link_to 'Download Current TimeTable',"/timetables" %></li>
           <li><%= link_to 'Logout', destroy_student_session_path, method: :get %></li>
-               <% end %>
-
+          <% end %>
         <% else %>
-        <% if current_admin_user.role=="Manager" %>
-          <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
-           <li><%= link_to 'New Event',"/admin/events/new" %></li>
-
-        <% end %>
+          <% if current_admin_user.role=="Manager" %>
+            <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
+            <li><%= link_to 'New Event',"/admin/events/new" %></li>
+          <% end %>
         <% if current_admin_user.role=="Supervisor" %>
           <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
           <li><%= link_to 'See the grades of the students',"/coursestudenttracks" %> </li>
