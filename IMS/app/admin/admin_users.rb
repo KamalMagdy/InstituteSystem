@@ -1,6 +1,14 @@
 ActiveAdmin.register AdminUser do
   permit_params :email, :banned, :password, :password_confirmation, :role, :avatar_image, :rolesupervisorcancreate, :social_no , :name,  track_ids: []
-  actions :index, :show ,:edit, :new
+  actions :index, :show ,:edit, :new, :destroy
+
+controller do 
+      def destroy 
+        @adminuser = AdminUser.find(params[:id])
+        @adminuser.banned = true
+        @adminuser.save!
+      end  
+    end
 
   controller do 
     def create 
