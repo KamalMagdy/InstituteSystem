@@ -1,183 +1,84 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>IMS</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<p id="notice"><%= notice %></p>
+<h1><%= @course.name %></h1>
+<br/>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
 
-  <script src='https://www.google.com/recaptcha/api.js'></script>
-  </head>
+<h4> Course Materials </h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr class="d-flex">
+      <th class="col-4">Document Name</th>
+      <th class="col-4">Document Type</th>
+      <th class="col-4">Document file</th>
+    </tr>
+  </thead>
 
-  <body>
-  <div class="container-fluid">
-   <div class="row">
-    <div class="col-sm-2 sidebar">
-      <nav>
-      <a class="navbar-brand logo" href="#"><%=image_tag("35526972_1706158386165401_3881246350645395456_n.png", size: "80x70")%></a>
-        <ul>
-        <% if current_admin_user==nil %>
-          <% if current_student!=nil %>
-          <li><%= link_to 'Home',"/home" %></li>
-          <li><%= link_to 'All courses',"/courses" %></li>
-          <li><%= link_to 'upload cv',"/cvs/new" %></li>
-           <li><%= link_to 'edit profile',"/students/edit" %></li>
-          <li><%= link_to grades_course_path(current_student.id), method: :get do %>Grades<% end %></li>
-           <li><%= link_to 'Download Current TimeTable',"/timetables" %></li>
-          <li><%= link_to 'Logout', destroy_student_session_path, method: :get %></li>
-          <% end %>
-        <% else %>
-          <% if current_admin_user.role=="Manager" %>
-            <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
-            <li><%= link_to 'New Event',"/admin/events/new" %></li>
-          <% end %>
-        <% if current_admin_user.role=="Supervisor" %>
-          <li><%= link_to 'Dashboard',"/admin/dashboard" %></li>
-          <li><%= link_to 'See the grades of the students',"/coursestudenttracks" %> </li>
-          <li><%= link_to 'Add a new grade for a student',"/coursestudenttracks/new" %></li>
-          <li><%= link_to 'Add a new course',"/courses/new" %></li>
-           <li><%= link_to 'All courses',"/courses/1/allcourses" %></li>
-           <li><%= link_to 'Upload Timetable', "/timetables/new"%></li>
-           <li><%= link_to 'New Event',"/admin/events/new" %></li>
-
-          <% end %>
-          <% if current_admin_user.role=="Instructor" %>
-          <li><%= link_to 'see all assignments',"/assignments" %></li>
-          <li><%= link_to 'Upload new assignment',"/totrack" %></li>
-          <li><%= link_to 'see all uploaded assignments',"/assignmentstaffstudents" %></li>
-           <li><%= link_to 'Upload new Lecture',"/tochoosetrack" %></li>
-           <li><%= link_to 'see all uploaded Lectures',"/coursestafftracks" %></li>
-           <li><%= link_to 'Logout', destroy_student_session_path, method: :get %></li>
-
-          <% end %>
-          <% end %>
-        </ul>
-      </nav>
-    </div>
-    <div class="col-sm-10 my-content">
-       <% if current_admin_user==nil && current_student==nil%>
-       <% else %>
-    <nav class="navbar navbar-expand-lg navbar-light bg-secondary my-nav">
-  
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav portal-name col-sm-2">
-     <li class="nav-item">
-     <% if current_admin_user==nil %>
-        <a class="nav-link" href="#">Student Portal</a>
-        <% else %>
-        <% if current_admin_user.role=="Manager" %>
-        <a class="nav-link" href="#">Manager Portal</a>
-        <% end %>
-        <% if current_admin_user.role=="Supervisor" %>
-        <a class="nav-link" href="#">Supervisor Portal</a>
-          <% end %>
-          <% if current_admin_user.role=="Instructor" %>
-        <a class="nav-link" href="#">Instructor Portal</a>
-          <% end %>
-          <% end %>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav nav-icons col-sm-10 justify-content-end">
-      <li class="nav-item">
-        <%=image_tag("notification.png")%>
-      </li>
-      <li class="nav-item">
-        <%=image_tag("chat-outline.png")%>
-      </li>
-      <li class="nav-item">
-      <% if current_student.blank? %>
-        <% if current_admin_user.avatar_image.blank? %>
-          <%=image_tag("no_image_user.png", size: "50x50")%>
-        <% else %>
-          <%=image_tag(current_admin_user.avatar_image_url, size: "50x50")%>
-        <% end %>
+  <tbody>
+    <% @materials_material.each_with_index do |onematerial,index| %>
+      <tr class="d-flex">
+      <th scope="row" class="col-4"><%= @materials_material_name[index] %></th>
+      <td class="col-4"><%= @materials_material_type[index]  %></td>
+      <td class="col-4"><%= link_to "Download", @materials_material[index] %></td>
+      </tr>  
+    <% end %>
+  </tbody>
+</table>
+<br/>
+<br/>
+<h4>Course Assignments </h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr class="d-flex">
+  <th class="col-3">Assignment Name</th>
+  <th class="col-3">Assignment Deadline</th>
+  <th class="col-3">Assignment file</th>
+  <th class="col-3">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @courseassignments_deadline.each_with_index do |onecourseassignment,index| %>
+      <tr class="d-flex">
+      <th scope="row" class="col-3"><%= @courseassignments_name[index] %></th>
+      <td class="col-3"><%= @courseassignments_deadline[index]  %></td>
+      <% if @courseassignments_assignmentfile[index].empty? %>
+      <td class="col-3"> </td>
       <% else %>
-        <% if current_student.avatar.blank? %>
-          <%=image_tag("no_image_user.png", size: "50x50")%>
-        <% else %>
-          <%=image_tag(current_student.avatar_url, size: "50x50")%>
-        <% end %>
+      <td class="col-3"><%= link_to "Download",  @courseassignments_assignmentfile[index] %></td>
       <% end %>
-      </li>
-    </ul>
-  </div>
-</nav>
-<% end %>
-<div class="container my-container">
-
-<h1><%= @tag.name %></h1>
-
-<div class="container">
-  <div class="row my-wrapper">
-    <% @posts.each do |post| %>
-       <div class="col-sm-10">
-    <br/>
-     <div class="my-post">
-      <div class="post-info">
-        <h1><%= post.student.name %></h1>
-      </div>
-      <p><%= post.body %></p>
-
-      <% @postshow = Post.find(post.id)  %>
-      <div id='tag_cloud'>
-      <% tag_cloud @postshow.tag_counts, %w{s m l} do |tag, css_class| %>
-        <%= link_to tag.name, tag_path(tag.id), class: css_class %>
-      <% end %>
-      </div>
-      <div class="post-likes">
-      <% if current_admin_user==nil %>
-      <%= link_to like_post_path(@postshow), method: :put do %> 
-        <%=image_tag("like.png")%>
-        <%= @postshow.get_upvotes.size %>
-        <% end %>
-      <% end %>
-      
-      <% if current_admin_user==nil %> 
-      <%= link_to dislike_post_path(@postshow), method: :put do %>
-        <%=image_tag("dislike.png")%>
-        <%= @postshow.get_downvotes.size %>
-      <% end %>
-      <% end %>
-            </div>
-
-            <%= commontator_thread(@postshow) %>
-            <% @posts_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{post.id} and resource_type='Post'") %>
-            <% for @post_comment in @posts_comments %>
-            <% @admin_name = AdminUser.where(id: @post_comment['author_id']).take %>
-            <p><%= @admin_name.name %>:::
-               <%= @post_comment['body'] %></p> 
-        
-           <% end %>
-
-           <% if current_admin_user!=nil %>
-          <td><%= link_to 'New Admin Comment', "admin/posts/#{post.id}" %></td>
-          <% end %>
-
-   
-    <% if current_student == @postshow.student %>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="col-3"><%= link_to upload_course_path(@courseassignments_id[index]), method: :put do %>Upload<% end %></td>
+      </tr>  
     <% end %>
-     </div>
-    </div>
+  </tbody>
+</table>
+<br/>
+<br/>
+<h4>Your Uploaded Assignments </h4>
+<table class="table table-striped">
+  <thead class="thead-dark">
+  <tr class="d-flex">
+  <th class="col-2">Assignment Name</th>
+  <th class="col-2">Your Answer (file)</th>
+  <th class="col-2">Your Answer (URL)</th>
+  <th class="col-3">Delivery Time</th>
+  <th class="col-3">Instructor Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @assignments_id.each_with_index do |oneassignment,index| %>
+      <tr class="d-flex">
+      <th scope="row" class="col-2"><%= @assignments_name[index] %></th>
+      <% if @assignmentfile[index].blank? %>
+      <th class="col-2"> </th>
+      <% else %>
+      <th class="col-2"><%= link_to "Download", @assignmentfile[index] %></th>
+      <% end %>
+      <td class="col-2"><a href='<%= @assignments_delivered[index] %>'><%= @assignments_delivered[index] %></a></td>
+        <td class="col-3"><%= @assignments_createdat[index]  %></td>
+        <td class="col-3"><%= @assignments_review[index]  %></td>
+      </tr>  
     <% end %>
-    </div>
-    </div>
-     </div>
-    </div>
-   </div>
-  </div>
-  
-</body>
-</html>
+  </tbody>
+</table>
 
-<%= link_to 'Back', posts_path %>
+
+

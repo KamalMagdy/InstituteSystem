@@ -15,7 +15,6 @@ class CvsController < InheritedResources::Base
 
 
     @cv_comments = Cv.where(student_id: current_student.id).take
-    # puts @cv_comments.id
     @cvs_comments = ActiveRecord::Base.connection.exec_query("select * from active_admin_comments where resource_id =#{@cv_comments.id} and resource_type='Cv'")   
 
     for @cv_comment in @cvs_comments 

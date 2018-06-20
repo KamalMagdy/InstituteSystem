@@ -4,7 +4,6 @@ ActiveAdmin.register AdminUser do
 
   controller do 
     def create 
-    puts "in create" 
        if(params[:admin_user][:role] == "Supervisor")
         if(params[:admin_user][:track_ids] != nil)
          @uniq_supervisor = Staff.where(track_id:params[:admin_user][:track_ids])
@@ -87,14 +86,6 @@ controller do
 
     end
 
-    # controller do 
-    #   def destroy 
-    #     @adminuser = AdminUser.find(params[:id])
-    #     @adminuser.banned = true
-    #     @adminuser.save!
-    #   end  
-    # end
-
     after_update do |user|
       if current_admin_user.role == "Supervisor"
         @role = ActiveRecord::Base.connection.exec_query("update admin_users set role = 'Instructor' where id = '#{@admin_user.id}'")
@@ -106,7 +97,6 @@ controller do
  
     else
         if (params[:admin_user][:role]=='Instructor')
-          puts "L mfrod yb2a 3ndy aktr mn track"
         end
       end
     end

@@ -1,6 +1,6 @@
 ActiveAdmin.register Track do
     permit_params :name, :intake, :typeoftrack
-    menu :parent => "", :if => proc { current_admin_user.role == "Supervisor" }
+    menu :parent => "Tracks", :if => proc { current_admin_user.role == "Manager" }
 
 filter :name
 filter :intake

@@ -3,7 +3,7 @@ ActiveAdmin.register Event do
 controller do
   def new
     @event = Event.new
-    @event.admin_user_id = 1
+    @event.admin_user_id = current_admin_user.id
   end
 end
   form do |f|

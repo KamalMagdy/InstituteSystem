@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # get '/rails/db', to: '/home'
   resources :timetables
   resources :staffcourses
   devise_scope :student do
@@ -75,7 +74,7 @@ match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
 
   mount Commontator::Engine => '/commontator'
   devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)  ##>>>>>>>>>>>>>>>>>>de feha moshkla
+  ActiveAdmin.routes(self) 
 
   devise_for :students, controllers: { registrations: 'students/registrations', sessions: 'students/sessions' }
   devise_scope :students do

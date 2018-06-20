@@ -77,7 +77,9 @@ class CoursestudenttracksController < InheritedResources::Base
     @counter=0
     @courses = ActiveRecord::Base.connection.exec_query("select * from courses_tracks where track_id=#{@trackid[0]["track_id"]}")
     for @course in @courses
-      @grades = Coursestudenttrack.where(track_id: @trackid[0]["track_id"], student_id: params[:student], course_id: @course['course_id'])
+      @grades = Coursestudenttrack.where(track_id: @trackid[0]["track_id"], student_id: params[:student], course_id: @course["course_id"])
+      if @grades.blank?
+      else
       @grades = Coursestudenttrack.find(@grades[0]["id"])
       if(params[:grade]["#{@counter}"]=="empty")
       else
@@ -85,6 +87,7 @@ class CoursestudenttracksController < InheritedResources::Base
         @desiredrecord.grade = params[:grade]["#{@counter}"]
         @desiredrecord.save!
       end
+    end
       @counter = @counter +1
     end
     redirect_to :action => :index
