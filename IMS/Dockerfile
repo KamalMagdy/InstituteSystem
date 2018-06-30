@@ -6,4 +6,3 @@ COPY Gemfile /IMS/Gemfile
 COPY Gemfile.lock /IMS/Gemfile.lock
 RUN bundle install
 COPY . /IMS
-

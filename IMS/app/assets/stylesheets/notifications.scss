@@ -1,0 +1,120 @@
+// Place all the styles related to the lists controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul {
+    
+    li {
+        float:left;
+        font:13px helvetica;
+        font-weight:bold;
+        margin:3px 0;
+        
+        a {
+            color:#FFF;
+            text-decoration:none;
+            padding:6px 15px;
+            cursor:pointer;
+        }
+        a:hover {
+            
+            cursor:pointer;
+        }
+    }
+}
+
+    
+#noti_Container {
+    position:relative;
+    #noti_Counter {
+        display:block;
+        position:absolute;
+        background:#E1141E;
+        color:#FFF;
+        font-size:12px;
+        font-weight:normal;
+        padding:1px 3px;
+        margin:-8px 0 0 25px;
+        border-radius:2px;
+        -moz-border-radius:2px; 
+        -webkit-border-radius:2px;
+        z-index:1;
+    }
+    #noti_Button {
+        // width:22px;
+        // height:22px;
+        // line-height:22px;
+        // border-radius:50%;
+        // -moz-border-radius:50%; 
+        // -webkit-border-radius:50%;
+        // background:#FFF;
+        background-color: #fff;
+        margin:-3px 10px 0 10px;
+        cursor:pointer;
+    }
+    #noti_Button:visited{
+        background-color: #fff;
+
+    }
+    #noti_Button:active{
+        background-color: #fff;
+
+    }
+    #notifications {
+        display:none;
+        width:250px;
+        overflow: scroll;
+        height: 250px;
+        position:absolute;
+        top:35px;
+        left:20px;
+        background:#FFF;
+        border:solid 1px rgba(100, 100, 100, .20);
+        -webkit-box-shadow:0 3px 8px rgba(0, 0, 0, .20);
+        z-index: 999;
+        p {
+            padding: 10px;
+            border-bottom: 1px solid #CACACA;
+            background-color: #EDEDED;
+            margin-bottom: 0;
+        }
+        h3 {
+            display:block;
+            color:#333; 
+            background:#FFF;
+            font-weight:bold;
+            font-size:13px;    
+            padding:8px;
+            margin:0;
+            border-bottom:solid 1px rgba(100, 100, 100, .30);
+            ;
+        }
+    }
+    #notifications:before {         
+        content: '';
+        display:block;
+        width:0;
+        height:0;
+        color:transparent;
+        border:10px solid #CCC;
+        border-color:transparent transparent #FFF;
+        margin-top:-20px;
+        margin-left:10px;
+    }
+    
+}
+   
+/* A CIRCLE LIKE BUTTON IN THE TOP MENU. */
+
+    
+/* THE POPULAR RED NOTIFICATIONS COUNTER. */
+
+    
+/* THE NOTIFICAIONS WINDOW. THIS REMAINS HIDDEN WHEN THE PAGE LOADS. */
+
+/* AN ARROW LIKE STRUCTURE JUST OVER THE NOTIFICATIONS WINDOW */
+
+
+    
+
+
